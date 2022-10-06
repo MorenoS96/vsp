@@ -7,10 +7,16 @@
 
 
 Tron-Spiel nach dem Vorbild von [Tron Legacy](https://de.wikipedia.org/wiki/Tron:_Legacy) (2010) als einfache 2D-Animation.
-![Startbildschirm](Assets/1%20StartBildschirm.png "Startbildschirm")
-![Wartebildschirm](Assets/2%20WarteBildschirm.png "Wartebildschirm")
-![Spielbildschirm](Assets/3%20Spielbildschirm.png "Spielebildschirm")
-![Startbildschirm](Assets/4%20EndBildschirm.png "Endbildschirm")
+
+| ![Wartebildschirm](Assets/1_StartBildschirm.png "Startebildschirm") | I am text to the right |
+
+
+
+
+
+![Wartebildschirm](Assets/2_WarteBildschirm.png "Wartebildschirm")
+![Spielbildschirm](Assets/3_Spielbildschirm.png "Spielebildschirm")
+![Startbildschirm](Assets/4_EndBildschirm.png "Endbildschirm")
 
 Parameter die in einer Config Datei gesetzt werden können.
 | Parameter                             	| Wertebereich 	| Bildschirm 	|
