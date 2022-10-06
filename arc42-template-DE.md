@@ -1,71 +1,12 @@
-# 
-
-**Über arc42**
-
-arc42, das Template zur Dokumentation von Software- und
-Systemarchitekturen.
-
-Template Version 8.1 DE. (basiert auf AsciiDoc Version), Mai 2022
-
-Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and
-contributors. Siehe <https://arc42.org>.
-
-::: note
-Diese Version des Templates enthält Hilfen und Erläuterungen. Sie dient
-der Einarbeitung in arc42 sowie dem Verständnis der Konzepte. Für die
-Dokumentation eigener System verwenden Sie besser die *plain* Version.
-:::
-
 # Einführung und Ziele {#section-introduction-and-goals}
-
-Beschreibt die wesentlichen Anforderungen und treibenden Kräfte, die bei
-der Umsetzung der Softwarearchitektur und Entwicklung des Systems
-berücksichtigt werden müssen.
-
-Dazu gehören:
-
--   zugrunde liegende Geschäftsziele,
-
--   wesentliche Aufgabenstellungen,
-
--   wesentliche funktionale Anforderungen,
-
--   Qualitätsziele für die Architektur und
-
--   relevante Stakeholder und deren Erwartungshaltung.
-
 ## Aufgabenstellung {#_aufgabenstellung}
 
 ::: formalpara-title
 **Inhalt**
 :::
 
-Kurzbeschreibung der fachlichen Aufgabenstellung, treibenden Kräfte,
-Extrakt (oder Abstract) der Anforderungen. Verweis auf (hoffentlich
-vorliegende) Anforderungsdokumente (mit Versionsbezeichnungen und
-Ablageorten).
+Tron-Spiel nach dem Vorbild von [Tron Legacy](https://de.wikipedia.org/wiki/Tron:_Legacy) (2010) als einfache 2D-Animation.
 
-::: formalpara-title
-**Motivation**
-:::
-
-Aus Sicht der späteren Nutzung ist die Unterstützung einer fachlichen
-Aufgabe oder Verbesserung der Qualität der eigentliche Beweggrund, ein
-neues System zu schaffen oder ein bestehendes zu modifizieren.
-
-::: formalpara-title
-**Form**
-:::
-
-Kurze textuelle Beschreibung, eventuell in tabellarischer Use-Case Form.
-Sofern vorhanden, sollte die Aufgabenstellung Verweise auf die
-entsprechenden Anforderungsdokumente enthalten.
-
-Halten Sie diese Auszüge so knapp wie möglich und wägen Sie Lesbarkeit
-und Redundanzfreiheit gegeneinander ab.
-
-Siehe [Anforderungen und Ziele](https://docs.arc42.org/section-1/) in
-der online-Dokumentation (auf Englisch!).
 
 ## Qualitätsziele {#_qualit_tsziele}
 
