@@ -5,7 +5,14 @@
 **Inhalt**
 :::
 
+
 Tron-Spiel nach dem Vorbild von [Tron Legacy](https://de.wikipedia.org/wiki/Tron:_Legacy) (2010) als einfache 2D-Animation.
+![Startbildschirm](Assets/1%20StartBildschirm.png "Startbildschirm")
+![Wartebildschirm](Assets/2%20WarteBildschirm.png "Wartebildschirm")
+![Spielbildschirm](Assets/3%20Spielbildschirm.png "Spielebildschirm")
+![Startbildschirm](Assets/4%20EndBildschirm.png "Endbildschirm")
+
+
 
 
 ## Qualitätsziele {#_qualit_tsziele}
