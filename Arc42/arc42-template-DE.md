@@ -12,7 +12,28 @@ Tron-Spiel nach dem Vorbild von [Tron Legacy](https://de.wikipedia.org/wiki/Tron
 ![Spielbildschirm](Assets/3%20Spielbildschirm.png "Spielebildschirm")
 ![Startbildschirm](Assets/4%20EndBildschirm.png "Endbildschirm")
 
-
+Parameter die in einer Config Datei gesetzt werden können.
+| Parameter                             	| Wertebereich 	| Bildschirm 	|
+|---------------------------------------	|--------------	|------------	|
+| Standardspieler Anzahl                	| 2...6        	| 1          	|
+| maximale Wartezeit in ms              	| 100...300000 	| 2          	|
+| Größe eines Rasterpunktes in px       	| 10 ... 100   	| 3          	|
+| Anzahl der Rasterpunkte Horizontal    	| 10 ... 20    	| 3          	|
+| Anzahl der Rasterpunkte Vertikal      	| 10 ... 20    	| 3          	|
+| Geschwindigkeit in Punkte pro Sekunde 	| 1 ... 500    	| 3          	|
+| Taste rechts Spieler 1                	| tastatur     	| 3          	|
+| Taste links Spieler 1                 	| tastatur     	| 3          	|
+| Taste rechts Spieler 2                	| tastatur     	| 3          	|
+| Taste links Spieler 2                 	| tastatur     	| 3          	|
+| Taste rechts Spieler 3                	| tastatur     	| 3          	|
+| Taste links Spieler 3                 	| tastatur     	| 3          	|
+| Taste rechts Spieler 4                	| tastatur     	| 3          	|
+| Taste links Spieler 4                 	| tastatur     	| 3          	|
+| Taste rechts Spieler 5                	| tastatur     	| 3          	|
+| Taste links Spieler 5                 	| tastatur     	| 3          	|
+| Taste rechts Spieler 6                	| tastatur     	| 3          	|
+| Taste links Spieler 6                 	| tastatur     	| 3          	|
+| Countdown Ende in Sekunden            	| 3 ... 10     	| 4          	|
 
 
 ## Qualitätsziele {#_qualit_tsziele}
