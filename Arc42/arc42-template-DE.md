@@ -7,16 +7,85 @@
 
 
 Tron-Spiel nach dem Vorbild von [Tron Legacy](https://de.wikipedia.org/wiki/Tron:_Legacy) (2010) als einfache 2D-Animation.
+Im folgenden werden nun Bildschirm Skizzen gezeigt, welche zeigen sollen wie das Spiel am Ende funktionieren soll.
 
-| ![Wartebildschirm](Assets/1_StartBildschirm.png "Startebildschirm") | I am text to the right |
+Es wird häufig auf eine Config Datei verweisen. 
+Im Abschnitt "Config Tabelle" werden alle vom User änderbaren Parameter gezeigt inklusive deren zulässigen Wertebereich und auf welchen Spielabschnitt sich der jeweilige Wert auswirkt.
+
+Vorab eine Übersicht der Bildschirme und deren Übergänge und danach eine Detailansicht.
+
+**Übersicht**
+![Storyboard](Assets/StoryBoard.drawio.png "StoryBoard")
 
 
+**Detail**
+![Wartebildschirm](Assets/1_StartBildschirm.png "Startebildschirm") 
+<ul>
+<li>Der User kann zuerst auswählen wie viel Spieler (2-6) mitspielen sollen. Ein Defaultwert kann in der Config gesetzt werden.</li>
+<li>Klickt der User auf start, so gelangt er zum Bildschirm 2</li>
+</ul>
+
+ ![Wartebildschirm](Assets/2_WarteBildschirm.png "Wartebildschirm")
+<ul>
+<li>Danach muss der User warten bis alle weiteren Spieler bereit sind</li>
+<li>Eine Anzeige soll zeigen wie viele Spieler bereit sind und auf wie viele gewartet wird.</li>
+<li>Sollte ein Spieler zu lange brauchen um beizutreten, dann wird ohne ihn gespielt (timeout)</li>
+<li>Die maximale Wartezeit kann in der Config Datei angegeben werden</li>
+<li>Die Anwendung wechselt zu Bildschirm 3 sobald alle Spieler bereit sind</li>
+<li>Sollten z.B. aufgrund von timeouts weniger als 2 Spieler am Ende der Wartezeit übrig bleiben, so wird das Spiel abgebrochen und die Anwendung wechselt zu Bildschirm 1</li>
+</ul>
+
+ ![Spielbildschirm](Assets/3_Spielbildschirm.png "Spielebildschirm")
+<ul>
+<li>Das Spielfeld soll durch ein Raster repräsentiert werden.
+
+<ul>
+    <li>
+    Die größe eines Rasterpunktes ist konfigurierbar.
+    </li>
+    <li>
+    Die Anzahl der Rasterpunkte in vertikaler und horizontaler Richtung ist konfigurierbar.
+    </li>
+</ul>
+
+</li>
 
 
+<li>
+Es existiert eine Legende mit der Spielernummer und Farbe.
+</li>
+<li>
+Vor Spielbeginn soll ein 3 Sekunden Countdown ablaufen.
+</li>
+<li>
+Die Spielfigur bewegt sich immer mit jedem "Tick".
+<ul>
+<li>Die Geschwindigkeit ist konfigurierbar.</li>
+<li>
+Wenn der Spieler weder nach rechts noch nach links lenkt, so bewegt sie sich in dieselbe Richtung wie vorher. 
+<span style="color:red">Achtung schwamming formuliert!</span>.
+</li>
 
-![Wartebildschirm](Assets/2_WarteBildschirm.png "Wartebildschirm")
-![Spielbildschirm](Assets/3_Spielbildschirm.png "Spielebildschirm")
-![Startbildschirm](Assets/4_EndBildschirm.png "Endbildschirm")
+</ul>
+<li>Collidiert eine Spielfigur entweder mit einem anderen Spieler, der Wand oder dem Schatten eines Spielers (auch seinem Eigenen) so stirbt sie.</li>
+<li>Sobald die Spielfigur stirbt, verschwindet ihr Schatten</li>
+<li>Der Gewinner ist der Spieler dessen Figur als letztes überlebt (last one standing)</li>
+<li>Sollten mehrere Spieler als letztes gleichzeitig ausscheiden, so ist es ein unentschieden</li>
+<li>Wenn ein Spieler ausscheidet, so läuft das Spiel ohne ihn weiter, er sieht aber trotzdem noch den Bildschirm 3</li>
+<li>ist das Spiel vorbei so, wechselt die Anwendung zum Bildschirm 4</li>
+</ul>
+
+
+ ![Startbildschirm](Assets/4_EndBildschirm.png "Endbildschirm")
+
+<ul>
+<li>Im Endbildschirm wird der Gewinner angezeigt</li>
+<li>Es läuft ein Countdown ab. Dieser ist konfigurierbar.</li>
+<li>Nach Ablauf des Countdowns wechselt die Anwendung zum Bildschirm 1</li>
+
+</ul>
+
+**Config Tabelle** 
 
 Parameter die in einer Config Datei gesetzt werden können.
 | Parameter                             	| Wertebereich 	| Bildschirm 	|
