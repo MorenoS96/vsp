@@ -19,11 +19,19 @@ Vorab eine Übersicht der Bildschirme und deren Übergänge und danach eine Deta
 
 
 **Detail**
-![Wartebildschirm](Assets/1_StartBildschirm.png "Startebildschirm") 
+
+**Startbildschirm**
+![Startbildschirm](Assets/1_StartBildschirm.png "Startebildschirm") 
 <ul>
 <li>Der User kann zuerst auswählen wie viel Spieler (2-6) mitspielen sollen. Ein Defaultwert kann in der Config gesetzt werden.</li>
 <li>Klickt der User auf start, so gelangt er zum Bildschirm 2</li>
 </ul>
+| Abgeleitete Methode                           | Semantische Beschreibung                                                                                                                                                                                                                                                            | Auslöser                         | Rückgabewert                                  | Methoden Nr | Bemerkung                   |   |   |   |   |
+|-----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-----------------------------------------------|-------------|-----------------------------|---|---|---|---|
+| private String init()                         | Aus dem Feld "Anzahl" wird die Zahl eingelesen. Danach wird geprüft, ob die Zahl zwischen 2 und 6 liegt. Sollte dies nicht der Fall sein, soll eine dementsprechende Fehlermeldung anzeigt werden. Ansonsten wird die Initialisierung der Spieler und des Spielfeldes vorgenommen.  | start()                          | Fehlermeldung beginnend mit "Error" oder "ok" | 1.1         |                             |   |   |   |   |
+| private void changeView(int displayDescriber) | Der Bildschirm wird je nach "displayDescriber" gewechselt                                                                                                                                                                                                                           | start()                          |                                               | 1.2         | für alle Views erforderlich |   |   |   |   |
+| public void start()                           | ruft die Methoden init und danach changeView auf. Sollte init einen Fehler melden wird start abgebrochen.                                                                                                                                                                           | User klickt auf den Button start |                                               | 1.3         |                             |   |   |   |   |
+
 
  ![Wartebildschirm](Assets/2_WarteBildschirm.png "Wartebildschirm")
 <ul>
@@ -34,6 +42,14 @@ Vorab eine Übersicht der Bildschirme und deren Übergänge und danach eine Deta
 <li>Die Anwendung wechselt zu Bildschirm 3 sobald alle Spieler bereit sind</li>
 <li>Sollten z.B. aufgrund von timeouts weniger als 2 Spieler am Ende der Wartezeit übrig bleiben, so wird das Spiel abgebrochen und die Anwendung wechselt zu Bildschirm 1</li>
 </ul>
+| Abgeleitete Methode                                      | Semantische Beschreibung                                                                      | Auslöser | Rückgabewert | Methoden Nr | Bemerkung |   |   |   |   |
+|----------------------------------------------------------|-----------------------------------------------------------------------------------------------|----------|--------------|-------------|-----------|---|---|---|---|
+| private int startTimer(int milliseconds)                 | startet den Timer                                                                             |          |              |             |           |   |   |   |   |
+| private boolean updateReadyCount(int playersReady, int ) | Die Anzeige im Bildschirm aktualieseren "x of y players ready". Passt auch den Ladebalken an. |          |              |             | Observer? |   |   |   |   |
+| private int getMaxTime()                                 | liest die maximaleWartezeit aus.                                                              |          |              |             |           |   |   |   |   |
+| private void startGame()                                 |                                                                                               |          |              |             |           |   |   |   |   |
+| public void startWaiting()                               | regelt die Reihenfolge aller Methoden in dem Wartebildschirm. Handelt auch fehlerfälle        |          |              |             |           |   |   |   |   |
+
 
  ![Spielbildschirm](Assets/3_Spielbildschirm.png "Spielebildschirm")
 <ul>
