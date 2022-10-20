@@ -126,6 +126,16 @@ Parameter die in einer Config Datei gesetzt werden können.
 | Taste links Spieler 6                 	| tastatur     	| 3          	|
 | Countdown Ende in Sekunden            	| 3 ... 10     	| 4          	|
 
+### Usecases
+
+| Nummer | Titel | Akteur | Ziel | Auslöser | Vorbedingung | Nachbedingung | Erfolgsszenario | Fehlerfälle | Häufigkeit | Zugrundeliegende Anforderungen |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| UC2 | Starten eines Spiels | Spieler/Nutzer | Spiel wird gestartet | Nutzer will ein Spiel spielen | Die Anwendung ist gestartet, der Button ist sichtbar und clickbar | Das Spiel ist gestartet, die Wartephase läuft |     |     | immer |     |
+| UC1 | Ändern der Spielerzahl | Spieler/Nutzer | Spieleranzahl eingestellt | Nutzer will defaultwert der Spieleranzahl nicht nutzen | Die Anwendung ist gestartet, der Spieler sieht den Startbildschirm | Spielerzahl ist geändert und Spieler können geladen werden / auf Spieler kann gewartet werden |     |     |     |     |
+| UC3 | Warten auf Spieler | Spieler/Nutzer | Alle Spieler sind geladen und bereit | Spieler hat das Spiel gestartet | Spiel ist gestartet und Spieler sieht den Ladebildschirm | Initialisieren des Spielfeldes wird gestartet |     |     |     |     |
+| UC5 | Steuern der Figuren | Spieler/Nutzer | Spieler können sich auf dem Spielfeld bewegen | Spieler will die Figur bewegen | Spielfeld wurde init, alle Spieler sind geladen, countdown ist abgelaufen | Die Figur hat sich in die gewünschte Richtung bewegt |     |     |     |     |
+| UC6 | Beenden des Spiels | Spieler/Nutzer | Spieler gewinnt oder Verliert | Spieler will gewinnen | Nur noch max. ein Spieler ist übrig | Das Spiel ist beendet und der Endbildschirm wird angezeigt |     |     |     |     |
+| UC4 | Beitreten eines Spiels | Spieler/Nutzer | Spieler ist einem Spiel beigetreten und kann auf den Beginn warten | Spieler will einem Spiel beitreten | Warten auf Spieler läuft, Spieleranzahl ist noch nicht voll | Spieler ist beigetreten und die Runde kann starten/es wird auf weitere fehlende Spieler gewartet. |     |     |     |     |
 
 ## Qualitätsziele {#_qualit_tsziele}
 
