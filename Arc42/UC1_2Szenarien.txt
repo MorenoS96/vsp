@@ -1,0 +1,37 @@
+UC1 Erfolgsszenario
+
+1. Das System zeigt den Startbildschirm an.
+	a. Das System sorgt dafür, dass das Eingabefeld sichtbar und klickbar ist.
+2. Das System lädt den Default Wert aus der Config Datei
+3. Das System prüft den Default Wert
+3. Der Spieler klickt auf das Eingabefeld.
+4. Der Spieler tippt die gewünschte Spielerzahl ein.
+5. Das System prüft ob die Eingabe gültig ist. Gültig ist sie genau dann wenn, es eine ganze Zahl zwischen 1 und 6 ist.
+1. Das System gibt eine Ausgabe, dass die Eingabe erfolgreich war.
+1. Das System zeigt die eingebene Zahl im Eingabefeld an.
+1. Das System speichert die Anzahl.
+
+
+--------------------------
+UC1 Fehlerszenario
+3, 5. Die Eingabe ist nicht gültig
+	a. Das System zeigt eine Fehlermeldung an : "Die Eingabe muss eine ganze Zahl zwischen 1 und 6 sein".
+	b. Die Eingabe wird nicht angenommen. Die Spielerzahl bleibt unverändert.
+
+
+
+--------------
+UC2 Erfolgsszenario 
+1. Das System zeigt den Startbildschirm an.
+	a. Das System sorgt dafür, dass der "Start-Button" sichtbar und klickbar ist.
+2. Der Spieler klickt auf den "Start-Button".
+3. Das System wechselt zum Wartebildschirm
+
+------
+UC2 Fehlerszenario
+
+
+
+
+
+
