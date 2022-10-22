@@ -298,35 +298,12 @@ Kommunikationsbeziehung, Eingabe, Ausgabe.
 
 ::: formalpara-title
 **Inhalt**
-:::
-
-Technische Schnittstellen (Kanäle, Übertragungsmedien) zwischen dem
-System und seiner Umwelt. Zusätzlich eine Erklärung (*mapping*), welche
-fachlichen Ein- und Ausgaben über welche technischen Kanäle fließen.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Viele Stakeholder treffen Architekturentscheidungen auf Basis der
-technischen Schnittstellen des Systems zu seinem Kontext.
-
-Insbesondere bei der Entwicklung von Infrastruktur oder Hardware sind
-diese technischen Schnittstellen durchaus entscheidend.
-
-::: formalpara-title
-**Form**
-:::
-
-Beispielsweise UML Deployment-Diagramme mit den Kanälen zu
-Nachbarsystemen, begleitet von einer Tabelle, die Kanäle auf
-Ein-/Ausgaben abbildet.
-
-**\<Diagramm oder Tabelle>**
-
-**\<optional: Erläuterung der externen technischen Schnittstellen>**
-
-**\<Mapping fachliche auf technische Schnittstellen>**
+ ![UC1Tech](Assets/technischer Kontext-UC1.drawio.png "UC1Tech")
+  ![UC2Tech](Assets/technischer Kontext-UC2.drawio.png "UC2Tech")
+   ![UC3Tech](Assets/technischer Kontext-UC3.drawio.png "UC3Tech")
+    ![UC4Tech](Assets/technischer Kontext-UC4.drawio.png "UC4Tech")
+     ![UC5Tech](Assets/technischer Kontext-UC5.drawio.png "UC5Tech")
+      ![UC6Tech](Assets/technischer Kontext-UC6.drawio.png "UC6Tech")
 
 # Lösungsstrategie {#section-solution-strategy}
 
