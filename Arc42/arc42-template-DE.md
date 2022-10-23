@@ -262,37 +262,11 @@ Siehe [Kontextabgrenzung](https://docs.arc42.org/section-3/) in der
 online-Dokumentation (auf Englisch!).
 
 ## Fachlicher Kontext {#_fachlicher_kontext}
-
-::: formalpara-title
 **Inhalt**
-:::
+Der Spieler interagiert mit dem Spiel über seine Maus und Tastatur und die GUI.
 
-Festlegung **aller** Kommunikationsbeziehungen (Nutzer, IT-Systeme, ...)
-mit Erklärung der fachlichen Ein- und Ausgabedaten oder Schnittstellen.
-Zusätzlich (bei Bedarf) fachliche Datenformate oder Protokolle der
-Kommunikation mit den Nachbarsystemen.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Alle Beteiligten müssen verstehen, welche fachlichen Informationen mit
-der Umwelt ausgetauscht werden.
-
-::: formalpara-title
-**Form**
-:::
-
-Alle Diagrammarten, die das System als Blackbox darstellen und die
-fachlichen Schnittstellen zu den Nachbarsystemen beschreiben.
-
-Alternativ oder ergänzend können Sie eine Tabelle verwenden. Der Titel
-gibt den Namen Ihres Systems wieder; die drei Spalten sind:
-Kommunikationsbeziehung, Eingabe, Ausgabe.
-
-**\<Diagramm und/oder Tabelle>**
-
-**\<optional: Erläuterung der externen fachlichen Schnittstellen>**
+Es werden Visualle Informationen ausgegeben.
+![](Assets/Fachlicher Kontext.png)
 
 ## Technischer Kontext {#_technischer_kontext}
 
