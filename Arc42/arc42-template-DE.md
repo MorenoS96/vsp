@@ -285,43 +285,22 @@ Es werden Visualle Informationen ausgegeben.
 **Inhalt**
 :::
 
-Kurzer Überblick über die grundlegenden Entscheidungen und
-Lösungsansätze, die Entwurf und Implementierung des Systems prägen.
-Hierzu gehören:
-
--   Technologieentscheidungen
-
--   Entscheidungen über die Top-Level-Zerlegung des Systems,
-    beispielsweise die Verwendung gesamthaft prägender Entwurfs- oder
-    Architekturmuster,
-
--   Entscheidungen zur Erreichung der wichtigsten Qualitätsanforderungen
-    sowie
-
--   relevante organisatorische Entscheidungen, beispielsweise für
-    bestimmte Entwicklungsprozesse oder Delegation bestimmter Aufgaben
-    an andere Stakeholder.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Diese wichtigen Entscheidungen bilden wesentliche „Eckpfeiler" der
-Architektur. Von ihnen hängen viele weitere Entscheidungen oder
-Implementierungsregeln ab.
-
-::: formalpara-title
-**Form**
-:::
-
-Fassen Sie die zentralen Entwurfsentscheidungen **kurz** zusammen.
-Motivieren Sie, ausgehend von Aufgabenstellung, Qualitätszielen und
-Randbedingungen, was Sie entschieden haben und warum Sie so entschieden
-haben. Vermeiden Sie redundante Beschreibungen und verweisen Sie eher
-auf weitere Ausführungen in Folgeabschnitten.
-
-Siehe [Lösungsstrategie](https://docs.arc42.org/section-4/) in der
-online-Dokumentation (auf Englisch!).
+| Funktionssignatur | Beschreibung | Fehlersemantik | UC-Zugehörigkeit |
+| --- | --- | --- | --- |
+| setPlayerCount(int default, int playerCount) | Ändert die Anzahl an Spielern für die nächste Runde |     | UC1 |
+| startGame() | Startet das Spiel und leitet die Wartephase ein |     | UC2 |
+| startRound() | Startet den Countdown... |     | UC4 |
+| startWaitPhase() | Prüft ob neue Spieler hinzugekommen sind und startet die Init wenn counter abgelaufen ist oder alle Spieler beisammen sind |     | UC3 |
+| loadPlayers() |     |     | UC3 |
+| initializeBoard() | Initialisiert das Spielfeld in der richtigen Größe mit den korrekten Kreuzen. |     | UC3 |
+| loadAssets() | Lädt die Spielfiguren und deren Schatten an einer zufälligen (fairen) Position auf dem Spielfeld. |     | UC3 |
+| movePlayer() | Bewegt die Spieler in der definierten Geschwindigkeit in Blickrichtung nach vorne. |     | UC5 |
+| changePlayerDirection() | Ändert die Richtung der Spielfigur basierend auf der Eingabe des Spielers. |     | UC5 |
+| checkInput() | Prüft auf Eingaben der Spieler. |     | UC5 |
+| checkCollision() | Prüft auf eine Zusammenstoß. |     | UC6 |
+| endRound() | Beendet die Runde, wenn checkCollision keinen/einen Spieler übrig lässt. |     | UC6 |
+| setWinner() | Gibt den Sieger aus. |     | UC6 |
+| joinGame() | Lässt Spieler einem Spiel beitreten. |     | UC4 |
 
 # Bausteinsicht {#section-building-block-view}
 
