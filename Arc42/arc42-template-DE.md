@@ -293,8 +293,8 @@ Es werden Visualle Informationen ausgegeben.
 | void startRound()                                 | Startet den Countdown...                                                                                                   |     | UC4              |
 | void startWaitPhase()                             | Prüft ob neue Spieler hinzugekommen sind und startet die Init wenn counter abgelaufen ist oder alle Spieler beisammen sind |     | UC3              |
 | HashMap<String, String> loadConfig()              | Lädt aus der Conig                                                                                                         |     |                  |
-| Board initializeBoard()                           | Initialisiert das Spielfeld in der richtigen Größe mit den korrekten Kreuzen.                                              |     | UC3              |
-| Board loadAssets(Board)                           | Lädt die Spielfiguren und deren Schatten an einer zufälligen (fairen) Position auf dem Spielfeld.                          |     | UC3              |
+| Board initializeBoard(int h, int w, int pc)       | Initialisiert das Spielfeld in der richtigen Größe mit den korrekten Kreuzen.                                              |     | UC3              |
+| Board loadAssets(Board board)                     | Lädt die Spielfiguren und deren Schatten an einer zufälligen (fairen) Position auf dem Spielfeld.                          |     | UC3              |
 | Board movePlayer()                                | Bewegt die Spieler in der definierten Geschwindigkeit in Blickrichtung nach vorne.                                         |     | UC5              |
 | void changePlayerDirection()                      | Ändert die Richtung der Spielfigur basierend auf der Eingabe des Spielers.                                                 |     | UC5              |
 | boolean checkInput()                              | Prüft auf Eingaben der Spieler. Und Sorgt für richtige "Bearbeitung".                                                      |     | UC5              |
@@ -305,6 +305,8 @@ Es werden Visualle Informationen ausgegeben.
 | boolean joinGame()                                | Lässt Spieler einem Spiel beitreten.                                                                                       |     | UC4              |
 | List<Player> getPlayersAlive()                    | Gibt eine Liste mit noch lebenden Spielern zurück.                                                                         |     | UC4              |
 | void gameLoop()                                   | Klärt den ganzen Ablauf der anderen Methoden.                                                                              |     | UC4              |
+| void displayBoard(Board board)                          | zeigt das Board an.                                                                               |     | UC4              |
+| void displayView(View view)                          | zeigt das Board an.                                                                               |     | UC4              |
 
 # Bausteinsicht {#section-building-block-view}
 
@@ -385,6 +387,11 @@ des nachfolgenden Whitebox-Templates. Dieses enthält:
     Kompatibilitäten und vieles mehr spezifizieren oder beschreiben. Im
     besten Fall kommen Sie mit Beispielen oder einfachen Signaturen
     zurecht.
+    
+    ![Ebene 1](Assets/Tron-BausteinSicht Ebene 1.drawio.png "E1")
+       
+    ![CustomDatatypes](Assets/Tron-CustomDatatypes.drawio.png "CD")
+   
 
 ***\<Übersichtsdiagramm>***
 
@@ -466,6 +473,12 @@ Blackbox-Templates:
 ### \<Name Schnittstelle m> {#__name_schnittstelle_m}
 
 ## Ebene 2 {#_ebene_2}
+
+     
+ ![E2Controller](Assets/Tron-BausteinSicht Ebene 2 Controller.drawio.png "E2Controller")
+   
+
+
 
 Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 1 als
 Whitebox.
