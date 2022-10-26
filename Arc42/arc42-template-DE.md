@@ -136,6 +136,123 @@ Parameter die in einer Config Datei gesetzt werden können.
 | UC5 | Steuern der Figuren | Spieler/Nutzer | Spieler können sich auf dem Spielfeld bewegen | Spieler will die Figur bewegen | Spielfeld wurde init, alle Spieler sind geladen, countdown ist abgelaufen | Die Figur hat sich in die gewünschte Richtung bewegt | Der Spieler drückt eine der definierten Tasten und die Figur verändert ihre Bewegung passend zur Taste.                                                                       | Der Spieler drückt die falsche Taste, es bewegt sich nichts. Die Figur bewegt sich in die falsche Richtung oder ändert ihre Bewegung gar nicht.                                                                                                                                                                                                            | jedes Spiel, ohne Änderung der Richtung ergibt das Ganze keinen Sinn | UC2, UC3, UC4                  |
 | UC6 | Beenden des Spiels | Spieler/Nutzer | Spieler gewinnt oder Verliert | Spieler will gewinnen | Nur noch max. ein Spieler ist übrig | Das Spiel ist beendet und der Endbildschirm wird angezeigt | Eine Kollision führt dazu, dass einer oder keiner der Spieler mehr übrig ist. Daraus ergibt sich ein Sieg oder ein Unentschieden. Der Screen mit dem Ergebnis wird angezeigt. | Es wird keine Kollision erkannt. Es wird kein Sieger ausgegeben.                                                                                                                                                                                                                                                                                           | immer                                     | UC2, UC3, UC4, UC5             |
 | UC4 | Beitreten eines Spiels | Spieler/Nutzer | Spieler ist einem Spiel beigetreten und kann auf den Beginn warten | Spieler will einem Spiel beitreten | Warten auf Spieler läuft, Spieleranzahl ist noch nicht voll | Spieler ist beigetreten und die Runde kann starten/es wird auf weitere fehlende Spieler gewartet. | 1. Spieler drückt auf button Spiel beitreten 2. Spieler wird verbunden wenn noch genug Platz für ihn da ist 3. Sobald der SPieler drin ist wird ein Warteplatz weggenommen    | 2.a Jemand anders ist schon beigetreten 2.a.1 Verbindung mit dem Spiel wird abgebrochen 2.b Man hat keine Verbindung zum Spiel aufbauen können 2.b.1 Verbindung wird nicht weiterhin verushct aufzubauen, der Spieler müsste dafür nochmal den button drücken 2.c Spiel wird abgebrochen während des beitritts 2.c.1 Die Verbindung wird nicht aufgenommen | Ungefähr %Teilnehmeranzahl% mal pro Spiel | UC1,UC2,UC3                    |
+#### UC1: Ändern der Spielerzahl
+- Akteur: Spieler/Nutzer
+- Ziel: Spieleranzahl eingestellt
+- Auslöser: Nutzer will defaultwert der Spieleranzahl nicht nutzen
+- Vorbedingung: Die Anwendung ist gestartet, der Spieler sieht den Startbildschirm
+- Nachbedingung: Spielerzahl ist geändert und Spieler können geladen werden / auf Spieler kann gewartet werden
+- Erfolgsszenario:
+    1. Das System zeigt den Startbildschirm an.
+       a. Das System sorgt dafür, dass das Eingabefeld sichtbar und klickbar ist.
+    2. Das System lädt den Default Wert aus der Config Datei
+    3. Das System prüft den Default Wert
+    3. Der Spieler klickt auf das Eingabefeld.
+    4. Der Spieler tippt die gewünschte Spielerzahl ein.
+    5. Das System prüft ob die Eingabe gültig ist. Gültig ist sie genau dann wenn, es eine ganze Zahl zwischen 2 und 6 ist.
+    6. Das System gibt eine Ausgabe, dass die Eingabe erfolgreich war.
+    7. Das System zeigt die eingebene Zahl im Eingabefeld an.
+    8. Das System speichert die Anzahl. 
+- Fehlerfälle:
+  - iii, v. Die Eingabe ist nicht gültig 
+    a. Das System zeigt eine Fehlermeldung an : "Die Eingabe muss eine ganze Zahl zwischen 2 und 6 sein".
+    b. Die Eingabe wird nicht angenommen. Die Spielerzahl bleibt unverändert.
+- Häufigkeit: immer
+- Zugrundeliegende Anforderungen: keine
+
+#### UC2: Starten eines Spiels
+- Akteur: Spieler/Nutzer
+- Ziel: Spieler kann Spiel starten
+- Auslöser: Spieler will ein Spiel starten
+- Vorbedingung: Die Anwendung ist gestartet, der Spieler sieht den Startbildschirm
+- Nachbedingung: Das Spiel ist gestartet, die Wartephase läuft
+- Erfolgsszenario:
+    1. Das System zeigt den Startbildschirm an.
+       a. Das System sorgt dafür, dass der "Start-Button" sichtbar und klickbar ist.
+    2. Der Spieler klickt auf den "Start-Button".
+    3. Das System wechselt zum Wartebildschirm
+- Fehlerfälle:
+  - ii. Der Spieler klickt nicht auf den "Start-Button"
+    a. Das System zeigt eine Fehlermeldung an : "Bitte klicken Sie auf den Start-Button".
+    b. Das System bleibt auf dem Startbildschirm.*
+- Häufigkeit: immer
+- Zugrundeliegende Anforderungen: keine
+
+#### UC3: Warten auf Spieler
+- Akteur: Spieler/Nutzer
+- Ziel: Alle Spieler sind geladen und bereit
+- Auslöser: Spieler hat das Spiel gestartet
+- Vorbedingung: Spiel ist gestartet und Spieler sieht den Ladebildschirm
+- Nachbedingung: Initialisieren des Spielfeldes wird gestartet
+- Erfolgsszenario:
+  1. Das Spielfeld wird initialisiert
+  2. Es werden %Sekunden% gewartet
+  3. Freie Plätze werden durch KI Spieler aufgefüllt
+- Fehlerfälle:
+  - 1.a Fehler beim Initialisieren des Spiel feldes 
+    - 1.a.1 Warten wird abgebrochen und der Spieler muss das Spiel neu laden
+  - 1.b Config falsch
+    - 1.b.1 Der Spieler wird aufgefordert passende Werte einzugeben
+  - 3.a Nicht alle KI Spieler können eingesetzt werden
+    - 3.a.1 Abbruch der Initialisierung
+- Häufigkeit: immer
+- Zugrundeliegende Anforderungen: UC1, UC2
+
+#### UC4: Beitreten eines Spiels
+- Akteur: Spieler/Nutzer
+- Ziel: Spieler ist einem Spiel beigetreten und kann auf den Beginn warten
+- Auslöser: Spieler will einem Spiel beitreten
+- Vorbedingung: Warten auf Spieler läuft, Spieleranzahl ist noch nicht voll
+- Nachbedingung: Spieler ist beigetreten und die Runde kann starten/es wird auf weitere fehlende Spieler gewartet.
+- Erfolgsszenario:
+  1. Spieler drückt auf button Spiel beitreten
+  2. Spieler wird verbunden, wenn noch genug Platz für ihn da ist
+  3. Sobald der Spieler drin ist, wird ein Warteplatz weggenommen
+- Fehlerfälle:
+  - 2.a Jemand anders ist schon beigetreten
+    - 2.a.1 Verbindung mit dem Spiel wird abgebrochen
+  - 2.b Man hat keine Verbindung zum Spiel aufbauen können
+    - 2.b.1 Verbindung wird nicht weiterhin versucht aufzubauen, der Spieler müsste dafür nochmal den button drücken
+  - 2.c Spiel wird abgebrochen während des beitritts
+    - 2.c.1 Die Verbindung wird nicht aufgenommen
+
+#### UC5: Steuern der Figuren
+- Akteur: Spieler/Nutzer
+- Ziel: Spieler können sich auf dem Spielfeld bewegen
+- Auslöser: Spieler will seine Spielfigur auf dem Spielfeld bewegen
+- Vorbedingung: Spielfeld wurde init, alle Spieler sind geladen, countdown ist abgelaufen
+- Nachbedingung: Die Figur hat sich in die gewünschte Richtung bewegt
+- Erfolgsszenario:
+  1. Spieler drückt eine der vordefinierten Tasten
+  2. Spielfigur bewegt sich in die gewünschte Richtung
+- Fehlerfälle:
+  - 1.a Spieler drückt eine Taste die nicht definiert ist
+    - 1.a.1 Die Figur bewegt sich wie zuvor
+- Häufigkeit: immer
+- Zugrundeliegende Anforderungen: UC2, UC3, UC4
+
+#### UC6: Beenden des Spiels
+- Akteur: Spieler/Nutzer
+- Ziel: Spieler gewinnt oder verliert das Spiel
+- Auslöser: Spieler will gewinnen
+- Vorbedingung: Nur noch max. ein Spieler ist übrig
+- Nachbedingung: Das Spiel ist beendet und der Endbildschirm wird angezeigt
+- Erfolgsszenario:
+  1. Spieler kollidiert (Mit einer Wand oder einem anderen Spieler oder einem Schatten)
+  2. Spieler wird aus dem Spiel entfernt
+  3. Es bleibt nur noch max. ein Spieler übrig
+  4. Der Endbildschirm wird angezeigt
+- Fehlerfälle:
+    - 1.a Es wird keine Kollision erkannt
+      - 1.a.1 Der Spieler wird nicht aus dem Spiel entfernt
+    - 2.a Der Spieler wird nicht aus dem Spiel entfernt
+      - 2.a.1 Der Spieler kann weiterhin spielen
+      - 2.a.2 Der Spieler kann weiterhin andere Spieler kollidieren lassen
+    - 3.a Es bleiben mehr als ein Spieler übrig
+      - 3.a.1 Das Spiel läuft weiter
+    - 4.a Der Endbildschirm wird nicht angezeigt
+      - 4.a.1 Das Spiel läuft weiter
+- Häufigkeit: immer
 
 ## Qualitätsziele {#_qualit_tsziele}
 
