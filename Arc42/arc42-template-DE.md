@@ -477,7 +477,7 @@ Blackbox-Templates:
      
  ![E2Controller](Assets/Tron-BausteinSicht Ebene 2 Controller.drawio.png "E2Controller")
    
-![](Assets/Tron-BausteinSicht Ebene 2 Modul.png)
+![](Assets/Tron-BausteinSicht Ebene 2 Model.png)
 
 
 Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 1 als
