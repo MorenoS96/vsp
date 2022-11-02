@@ -534,11 +534,11 @@ Blackbox-Templates:
 ![E2 Model](Assets/Tron-BausteinSicht Ebene 2 Model.png)
 ![E2 View](Assets/Ebene_2_View.png "E2 View")
 
-| Interface Name                                 | Method                                                                                                             
+| Interface Name                                 | Methods                                                                                                             
 |---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------
-| void setPlayerCount(int default, int playerCount) | Ändert die Anzahl an Spielern für die nächste Runde                                                             
-| void startGame()                                  | Startet das Spiel und leitet die Wartephase ein                                                                 
-| void startRound()                                 | Startet den Countdown...                                                                                        
+| IObserver                                         | Ändert die Anzahl an Spielern für die nächste Runde                                                             
+| IModifyHandler                                    | Startet das Spiel und leitet die Wartephase ein                                                                 
+| IGameLogic                                        | Startet den Countdown...                                                                                        
 
 Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 1 als
 Whitebox.
