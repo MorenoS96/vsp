@@ -385,7 +385,7 @@ Der Spieler interagiert mit dem Spiel über seine Maus und Tastatur und die GUI.
 
 Es werden Visualle Informationen ausgegeben.
 
-![](Assets/Fachlicher Kontext.png)
+![Fachlicher Kontext](Assets/Fachlicher Kontext.png)
 
 ## Technischer Kontext {#_technischer_kontext}
 
@@ -475,72 +475,10 @@ online-Dokumentation (auf Englisch!).
 
 ## Whitebox Gesamtsystem {#_whitebox_gesamtsystem}
 
-An dieser Stelle beschreiben Sie die Zerlegung des Gesamtsystems anhand
-des nachfolgenden Whitebox-Templates. Dieses enthält:
-
-- Ein Übersichtsdiagramm
-
-- die Begründung dieser Zerlegung
-
-- Blackbox-Beschreibungen der hier enthaltenen Bausteine. Dafür haben
-  Sie verschiedene Optionen:
-
-    - in *einer* Tabelle, gibt einen kurzen und pragmatischen
-      Überblick über die enthaltenen Bausteine sowie deren
-      Schnittstellen.
-
-    - als Liste von Blackbox-Beschreibungen der Bausteine, gemäß dem
-      Blackbox-Template (siehe unten). Diese Liste können Sie, je nach
-      Werkzeug, etwa in Form von Unterkapiteln (Text), Unter-Seiten
-      (Wiki) oder geschachtelten Elementen (Modellierungswerkzeug)
-      darstellen.
-
-- (optional:) wichtige Schnittstellen, die nicht bereits im
-  Blackbox-Template eines der Bausteine erläutert werden, aber für das
-  Verständnis der Whitebox von zentraler Bedeutung sind. Aufgrund der
-  vielfältigen Möglichkeiten oder Ausprägungen von Schnittstellen
-  geben wir hierzu kein weiteres Template vor. Im schlimmsten Fall
-  müssen Sie Syntax, Semantik, Protokolle, Fehlerverhalten,
-  Restriktionen, Versionen, Qualitätseigenschaften, notwendige
-  Kompatibilitäten und vieles mehr spezifizieren oder beschreiben. Im
-  besten Fall kommen Sie mit Beispielen oder einfachen Signaturen
-  zurecht.
-
+***\<Übersichtsdiagramm>***
   ![Ebene 1](Assets/Tron-BausteinSicht Ebene 1.drawio.png "E1")
 
   ![CustomDatatypes](Assets/Tron-CustomDatatypes.drawio.png "CD")
-
-***\<Übersichtsdiagramm>***
-
-Begründung
-
-:   *\<Erläuternder Text>*
-
-Enthaltene Bausteine
-
-:   *\<Beschreibung der enthaltenen Bausteine (Blackboxen)>*
-
-Wichtige Schnittstellen
-
-:   *\<Beschreibung wichtiger Schnittstellen>*
-
-Hier folgen jetzt Erläuterungen zu Blackboxen der Ebene 1.
-
-Falls Sie die tabellarische Beschreibung wählen, so werden Blackboxen
-darin nur mit Name und Verantwortung nach folgendem Muster beschrieben:
-
-+-----------------------+-----------------------------------------------+
-| **Name**              | **Verantwortung**                             |
-+=======================+===============================================+
-| *\<Blackbox 1>*       |*\<Text>*                                    |
-+-----------------------+-----------------------------------------------+
-| *\<Blackbox 2>*       |*\<Text>*                                    |
-+-----------------------+-----------------------------------------------+
-
-Falls Sie die ausführliche Liste von Blackbox-Beschreibungen wählen,
-beschreiben Sie jede wichtige Blackbox in einem eigenen
-Blackbox-Template. Dessen Überschrift ist jeweils der Namen dieser
-Blackbox.
 
 ### \<Name Blackbox 1> {#__name_blackbox_1}
 
@@ -593,8 +531,14 @@ Blackbox-Templates:
 
 ![E2Controller](Assets/Tron-BausteinSicht Ebene 2 Controller.drawio.png "E2Controller")
 
-![](Assets/Tron-BausteinSicht Ebene 2 Model.png)
+![E2 Model](Assets/Tron-BausteinSicht Ebene 2 Model.png)
 ![E2 View](Assets/Ebene_2_View.png "E2 View")
+
+| Interface Name                                 | Methods                                                                                                             
+|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------
+| IObserver                                         | Ändert die Anzahl an Spielern für die nächste Runde                                                             
+| IModifyHandler                                    | Startet das Spiel und leitet die Wartephase ein                                                                 
+| IGameLogic                                        | Startet den Countdown...                                                                                        
 
 Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 1 als
 Whitebox.
