@@ -1,4 +1,4 @@
-package controller.interfaces;
+package java.controller.interfaces;
 
 public interface IConfig {
 }

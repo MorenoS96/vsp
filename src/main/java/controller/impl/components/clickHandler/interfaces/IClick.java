@@ -1,4 +1,4 @@
-package controller.impl.components.clickHandler.interfaces;
+package java.controller.impl.components.clickHandler.interfaces;
 
 public interface IClick {
 }

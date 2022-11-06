@@ -1,4 +1,4 @@
-package controller.impl.components.tastaturHandler.interfaces;
+package java.controller.impl.components.tastaturHandler.interfaces;
 
 public interface IGetInput {
 }
