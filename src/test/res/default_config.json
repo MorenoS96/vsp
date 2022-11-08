@@ -1,0 +1,21 @@
+{
+  "defaultPlayerCount": 2,
+  "maxWaitTimeMs": 100,
+  "sizeOfRasterPointInPx": 10,
+  "horizontalRasterPoints": 10,
+  "verticalRasterPoints": 10,
+  "velocityOfPlayers": 1,
+  "player1MoveRight": "e",
+  "player1MoveLeft": "q",
+  "player2MoveRight": "z",
+  "player2MoveLeft": "t",
+  "player3MoveRight": "i",
+  "player3MoveLeft": "u",
+  "player4MoveRight": "p",
+  "player4MoveLeft": "o",
+  "player5MoveRight": "ä",
+  "player5MoveLeft": "ö",
+  "player6MoveRight": "m",
+  "player6MoveLeft": "n",
+  "finalCountdown": 3
+}
