@@ -1,4 +1,4 @@
-package tron.controller.basicController.components.configHandler.interfaces;
+package tron.controller.impl.basicController.components.configHandler.interfaces;
 
 public interface IGetConfig {
 

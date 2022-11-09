@@ -1,6 +1,6 @@
 package tron.controller.factory;
 
-import tron.controller.basicController.composite.basicController;
+import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IController;
 
 public class ControllerFactory {
@@ -9,7 +9,7 @@ public class ControllerFactory {
 
     public IController getInstance(){
         if(controller==null){
-            controller=new basicController();
+            controller=new BasicController();
         }
         return controller;
     }

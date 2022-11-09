@@ -1,5 +1,5 @@
-package tron.controller.basicController.components.configHandler.impl;
-import tron.controller.basicController.components.configHandler.interfaces.IGetConfig;
+package tron.controller.impl.basicController.components.configHandler.impl;
+import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class configHandler implements  IGetConfig {
+public class ConfigHandler implements  IGetConfig {
     static String defaultPath="src/res/config.json";
     private Map<String,String> classConfigMap;
     private static String filePath=null;
