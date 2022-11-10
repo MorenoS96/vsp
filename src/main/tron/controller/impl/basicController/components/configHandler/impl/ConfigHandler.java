@@ -1,19 +1,20 @@
 package tron.controller.impl.basicController.components.configHandler.impl;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-public class ConfigHandler implements  IGetConfig {
+public class ConfigHandler implements IGetConfig{
     static String defaultPath="src/res/config.json";
     private Map<String,String> classConfigMap;
     private static String filePath=null;
-    private Map<String, String> loadConfigMap(String absolutePathToConfigFile) throws IOException, ParseException {
+    private Map<String, String> loadConfigMap(String absolutePathToConfigFile) throws IOException, ParseException, org.json.simple.parser.ParseException {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader(absolutePathToConfigFile)); //the location of the file
         JSONObject jsonObject = (JSONObject) obj;
