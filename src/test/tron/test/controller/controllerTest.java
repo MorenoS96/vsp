@@ -1,7 +1,7 @@
 package tron.test.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import tron.controller.interfaces.IController;
 import tron.controller.factory.ControllerFactory;
