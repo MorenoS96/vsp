@@ -2,7 +2,7 @@ package tron.controller.impl.basicController.components.configHandler.impl;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
+import tron.controller.impl.basicController.components.configHandler.interfaces.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -53,5 +53,17 @@ public class ConfigHandler implements IGetConfig{
     @Override
     public void setConfigPath(String configPath) {
         filePath=configPath;
+    }
+
+    @Override
+    public Map<String, String> getConfigMap() {
+        if(classConfigMap==null){
+            try {
+                classConfigMap=loadConfigMap(defaultPath);
+            } catch (Exception e) {
+                return new HashMap<>();
+            }
+        }
+        return new HashMap<>(classConfigMap);
     }
 }
