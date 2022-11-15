@@ -8,7 +8,8 @@ import tron.controller.impl.basicController.components.factory.interfaces.IFacto
 import tron.controller.impl.basicController.components.tastaturHandler.impl.*;
 import tron.controller.impl.basicController.components.tastaturHandler.interfaces.*;
 import tron.controller.interfaces.*;
-
+import tron.controller.util.OsUtil;
+import com.github.kwhat.jnativehook.GlobalScreen;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
@@ -28,9 +29,14 @@ public class BasicController implements IController {
         /*
         Achtung funktioniert nur auf windows!
          */
+        if(OsUtil.getOS().equals( OsUtil.OS.WINDOWS)){
+            GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
+            keyboardHook.addKeyListener(tastaturHandler);
 
-        GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
-        keyboardHook.addKeyListener(tastaturHandler);
+        }else {
+            GlobalScreen.addNativeKeyListener(tastaturHandler);
+        }
+
 
     }
     @Override

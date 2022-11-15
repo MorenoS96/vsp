@@ -1,5 +1,7 @@
 package tron.controller.impl.basicController.components.tastaturHandler.impl;
 
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import lc.kra.system.keyboard.event.GlobalKeyEvent;
 import lc.kra.system.keyboard.event.GlobalKeyListener;
 import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Date;
 import tron.controller.util.ConfigHelper;
-public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,KeyListener {
+public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,KeyListener, NativeKeyListener {
     private HashSet<Character> mappedKeys;
     private HashMap<Character,Long> pressedKeys;
     private char lastInput;
@@ -105,6 +107,21 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
 
     @Override
     public void keyReleased(GlobalKeyEvent globalKeyEvent) {
+
+    }
+
+    @Override
+    public void nativeKeyTyped(NativeKeyEvent nativeEvent) {
+        handleKeyBoardChar( nativeEvent.getKeyChar());
+    }
+
+    @Override
+    public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
+        handleKeyBoardChar( nativeEvent.getKeyChar());
+    }
+
+    @Override
+    public void nativeKeyReleased(NativeKeyEvent nativeEvent) {
 
     }
 }
