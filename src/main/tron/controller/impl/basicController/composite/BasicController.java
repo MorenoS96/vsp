@@ -1,5 +1,6 @@
 package tron.controller.impl.basicController.composite;
 
+import lc.kra.system.keyboard.GlobalKeyboardHook;
 import tron.controller.impl.basicController.components.configHandler.impl.ConfigHandler;
 import tron.controller.impl.basicController.components.configHandler.interfaces.*;
 import tron.controller.impl.basicController.components.factory.impl.TastaturHandlerFactory;
@@ -24,6 +25,13 @@ public class BasicController implements IController {
         this.iGetInput = tastaturHandlerIFactory.getInstance();
         iGameKey=tastaturHandlerIFactory.getInstance();
         tastaturHandler= tastaturHandlerIFactory.getInstance();
+        /*
+        Achtung funktioniert nur auf windows!
+         */
+
+        GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
+        keyboardHook.addKeyListener(tastaturHandler);
+
     }
     @Override
     public String getConfigVal(String ConfigName) {
