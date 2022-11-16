@@ -10,13 +10,15 @@ import java.awt.event.KeyEvent;
 
 import tron.controller.interfaces.IController;
 import tron.controller.factory.ControllerFactory;
+import tron.registrator.impl.Registrator;
 
 import javax.swing.*;
 
 public class controllerTest {
     @Test
   public void testIConfig(){
-        ControllerFactory controllerFactory=new ControllerFactory();
+        Registrator registrator=new Registrator();
+        ControllerFactory controllerFactory=new ControllerFactory(registrator);
       IController controller= controllerFactory.getInstance();
       String testConfigPath= "src/test/res/default_config.json";
       controller.setConfigPath(testConfigPath);
@@ -30,13 +32,14 @@ public class controllerTest {
 
 
        /*
-        Achtung funktioniert nur auf windows!
+        Achtung nur auf windows getestet
         Achtung der test schreibt, der cursor sollte also in der console sein oder in einem Kommentar
          */
 
     @Test
     public void testIControllerModel(){
-        ControllerFactory controllerFactory=new ControllerFactory();
+        Registrator registrator=new Registrator();
+        ControllerFactory controllerFactory=new ControllerFactory(registrator);
         IController controller= controllerFactory.getInstance();
         String testConfigPath= "src/test/res/default_config.json";
         controller.setConfigPath(testConfigPath);
@@ -61,7 +64,11 @@ public class controllerTest {
 
     @Test
     public void testIControllerView(){
-
+        Registrator registrator=new Registrator();
+        ControllerFactory controllerFactory=new ControllerFactory(registrator);
+        IController iController=controllerFactory.getInstance();
+        iController.pushInput("changePlayerCount","3");
+        assertEquals(3,iController.getPlayerCount());
     }
     @Test
     public void testITastatur(){

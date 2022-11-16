@@ -21,15 +21,12 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
     private char lastInput;
     private String[] moveConfigNames;
     private IGetConfig iGetConfig;
-    TextArea area;
     public TastaturHandler(IGetConfig iGetConfig) {
         mappedKeys  = new HashSet<>();
         pressedKeys=new HashMap<>();
         moveConfigNames= ConfigHelper.getMoveConfigNames();
         this.iGetConfig=iGetConfig;
         reMapKeys();
-
-
     }
     @Override
     public void reMapKeys(){
