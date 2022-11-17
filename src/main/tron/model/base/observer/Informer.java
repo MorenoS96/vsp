@@ -13,5 +13,4 @@ public class Informer implements Observer {
     public void update() { // Kommt noch
         System.out.println("Wurde informiert");
     }
-// test
 }
