@@ -4,9 +4,18 @@ import java.util.List;
 
 public class Player {
     int id;
-    String color,currentDirection;
+    String color;
+
+    char currentDirection = 'U';
     BoardCell currentCell;
     List<BoardCell> paintedCells;
+
+    public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells) {
+        this.id = id;
+        this.color = color;
+        this.currentCell = currentCell;
+        this.paintedCells = paintedCells;
+    }
 
     public int getId() {
         return id;

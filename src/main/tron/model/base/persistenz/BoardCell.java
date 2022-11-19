@@ -1,23 +1,24 @@
 package tron.model.base.persistenz;
 
 public class BoardCell {
-    int id;
+    int x,y;
     String color;
 
-    public BoardCell(int id, String color) {
-        this.id = id;
+    public BoardCell(int x, int y, String color) {
+        this.x = x;
+        this.y = y;
         this.color = color;
     }
 
-    public void paintCell(String color) { //TODO
-
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public int getId() {
-        return id;
+    public int getX() {
+        return x;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getY() {
+        return y;
     }
 }

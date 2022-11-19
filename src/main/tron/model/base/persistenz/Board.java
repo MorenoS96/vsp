@@ -13,8 +13,7 @@ public class Board {
     }
 
     public Board initBoard(int height, int width, List<BoardCell> cells) { //TODO
-        Board board = new Board(height,width,cells);
-        return board;
+        return new Board(height,width,cells);
     }
 
 }
