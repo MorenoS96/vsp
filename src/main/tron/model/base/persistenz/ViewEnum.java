@@ -10,6 +10,6 @@ enum ViewEnum {
         this.name = name;
     }
 
-    public String id() {return name;}
+    public String getName() {return name;}
 
 }

@@ -5,6 +5,7 @@ import tron.controller.interfaces.IController;
 import tron.controller.interfaces.IControllerModel;
 import tron.model.base.persistenz.Board;
 import tron.model.base.persistenz.BoardCell;
+import tron.model.base.persistenz.Coordinate;
 import tron.model.base.persistenz.Player;
 
 import java.util.ArrayList;
@@ -19,23 +20,49 @@ public class GameLogic {
 
     List<Player> players;
 
-    static BasicController basicController;
+    IControllerModel iControllerModel;
+    static Map<String,String>  config;
 
-    static Map<String,String>  config = basicController.getConfig();
 
-
-    public GameLogic() {
-        playerCount = basicController.getPlayerCount(); // Wieso NullpointerExc
-        players = initPlayers(playerCount);
+    public GameLogic(IControllerModel iControllerModel) {
+        this.iControllerModel = iControllerModel;
+        config = iControllerModel.getConfig();
+        playerCount = iControllerModel.getPlayerCount();
+        players = initPlayers(playerCount); //playerCount ok in Controller oder Model?
 
     }
 
     public List<Player> initPlayers(int playerCount) {
         List<Player> players = new ArrayList<>();
+        int horizontalRasterPoints = Integer.parseInt(config.get("horizontalRasterPoints"));
+        Coordinate[] startingPositions = getPlayerStartingPositions(horizontalRasterPoints);
 
         for (int i = 0; i < playerCount; i++) {
-            List<BoardCell> list = new ArrayList<>();
-            Player player = new Player(i, getPlayerColor(i), getPlayerPosition(i), list);
+            // id der Zelle soll == position der Array entsprechen
+            String playerColor = getPlayerColor(i);
+            int yCoord = Integer.parseInt(config.get("verticalRasterPoints"));
+            int boardCellId = (yCoord-1) * horizontalRasterPoints + startingPositions[i].getX()+1;
+            BoardCell staringPosition = new BoardCell(startingPositions[i].getX(),startingPositions[i].getY(),boardCellId,playerColor);
+            List<BoardCell> paintedCells = new ArrayList<>();
+
+            //
+            String moveUpKey = "player" + i+1 + "MoveUp";
+            String moveUpString = config.get(moveUpKey);
+            char moveUp = moveUpString.charAt(0);
+
+            String moveDownKey = "player" + i+1 + "MoveDown";
+            String moveDownString = config.get(moveDownKey);
+            char moveDown = moveDownString.charAt(0);
+
+            String moveLeftKey = "player" + i+1 + "MoveLeft";
+            String moveLeftString = config.get(moveLeftKey);
+            char moveLeft = moveLeftString.charAt(0);
+
+            String moveRightKey = "player" + i+1 + "MoveRight";
+            String moveRightString = config.get(moveRightKey);
+            char moveRight = moveRightString.charAt(0);
+
+            Player player = new Player(i, playerColor,staringPosition , paintedCells,moveUp,moveDown,moveLeft,moveRight);
             players.add(player);
         }
         return players;
@@ -62,11 +89,23 @@ public class GameLogic {
     }
 
     // Evtl später noch check, ob Spielfeld groß genug ist für die Anzahl an Spielern, nur nötig, wenn runtergestellt.
-    public static BoardCell getPlayerPosition(int id) {
-        String color = getPlayerColor(id);
-        int FieldX = Integer.parseInt(config.get("horizontalRasterPoints"));
-        int xPos = FieldX/playerCount;
-        return new BoardCell(xPos,0,color);
+
+    /**
+     * Die Berechnung soll so funktionieren, dass wir die Spieleranzahl+2 durch die Boardlänge (x Anzahl) teilen,
+     * und dann die mittleren Positionen als Startkoordianten für die Spieler nutzen.
+     * @param horizontalRasterPoints Wie viele x Positionen das Board hat
+     * @return Alle Koordinaten wo Spieler starten können
+     */
+    public static Coordinate[] getPlayerStartingPositions(int horizontalRasterPoints) {
+        Coordinate[] coordinates = new Coordinate[playerCount];
+        int yCoord = Integer.parseInt(config.get("verticalRasterPoints"));
+        int posibleXCoord = horizontalRasterPoints/(playerCount+2);
+
+        for(int i=2;i<playerCount+2;i++) {
+            int x = i * posibleXCoord;
+            coordinates[i] = new Coordinate(x-1,yCoord-1); //Wenn unsere Cells mit 1 anfangen das -1 weg
+        }
+        return coordinates;
     }
 
     public static boolean checkCollision(int id, Board currentBoard) {
@@ -77,5 +116,9 @@ public class GameLogic {
         return false;
     }
 
-    // Methode zur Ermittlung der Startposition
+    public void moveEveryPlayer(char[] allInputs,Board board) {
+        for(int i=0;i<playerCount;i++) {
+            players.get(i).move(allInputs[i], board);
+        }
+    }
 }
