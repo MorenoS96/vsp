@@ -1,7 +1,5 @@
 package tron.model.base.persistenz;
 
-import java.util.List;
-
 public class Board {
     int height,width;
     BoardCell[] cells;

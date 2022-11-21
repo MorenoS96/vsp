@@ -1,10 +1,12 @@
 package tron.model.base.persistenz;
 
-import tron.model.base.gamelogic.GameLogic;
+import tron.model.base.gamelogic.impl.GameLogic;
+import tron.model.base.inputhandler.interfaces.IInputHandler;
 
 import java.util.List;
 
-public class Player {
+public class Player implements IInputHandler {
+
     int id;
     String color;
     char currentDirection;
@@ -28,38 +30,75 @@ public class Player {
      * Setzt die current Position vom Spieler entsprechend der Richtung auf eine andere Zelle,
      * wenn eine Eingabe gemacht wird dann einfach über die if Kaskade sonst ist der char ' '
      * und es wird die Richtung genommen, die das letzte mal ausgewählt wurde oder der Standart Up.
+     *
      * @param direction
      * @param board
      */
-    public void move(char direction,Board board) { //TODO
+    public void move(char direction, Board board) {
         paintedCells.add(currentCell); // Alte Position als gefärbt markieren
         BoardCell previousCell = currentCell;
-        if (direction==moveUp) {
+        int idPreviousCell = previousCell.getId();
+
+        // Checkt ob Spieler eine 180 Grad Drehung machen würde, wenn ja, wird die Richtung einfach beibehalten
+        if(moveCorrect(direction)) {
+            direction = currentDirection;
+        }
+
+        if (direction == moveUp) {
             currentDirection = moveUp;
-            // vermutlich checks hierhin
-            // ob in die Richtung bewegen darf, ob gegen gefärbe zelle fährt, ob aus dem Board fährt
-            int idPreviousCell = previousCell.getId();
-            currentCell = board.getCellById(idPreviousCell + 10); // + WIDTH
-        } else if (direction==moveDown) {
+            int newCellId = idPreviousCell + WIDTH;
+            if (GameLogic.checkBorder(currentCell.getId(), "moveUp") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+                playerDies();
+            }
+            currentCell = board.getCellById(idPreviousCell + WIDTH);
+        } else if (direction == moveDown) {
             currentDirection = moveDown;
-            int idPreviousCell = previousCell.getId();
-            currentCell = board.getCellById(idPreviousCell - 10); // + WIDTH
-        } else if (direction==moveRight) {
+            int newCellId = idPreviousCell - WIDTH;
+            if (GameLogic.checkBorder(currentCell.getId(), "moveDown") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+                playerDies();
+            }
+            currentCell = board.getCellById(idPreviousCell - WIDTH);
+        } else if (direction == moveRight) {
             currentDirection = moveRight;
-            int idPreviousCell = previousCell.getId();
+            int newCellId = idPreviousCell + 1;
+            if (GameLogic.checkBorder(currentCell.getId(), "moveRight") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+                playerDies();
+            }
             currentCell = board.getCellById(idPreviousCell + 1);
         } else if (direction == moveLeft) {
             currentDirection = moveLeft;
-            int idPreviousCell = previousCell.getId();
+            int newCellId = idPreviousCell - 1;
+            if (GameLogic.checkBorder(currentCell.getId(), "moveLeft") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+                playerDies();
+            }
             currentCell = board.getCellById(idPreviousCell - 1);
-        } else if(direction == ' '){
-            move(currentDirection,board);
+        } else if (direction == ' ') {
+            move(currentDirection, board);
         } else {
             // Do nothing
             System.out.println("Eingabe nicht gemapt");
         }
 
+    }
 
+    public void playerDies() { // Muss keinen Spieler übergeben wegen this ?
+
+    }
+
+    /**
+     * Checkt, ob man eine 180 Grad Drehung machen möchte
+     *
+     * @return true wenn man sich Illegal bewegen möchte sonst false
+     */
+    public  boolean moveCorrect(Character InputDirection) {
+        if (InputDirection == moveUp && currentDirection == moveDown ||
+            InputDirection == moveDown && currentDirection == moveUp ||
+            InputDirection == moveRight && currentDirection == moveLeft ||
+            InputDirection == moveLeft && currentDirection == moveRight
+        ) {
+            return true;
+        }
+        return false;
     }
 
 
