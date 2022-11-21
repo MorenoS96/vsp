@@ -23,6 +23,9 @@ public class GameLogic {
     IControllerModel iControllerModel;
     static Map<String,String>  config;
 
+    public final int HEIGHT =  Integer.parseInt(config.get("horizontalRasterPoints"));
+    public final int WIDTH =  Integer.parseInt(config.get("verticalRasterPoints"));
+
 
     public GameLogic(IControllerModel iControllerModel) {
         this.iControllerModel = iControllerModel;

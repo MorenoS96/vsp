@@ -5,6 +5,11 @@ public class BoardCell {
     String color;
     // id der Zelle soll == position der Array entsprechen
 
+    public BoardCell(int x, int y,int id) {
+        this.x = x;
+        this.y = y;
+        this.id = id;
+    }
     public BoardCell(int x, int y,int id, String color) {
         this.x = x;
         this.y = y;
