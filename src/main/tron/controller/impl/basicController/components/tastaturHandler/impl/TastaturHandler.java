@@ -11,9 +11,9 @@ import tron.controller.impl.basicController.components.tastaturHandler.interface
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Date;
+import java.util.*;
+import java.util.List;
+
 import tron.controller.util.ConfigHelper;
 public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,KeyListener, NativeKeyListener {
     private HashSet<Character> mappedKeys;
@@ -46,30 +46,34 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
     @Override
     public char[] getInputsForCurrentCycle() {
         char[] arrayToReturn=new char[6];
-        for(int i=0;i< moveConfigNames.length;i+=2){
+        int moveDirections=4;
+        for(int i=0;i< moveConfigNames.length;i+=moveDirections){
             char moveRight=iGetConfig.getConfigVal(moveConfigNames[i]).strip().toLowerCase().charAt(0);
             char moveLeft=iGetConfig.getConfigVal(moveConfigNames[i+1]).strip().toLowerCase().charAt(0);
-
-            Long timeMoveRight=pressedKeys.get(moveRight);
-            Long timeMoveLeft=pressedKeys.get(moveLeft);
-
-            if(timeMoveLeft==null){
-                if(timeMoveRight==null){//keine haben wert
-                    arrayToReturn[i/2]=' ';
-                }else{//nur rechts hat wert
-                    arrayToReturn[i/2]=moveRight;
-                }
-            }else{
-                if(timeMoveRight==null){ //nur links hat wert
-                    arrayToReturn[i/2]=moveLeft;
-                }else{ //beide haben wert, nehm den neuesten
-                    if(timeMoveRight>timeMoveLeft){
-                        arrayToReturn[i/2]=moveRight;
-                    }else {
-                        arrayToReturn[i/2]=moveLeft;
+            char moveUp=iGetConfig.getConfigVal(moveConfigNames[i+2]).strip().toLowerCase().charAt(0);
+            char moveDown=iGetConfig.getConfigVal(moveConfigNames[i+3]).strip().toLowerCase().charAt(0);
+            char[] moves=new char[]{moveRight,moveLeft,moveUp,moveDown};
+            Long maxTime=0l;
+            int maxTimeIndex=-1;
+            for(int a=0;a<moves.length;a++){
+                Long pressedKeyTime=pressedKeys.get(moves[a]);
+                if(pressedKeyTime!=null){
+                    if(pressedKeyTime>maxTime){
+                        maxTime=pressedKeyTime;
+                        maxTimeIndex=a;
                     }
                 }
+
             }
+            if(maxTimeIndex>=0){
+                arrayToReturn[i/moveDirections]=moves[maxTimeIndex];
+            }else{
+                arrayToReturn[i/moveDirections]=' ';
+            }
+
+
+
+
 
         }
         pressedKeys.clear();
