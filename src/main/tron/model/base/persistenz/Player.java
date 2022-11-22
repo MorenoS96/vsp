@@ -1,6 +1,5 @@
 package tron.model.base.persistenz;
 
-import tron.model.base.gamelogic.impl.GameLogic;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 
 import java.util.List;
@@ -102,6 +101,7 @@ public class Player implements IInputHandler {
             currentCell = board.getCellById(idPreviousCell - 1);
         } else if (direction == ' ') {
             move(currentDirection, board);
+            //TODO checks
         } else {
             // Do nothing
             System.out.println("Eingabe nicht gemapt");
@@ -145,6 +145,7 @@ public class Player implements IInputHandler {
         return !nextBoardCell.getColor().isEmpty();
     }
 
+    //TODO alle bwewegungen danachen töten
     /**
      * Wenn der nächste Block über das Raster hinausgeht, wird true ausgegeben sonst false.
      * Diesen check zuerst ausführen damit die anderen keine Zellen abfragen die nicht existieren dürfen.

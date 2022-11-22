@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface IInputHandler {
 
-    Map<String,String> config = new BasicController(new Registrator()).getConfig();
+    Map<String,String> config = new BasicController(new Registrator()).getConfig(); //TODO
 
     int WIDTH =  Integer.parseInt(config.get("horizontalRasterPoints"));
     int HEIGHT =  Integer.parseInt(config.get("verticalRasterPoints"));
