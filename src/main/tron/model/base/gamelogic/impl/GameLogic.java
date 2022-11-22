@@ -1,59 +1,77 @@
 package tron.model.base.gamelogic.impl;
 
+import tron.controller.impl.basicController.composite.BasicController;
+import tron.controller.interfaces.IControllerModel;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.Board;
 import tron.model.base.persistenz.BoardCell;
 import tron.model.base.persistenz.Coordinate;
 import tron.model.base.persistenz.Player;
+import tron.view.interfaces.IViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Wird noch IGameLogic implementieren
-public class GameLogic implements IInputHandler {
+public class GameLogic implements IInputHandler, Runnable {
 
     boolean onePlayerRemaining = false;
 
     List<Player> players;
 
-    public GameLogic() {
-        players = initPlayers(PLAYER_COUNT); //playerCount ok in Controller oder Model?
+    public Thread gameThread;
+
+    public Board board;
+
+    IControllerModel iControllerModel;
+
+    IViewModel iViewModel;
+
+    public GameLogic(IControllerModel iControllerModel,IViewModel iViewModel) {
+        players = initPlayers(); //playerCount ok in Controller oder Model?
+        this.board = new Board(HEIGHT, WIDTH);
+        this.iControllerModel = iControllerModel;
+        this.iViewModel = iViewModel;
+        gameThread = new Thread(this);
+        gameThread.start();
 
     }
 
-    public List<Player> initPlayers(int playerCount) {
+    @Override
+    public void run() {
+        // Soll eine Runde simulieren
+        long lastRound = System.nanoTime();
+        double nsTicks = 1000000000/60.0;
+        double delta = 0;
+        while (true)  { // Später noch ersetzten
+            long now = System.nanoTime();
+            long timePassed = now - lastRound;
+            delta += timePassed/nsTicks;
+            lastRound = now;
+            if(delta >= 1) {
+                moveEveryPlayer(iControllerModel.getInputForCurrentCycle(),board);
+                iViewModel.displayBoard(board,players);
+            }
+        }
+    }
+
+    public List<Player> initPlayers() {
         List<Player> players = new ArrayList<>();
         Coordinate[] startingPositions = getPlayerStartingPositions(WIDTH);
 
-        for (int i = 0; i < playerCount; i++) {
+        for (int i = 0; i < PLAYER_COUNT; i++) {
             // id der Zelle soll == position der Array entsprechen
             String playerColor = getPlayerColor(i);
             int boardCellId = (HEIGHT - 1) * WIDTH + startingPositions[i].getX() + 1;
             BoardCell staringPosition = new BoardCell(startingPositions[i].getX(), startingPositions[i].getY(), boardCellId, playerColor);
             List<BoardCell> paintedCells = new ArrayList<>();
 
-            //
-            String moveUpKey = "player" + i + 1 + "MoveUp";
-            String moveUpString = config.get(moveUpKey);
-            char moveUp = moveUpString.charAt(0);
-
-            String moveDownKey = "player" + i + 1 + "MoveDown";
-            String moveDownString = config.get(moveDownKey);
-            char moveDown = moveDownString.charAt(0);
-
-            String moveLeftKey = "player" + i + 1 + "MoveLeft";
-            String moveLeftString = config.get(moveLeftKey);
-            char moveLeft = moveLeftString.charAt(0);
-
-            String moveRightKey = "player" + i + 1 + "MoveRight";
-            String moveRightString = config.get(moveRightKey);
-            char moveRight = moveRightString.charAt(0);
-
-            Player player = new Player(i, playerColor, staringPosition, paintedCells, moveUp, moveDown, moveLeft, moveRight);
+            Player player = new Player(i, playerColor, staringPosition, paintedCells);
             players.add(player);
         }
         return players;
     }
+
 
     public static String getPlayerColor(int id) {
         switch (id) {
@@ -97,6 +115,7 @@ public class GameLogic implements IInputHandler {
 
     /**
      * Ist "" wenn nicht gefärbt sonst sollte da eine Farbe drin stehen
+     *
      * @param nextBoardCell Nächsten Zelle
      * @return true, wenn nächste Zelle schon gefärbt ist, false, wenn nicht
      */
@@ -107,11 +126,12 @@ public class GameLogic implements IInputHandler {
     /**
      * Wenn der nächste Block über das Raster hinausgeht, wird true ausgegeben sonst false.
      * Diesen check zuerst ausführen damit die anderen keine Zellen abfragen die nicht existieren dürfen.
-     * @param cellId von welcher Zelle aus gecheckt werden soll
+     *
+     * @param cellId    von welcher Zelle aus gecheckt werden soll
      * @param direction in welche Richtung man sich bewegt
      * @return true oder false
      */
-    public static boolean checkBorder(int cellId,String direction) {
+    public static boolean checkBorder(int cellId, String direction) {
         int nextCellId;
         boolean nextCellIsBorder = false;
         switch (direction) {
@@ -135,7 +155,9 @@ public class GameLogic implements IInputHandler {
 
     public void moveEveryPlayer(char[] allInputs, Board board) {
         for (int i = 0; i < PLAYER_COUNT; i++) {
-            players.get(i).move(allInputs[i], board);
+            if (players.get(i).isAlive()) {
+                players.get(i).move(allInputs[i], board);
+            }
         }
     }
 }

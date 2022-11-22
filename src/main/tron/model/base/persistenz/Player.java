@@ -12,9 +12,32 @@ public class Player implements IInputHandler {
     char currentDirection;
     BoardCell currentCell;
     private List<BoardCell> paintedCells;
-    final char moveUp, moveDown, moveLeft, moveRight;
+    char moveUp, moveDown, moveLeft, moveRight;
 
-    public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells, char moveUp, char moveDown, char moveLeft, char moveRight) {
+    boolean isAlive = false;
+
+
+    public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells) {
+
+        String moveUpKey = "player" + id + 1 + "MoveUp";
+        String moveUpString = config.get(moveUpKey);
+        char moveUp = moveUpString.charAt(0);
+
+        String moveDownKey = "player" + id + 1 + "MoveDown";
+        String moveDownString = config.get(moveDownKey);
+        char moveDown = moveDownString.charAt(0);
+
+        String moveLeftKey = "player" + id + 1 + "MoveLeft";
+        String moveLeftString = config.get(moveLeftKey);
+        char moveLeft = moveLeftString.charAt(0);
+
+        String moveRightKey = "player" + id + 1 + "MoveRight";
+        String moveRightString = config.get(moveRightKey);
+        char moveRight = moveRightString.charAt(0);
+        new Player(id,color,currentCell,paintedCells,moveUp,moveDown,moveLeft,moveRight,true);
+    }
+
+    public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells, char moveUp, char moveDown, char moveLeft, char moveRight,boolean isAlive) {
         this.id = id;
         this.color = color;
         this.currentCell = currentCell;
@@ -24,6 +47,7 @@ public class Player implements IInputHandler {
         this.moveDown = moveDown;
         this.moveLeft = moveLeft;
         this.moveRight = moveRight;
+        this.isAlive = isAlive;
     }
 
     /**
@@ -83,6 +107,12 @@ public class Player implements IInputHandler {
 
     public void playerDies() { // Muss keinen Spieler übergeben wegen this ?
 
+        isAlive = false;
+        // Zellen werden alle wieder entfärbt
+        for(BoardCell boardCell: this.paintedCells) {
+            boardCell.setColor(" ");
+        }
+
     }
 
     /**
@@ -124,5 +154,9 @@ public class Player implements IInputHandler {
 
     public void setCurrentCell(BoardCell currentCell) {
         this.currentCell = currentCell;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 }

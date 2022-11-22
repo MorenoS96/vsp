@@ -2,7 +2,11 @@ package tron.model.base.gamelogic.interfaces;
 
 public interface IGameLogic {
 
-    boolean getAction();
+    void initPLayer();
+
+    void initBoard();
+
+
 
     boolean modify();
 
