@@ -1,5 +1,6 @@
 package tron.registrator.util;
 
+import tron.controller.interfaces.IConfig;
 import tron.controller.interfaces.IControllerModel;
 import tron.controller.interfaces.IControllerView;
 import tron.model.interfaces.IModelController;
@@ -16,6 +17,8 @@ public class InterFaceTypeToInterfaceHelper {
         interfaceTypeClassHashMap.put(InterfaceType.IControllerView, IControllerView.class);
         interfaceTypeClassHashMap.put(InterfaceType.IModelController, IModelController.class);
         interfaceTypeClassHashMap.put(InterfaceType.IViewModel, IViewModel.class);
+        interfaceTypeClassHashMap.put(InterfaceType.IConfig, IConfig.class);
+
     }
 
 
