@@ -1,6 +1,5 @@
 package tron.model.base.gamelogic.impl;
 
-import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.Board;
@@ -12,10 +11,11 @@ import tron.view.interfaces.IViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+
 // Wird noch IGameLogic implementieren
 public class GameLogic implements IInputHandler, Runnable {
 
-    boolean onePlayerRemaining = false;
+    boolean onePlayerRemaining = false; // Kommt noch was zu
 
     List<Player> players;
 
@@ -30,11 +30,12 @@ public class GameLogic implements IInputHandler, Runnable {
     public GameLogic(IControllerModel iControllerModel,IViewModel iViewModel) {
         players = initPlayers(); //playerCount ok in Controller oder Model?
         this.board = new Board(HEIGHT, WIDTH);
+
         this.iControllerModel = iControllerModel;
         this.iViewModel = iViewModel;
+
         gameThread = new Thread(this);
         gameThread.start();
-
     }
 
     @Override
@@ -57,16 +58,16 @@ public class GameLogic implements IInputHandler, Runnable {
 
     public List<Player> initPlayers() {
         List<Player> players = new ArrayList<>();
-        Coordinate[] startingPositions = getPlayerStartingPositions(WIDTH);
+        int[] startPositionIds = getPlayerStartingPositions();
 
         for (int i = 0; i < PLAYER_COUNT; i++) {
             // id der Zelle soll == position der Array entsprechen
             String playerColor = getPlayerColor(i);
-            int boardCellId = (HEIGHT - 1) * WIDTH + startingPositions[i].getX() + 1;
-            BoardCell staringPosition = new BoardCell(startingPositions[i].getX(), startingPositions[i].getY(), boardCellId, playerColor);
-            List<BoardCell> paintedCells = new ArrayList<>();
 
-            Player player = new Player(i, playerColor, staringPosition, paintedCells);
+            List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
+
+            Player player = new Player(i, playerColor, board.getCellById(startPositionIds[i]), paintedCells);
+            player.setCurrentCellColor();
             players.add(player);
         }
         return players;
@@ -88,7 +89,7 @@ public class GameLogic implements IInputHandler, Runnable {
             case 5:
                 return "Orange";
             default:
-                System.out.println("Keine passende Farbe gefunden");
+                System.out.println("Keine passende Farbe gefunden bzw zu viele Spieler");
                 return null;
         }
     }
@@ -99,58 +100,20 @@ public class GameLogic implements IInputHandler, Runnable {
      * Die Berechnung soll so funktionieren, dass wir die Spieleranzahl+2 durch die Boardlänge (x Anzahl) teilen,
      * und dann die mittleren Positionen als Startkoordianten für die Spieler nutzen.
      *
-     * @param horizontalRasterPoints Wie viele x Positionen das Board hat
-     * @return Alle Koordinaten wo Spieler starten können
+     * @return Alle XWerte bzw Ids wo gestartet werden soll
      */
-    public static Coordinate[] getPlayerStartingPositions(int horizontalRasterPoints) {
-        Coordinate[] coordinates = new Coordinate[PLAYER_COUNT];
-        int posibleXCoord = horizontalRasterPoints / (PLAYER_COUNT + 2);
+    public static int[] getPlayerStartingPositions() {
+        int[] xWerte = new int[PLAYER_COUNT];
+        int posibleXCoord = WIDTH / (PLAYER_COUNT + 2);
 
+        int j=0;
         for (int i = 2; i < PLAYER_COUNT + 2; i++) {
             int x = i * posibleXCoord;
-            coordinates[i] = new Coordinate(x - 1, HEIGHT - 1); //Wenn unsere Cells mit 1 anfangen das -1 weg
+            //coordinates[i] = new Coordinate(x - 1, HEIGHT - 1); //Wenn unsere Cells mit 1 anfangen das -1 weg
+            x += 1;
+            xWerte[j++] = x;
         }
-        return coordinates;
-    }
-
-    /**
-     * Ist "" wenn nicht gefärbt sonst sollte da eine Farbe drin stehen
-     *
-     * @param nextBoardCell Nächsten Zelle
-     * @return true, wenn nächste Zelle schon gefärbt ist, false, wenn nicht
-     */
-    public static boolean checkCollision(BoardCell nextBoardCell) {
-        return !nextBoardCell.getColor().isEmpty();
-    }
-
-    /**
-     * Wenn der nächste Block über das Raster hinausgeht, wird true ausgegeben sonst false.
-     * Diesen check zuerst ausführen damit die anderen keine Zellen abfragen die nicht existieren dürfen.
-     *
-     * @param cellId    von welcher Zelle aus gecheckt werden soll
-     * @param direction in welche Richtung man sich bewegt
-     * @return true oder false
-     */
-    public static boolean checkBorder(int cellId, String direction) {
-        int nextCellId;
-        boolean nextCellIsBorder = false;
-        switch (direction) {
-            case "moveUp":
-                nextCellId = cellId + WIDTH;
-                nextCellIsBorder = nextCellId <= (WIDTH * HEIGHT - 1); // Nächste ZellenId muss kleiner= sein als max Zellen ID
-                break;
-            case "moveDown":
-                nextCellId = cellId - WIDTH;
-                nextCellIsBorder = nextCellId >= 0; // Nächste ZellenId muss größer= sein als 0
-                break;
-            case "moveRight":
-                nextCellIsBorder = (cellId + 1 % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
-                break;
-            case "moveLeft":
-                nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
-                break;
-        }
-        return nextCellIsBorder;
+        return xWerte;
     }
 
     public void moveEveryPlayer(char[] allInputs, Board board) {

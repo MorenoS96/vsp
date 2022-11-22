@@ -10,6 +10,7 @@ public class Board {
         this.cells = createCells(height,width);
     }
 
+    // Ids gehen von 0 bis WIDHT*HEIGTH-1 aber x und y fangen bei 1 an und gehen bis einschließlich HEIGHT oder WIDTH
     public BoardCell[] createCells(int height,int width) {
         BoardCell[] cells = new BoardCell[height*width];
         int idCounter = 0;
@@ -20,10 +21,6 @@ public class Board {
                 idCounter++;
             }
         }
-        return cells;
-    }
-
-    public BoardCell[] getCells() {
         return cells;
     }
 

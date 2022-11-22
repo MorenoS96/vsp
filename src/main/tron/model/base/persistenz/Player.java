@@ -71,29 +71,33 @@ public class Player implements IInputHandler {
         if (direction == moveUp) {
             currentDirection = moveUp;
             int newCellId = idPreviousCell + WIDTH;
-            if (GameLogic.checkBorder(currentCell.getId(), "moveUp") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveUp") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
                 playerDies();
+                return;
             }
             currentCell = board.getCellById(idPreviousCell + WIDTH);
         } else if (direction == moveDown) {
             currentDirection = moveDown;
             int newCellId = idPreviousCell - WIDTH;
-            if (GameLogic.checkBorder(currentCell.getId(), "moveDown") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveDown") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
                 playerDies();
+                return;
             }
             currentCell = board.getCellById(idPreviousCell - WIDTH);
         } else if (direction == moveRight) {
             currentDirection = moveRight;
             int newCellId = idPreviousCell + 1;
-            if (GameLogic.checkBorder(currentCell.getId(), "moveRight") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveRight") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
                 playerDies();
+                return;
             }
             currentCell = board.getCellById(idPreviousCell + 1);
         } else if (direction == moveLeft) {
             currentDirection = moveLeft;
             int newCellId = idPreviousCell - 1;
-            if (GameLogic.checkBorder(currentCell.getId(), "moveLeft") || GameLogic.checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveLeft") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
                 playerDies();
+                return;
             }
             currentCell = board.getCellById(idPreviousCell - 1);
         } else if (direction == ' ') {
@@ -102,7 +106,7 @@ public class Player implements IInputHandler {
             // Do nothing
             System.out.println("Eingabe nicht gemapt");
         }
-
+        currentCell.setColor(this.getColor());
     }
 
     public void playerDies() { // Muss keinen Spieler übergeben wegen this ?
@@ -129,6 +133,50 @@ public class Player implements IInputHandler {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Ist "" wenn nicht gefärbt sonst sollte da eine Farbe drin stehen
+     *
+     * @param nextBoardCell Nächsten Zelle
+     * @return true, wenn nächste Zelle schon gefärbt ist, false, wenn nicht
+     */
+    public static boolean checkCollision(BoardCell nextBoardCell) {
+        return !nextBoardCell.getColor().isEmpty();
+    }
+
+    /**
+     * Wenn der nächste Block über das Raster hinausgeht, wird true ausgegeben sonst false.
+     * Diesen check zuerst ausführen damit die anderen keine Zellen abfragen die nicht existieren dürfen.
+     *
+     * @param cellId    von welcher Zelle aus gecheckt werden soll
+     * @param direction in welche Richtung man sich bewegt
+     * @return true oder false
+     */
+    public static boolean checkBorder(int cellId, String direction) {
+        int nextCellId;
+        boolean nextCellIsBorder = false;
+        switch (direction) {
+            case "moveUp":
+                nextCellId = cellId + WIDTH;
+                nextCellIsBorder = nextCellId <= (WIDTH * HEIGHT - 1); // Nächste ZellenId muss kleiner= sein als max Zellen ID
+                break;
+            case "moveDown":
+                nextCellId = cellId - WIDTH;
+                nextCellIsBorder = nextCellId >= 0; // Nächste ZellenId muss größer= sein als 0
+                break;
+            case "moveRight":
+                nextCellIsBorder = (cellId + 1 % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
+                break;
+            case "moveLeft":
+                nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
+                break;
+        }
+        return nextCellIsBorder;
+    }
+
+    public void setCurrentCellColor() {
+        currentCell.setColor(this.getColor());
     }
 
 

@@ -1,7 +1,7 @@
 package tron.model.base.persistenz;
 
 public class BoardCell {
-    private final int x, y, id;
+    private int x, y, id;
     String color = "";
     // id der Zelle soll == position der Array entsprechen
 
@@ -12,9 +12,7 @@ public class BoardCell {
     }
 
     public BoardCell(int x, int y, int id, String color) {
-        this.x = x;
-        this.y = y;
-        this.id = id;
+        new BoardCell(x,y,id);
         this.color = color;
     }
 
@@ -22,6 +20,9 @@ public class BoardCell {
         this.color = color;
     }
 
+    public String getColor() {
+        return color;
+    }
     public int getX() {
         return x;
     }
@@ -32,9 +33,5 @@ public class BoardCell {
 
     public int getId() {
         return id;
-    }
-
-    public String getColor() {
-        return color;
     }
 }
