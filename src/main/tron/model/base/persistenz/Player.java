@@ -7,10 +7,15 @@ import java.util.List;
 public class Player implements IInputHandler {
 
     int id;
+
     String color;
+
     char currentDirection;
+
     BoardCell currentCell;
+
     private List<BoardCell> paintedCells;
+
     char moveUp, moveDown, moveLeft, moveRight;
 
     boolean isAlive = false;
@@ -63,7 +68,7 @@ public class Player implements IInputHandler {
         int idPreviousCell = previousCell.getId();
 
         // Checkt ob Spieler eine 180 Grad Drehung machen würde, wenn ja, wird die Richtung einfach beibehalten
-        if(moveCorrect(direction)) {
+        if(isMoveIncorrect(direction)) {
             direction = currentDirection;
         }
 
@@ -71,7 +76,7 @@ public class Player implements IInputHandler {
             currentDirection = moveUp;
             int newCellId = idPreviousCell + WIDTH;
             if (checkBorder(currentCell.getId(), "moveUp") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
-                playerDies();
+                this.isAlive = false;
                 return;
             }
             currentCell = board.getCellById(idPreviousCell + WIDTH);
@@ -79,7 +84,7 @@ public class Player implements IInputHandler {
             currentDirection = moveDown;
             int newCellId = idPreviousCell - WIDTH;
             if (checkBorder(currentCell.getId(), "moveDown") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
-                playerDies();
+                this.isAlive = false;
                 return;
             }
             currentCell = board.getCellById(idPreviousCell - WIDTH);
@@ -87,7 +92,7 @@ public class Player implements IInputHandler {
             currentDirection = moveRight;
             int newCellId = idPreviousCell + 1;
             if (checkBorder(currentCell.getId(), "moveRight") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
-                playerDies();
+                this.isAlive = false;
                 return;
             }
             currentCell = board.getCellById(idPreviousCell + 1);
@@ -95,13 +100,14 @@ public class Player implements IInputHandler {
             currentDirection = moveLeft;
             int newCellId = idPreviousCell - 1;
             if (checkBorder(currentCell.getId(), "moveLeft") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
-                playerDies();
+                this.isAlive = false;
                 return;
             }
             currentCell = board.getCellById(idPreviousCell - 1);
         } else if (direction == ' ') {
             move(currentDirection, board);
-            //TODO checks
+            //TODO checks evtl
+            //TODO wie genau tötet man spieler
         } else {
             // Do nothing
             System.out.println("Eingabe nicht gemapt");
@@ -110,8 +116,6 @@ public class Player implements IInputHandler {
     }
 
     public void playerDies() { // Muss keinen Spieler übergeben wegen this ?
-
-        isAlive = false;
         // Zellen werden alle wieder entfärbt
         for(BoardCell boardCell: this.paintedCells) {
             boardCell.setColor(" ");
@@ -124,7 +128,7 @@ public class Player implements IInputHandler {
      *
      * @return true wenn man sich Illegal bewegen möchte sonst false
      */
-    public  boolean moveCorrect(Character InputDirection) {
+    public  boolean isMoveIncorrect(Character InputDirection) {
         if (InputDirection == moveUp && currentDirection == moveDown ||
             InputDirection == moveDown && currentDirection == moveUp ||
             InputDirection == moveRight && currentDirection == moveLeft ||
@@ -145,7 +149,6 @@ public class Player implements IInputHandler {
         return !nextBoardCell.getColor().isEmpty();
     }
 
-    //TODO alle bwewegungen danachen töten
     /**
      * Wenn der nächste Block über das Raster hinausgeht, wird true ausgegeben sonst false.
      * Diesen check zuerst ausführen damit die anderen keine Zellen abfragen die nicht existieren dürfen.

@@ -79,7 +79,7 @@ public class BasicController implements IController {
 
     }
 
-    @Override
+    //@Override
     public void startGame(int playerCount) {
         iClick.pushInput("changePlayerCount",String.valueOf(playerCount));
         iGameLoop.startGame();

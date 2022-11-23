@@ -4,7 +4,6 @@ import tron.controller.interfaces.IControllerModel;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.Board;
 import tron.model.base.persistenz.BoardCell;
-import tron.model.base.persistenz.Coordinate;
 import tron.model.base.persistenz.Player;
 import tron.view.interfaces.IViewModel;
 
@@ -27,9 +26,9 @@ public class GameLogic implements IInputHandler, Runnable {
 
     IViewModel iViewModel;
 
-    public GameLogic(IControllerModel iControllerModel,IViewModel iViewModel) {
-        players = initPlayers(); //playerCount ok in Controller oder Model?
+    public GameLogic(IControllerModel iControllerModel, IViewModel iViewModel) {
         this.board = new Board(HEIGHT, WIDTH);
+        players = initPlayers(); //playerCount ok in Controller oder Model?
 
         this.iControllerModel = iControllerModel;
         this.iViewModel = iViewModel;
@@ -42,16 +41,16 @@ public class GameLogic implements IInputHandler, Runnable {
     public void run() {
         // Soll eine Runde simulieren
         long lastRound = System.nanoTime();
-        double nsTicks = 1000000000/60.0;
+        double nsTicks = 1000000000 / 60.0;
         double delta = 0;
-        while (true)  { // Später noch ersetzten
+        while (true) { // Später noch ersetzten
             long now = System.nanoTime();
             long timePassed = now - lastRound;
-            delta += timePassed/nsTicks;
+            delta += timePassed / nsTicks;
             lastRound = now;
-            if(delta >= 1) {
-                moveEveryPlayer(iControllerModel.getInputForCurrentCycle(),board);
-                iViewModel.displayBoard(board,players);
+            if (delta >= 1) {
+                moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
+                iViewModel.displayBoard(board, players);
             }
         }
     }
@@ -74,7 +73,7 @@ public class GameLogic implements IInputHandler, Runnable {
     }
 
 
-    public static String getPlayerColor(int id) {
+    public  String getPlayerColor(int id) {
         switch (id) {
             case 0:
                 return "Blue";
@@ -94,8 +93,6 @@ public class GameLogic implements IInputHandler, Runnable {
         }
     }
 
-    // Evtl später noch check, ob Spielfeld groß genug ist für die Anzahl an Spielern, nur nötig, wenn runtergestellt.
-
     /**
      * Die Berechnung soll so funktionieren, dass wir die Spieleranzahl+2 durch die Boardlänge (x Anzahl) teilen,
      * und dann die mittleren Positionen als Startkoordianten für die Spieler nutzen.
@@ -106,7 +103,7 @@ public class GameLogic implements IInputHandler, Runnable {
         int[] xWerte = new int[PLAYER_COUNT];
         int posibleXCoord = WIDTH / (PLAYER_COUNT + 2);
 
-        int j=0;
+        int j = 0;
         for (int i = 2; i < PLAYER_COUNT + 2; i++) {
             int x = i * posibleXCoord;
             //coordinates[i] = new Coordinate(x - 1, HEIGHT - 1); //Wenn unsere Cells mit 1 anfangen das -1 weg
@@ -117,10 +114,19 @@ public class GameLogic implements IInputHandler, Runnable {
     }
 
     public void moveEveryPlayer(char[] allInputs, Board board) {
+        List<Player> playersToKill = new ArrayList<>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
-            if (players.get(i).isAlive()) {
-                players.get(i).move(allInputs[i], board);
-            }
+            players.get(i).move(allInputs[i], board);
+            if (!players.get(i).isAlive()) {
+                playersToKill.add(players.get(i));
+            } // Hier könnte man auf Anzahl noch lebender Spieler leicht nachfragen
+        }
+        killPlayers(playersToKill);
+    }
+
+    public void killPlayers(List<Player> players) {
+        for (Player player : players) {
+            player.playerDies();
         }
     }
 }
