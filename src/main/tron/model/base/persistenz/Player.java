@@ -23,19 +23,19 @@ public class Player implements IInputHandler {
 
     public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells) {
 
-        String moveUpKey = "player" + id + 1 + "MoveUp";
+        String moveUpKey = "player" + id + "MoveUp";
         String moveUpString = config.get(moveUpKey);
         char moveUp = moveUpString.charAt(0);
 
-        String moveDownKey = "player" + id + 1 + "MoveDown";
+        String moveDownKey = "player" + id + "MoveDown";
         String moveDownString = config.get(moveDownKey);
         char moveDown = moveDownString.charAt(0);
 
-        String moveLeftKey = "player" + id + 1 + "MoveLeft";
+        String moveLeftKey = "player" + id + "MoveLeft";
         String moveLeftString = config.get(moveLeftKey);
         char moveLeft = moveLeftString.charAt(0);
 
-        String moveRightKey = "player" + id + 1 + "MoveRight";
+        String moveRightKey = "player" + id + "MoveRight";
         String moveRightString = config.get(moveRightKey);
         char moveRight = moveRightString.charAt(0);
         new Player(id,color,currentCell,paintedCells,moveUp,moveDown,moveLeft,moveRight,true);
@@ -161,20 +161,18 @@ public class Player implements IInputHandler {
         int nextCellId;
         boolean nextCellIsBorder = false;
         switch (direction) {
-            case "moveUp":
+            case "moveUp" -> {
                 nextCellId = cellId + WIDTH;
                 nextCellIsBorder = nextCellId <= (WIDTH * HEIGHT - 1); // Nächste ZellenId muss kleiner= sein als max Zellen ID
-                break;
-            case "moveDown":
+            }
+            case "moveDown" -> {
                 nextCellId = cellId - WIDTH;
                 nextCellIsBorder = nextCellId >= 0; // Nächste ZellenId muss größer= sein als 0
-                break;
-            case "moveRight":
-                nextCellIsBorder = (cellId + 1 % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
-                break;
-            case "moveLeft":
-                nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
-                break;
+            }
+            case "moveRight" ->
+                    nextCellIsBorder = (cellId + 1 % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
+            case "moveLeft" ->
+                    nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
         }
         return nextCellIsBorder;
     }

@@ -59,13 +59,13 @@ public class GameLogic implements IInputHandler, Runnable {
         List<Player> players = new ArrayList<>();
         int[] startPositionIds = getPlayerStartingPositions();
 
-        for (int i = 0; i < PLAYER_COUNT; i++) {
+        for (int i = 1; i <= PLAYER_COUNT; i++) {
             // id der Zelle soll == position der Array entsprechen
             String playerColor = getPlayerColor(i);
 
             List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
 
-            Player player = new Player(i, playerColor, board.getCellById(startPositionIds[i]), paintedCells);
+            Player player = new Player(i, playerColor, board.getCellById(startPositionIds[i-1]), paintedCells);
             player.setCurrentCellColor();
             players.add(player);
         }
@@ -75,17 +75,17 @@ public class GameLogic implements IInputHandler, Runnable {
 
     public  String getPlayerColor(int id) {
         switch (id) {
-            case 0:
-                return "Blue";
             case 1:
-                return "Red";
+                return "Blue";
             case 2:
-                return "Green";
+                return "Red";
             case 3:
-                return "Yellow";
+                return "Green";
             case 4:
-                return "Purple";
+                return "Yellow";
             case 5:
+                return "Purple";
+            case 6:
                 return "Orange";
             default:
                 System.out.println("Keine passende Farbe gefunden bzw zu viele Spieler");
