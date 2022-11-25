@@ -6,7 +6,7 @@ public interface IControllerModel {
    char[] getInputForCurrentCycle();
    Map<String,String> getConfig();
    void joinGame();
-   void startGame(int playerCount);
+   //void endGame();
    int getPlayerCount();
 
 }

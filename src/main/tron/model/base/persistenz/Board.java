@@ -1,20 +1,30 @@
 package tron.model.base.persistenz;
 
-import java.util.List;
-
 public class Board {
     int height,width;
-    List<BoardCell> cells;
+    BoardCell[] cells;
 
-    public Board(int height, int width, List<BoardCell> cells) {
+    public Board(int height, int width) {
         this.height = height;
         this.width = width;
-        this.cells = cells;
+        this.cells = createCells(height,width);
     }
 
-    public Board initBoard(int height, int width, List<BoardCell> cells) { //TODO
-        Board board = new Board(height,width,cells);
-        return board;
+    // Ids gehen von 0 bis WIDHT*HEIGTH-1 aber x und y fangen bei 1 an und gehen bis einschließlich HEIGHT oder WIDTH
+    public BoardCell[] createCells(int height,int width) {
+        BoardCell[] cells = new BoardCell[height*width];
+        int idCounter = 0;
+        for(int i=1;i<=width;i++) {
+            for(int j=1;j<=height;j++) {
+                BoardCell boardCell = new BoardCell(i,j,idCounter);
+                cells[idCounter] = boardCell;
+                idCounter++;
+            }
+        }
+        return cells;
     }
 
+    public BoardCell getCellById(int id) {
+        return cells[id];
+    }
 }

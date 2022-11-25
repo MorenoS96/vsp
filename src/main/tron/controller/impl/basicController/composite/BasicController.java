@@ -44,8 +44,9 @@ public class BasicController implements IController {
         }else {
             GlobalScreen.addNativeKeyListener(tastaturHandler);
         }
-
-
+        registrator.registerComponent(InterfaceType.IControllerModel,this);
+        registrator.registerComponent(InterfaceType.IControllerView,this);
+        registrator.registerComponent(InterfaceType.IConfig,this);
     }
     @Override
     public String getConfigVal(String ConfigName) {
@@ -78,7 +79,7 @@ public class BasicController implements IController {
 
     }
 
-    @Override
+    //@Override
     public void startGame(int playerCount) {
         iClick.pushInput("changePlayerCount",String.valueOf(playerCount));
         iGameLoop.startGame();

@@ -2,12 +2,12 @@ package tron.test.controller;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.awt.Robot.*;
 import java.awt.event.KeyEvent;
 
+import org.junit.jupiter.api.Test;
 import tron.controller.interfaces.IController;
 import tron.controller.factory.ControllerFactory;
 import tron.registrator.impl.Registrator;
@@ -34,7 +34,7 @@ public class controllerTest {
        /*
         Achtung nur auf windows getestet
         Achtung der test schreibt, der cursor sollte also in der console sein oder in einem Kommentar
-        eeqztz i  h,eeqztz i  h,eeqztz i  h,
+
          */
 
     @Test
