@@ -50,14 +50,14 @@ public class controllerTest {
 
 
 
-            char[] inputs=new char[]{'e','e','q','z','t','z',' ','i',' ',' '};
+            char[] inputs=new char[]{'e','e','q','z','t','z',' ','i',' ',' ','h',','};
             for(int i=0;i<inputs.length;i++){
                robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(inputs[i]));
                robot.delay(1);
                 robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(inputs[i]));
             }
             char[] inputsForCurrentCycle= controller.getInputForCurrentCycle();
-            assertArrayEquals(new char[]{'q','z','i',' ',' ',' '},inputsForCurrentCycle);
+            assertArrayEquals(new char[]{'q','z','i',' ',' ',','},inputsForCurrentCycle);
         } catch (AWTException e) {
             e.printStackTrace();
         }
