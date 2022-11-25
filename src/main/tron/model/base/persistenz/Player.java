@@ -72,6 +72,7 @@ public class Player implements IInputHandler {
             direction = currentDirection;
         }
 
+        //TODO
         if (direction == moveUp) {
             currentDirection = moveUp;
             int newCellId = idPreviousCell + WIDTH;
@@ -106,7 +107,6 @@ public class Player implements IInputHandler {
             currentCell = board.getCellById(idPreviousCell - 1);
         } else if (direction == ' ') {
             move(currentDirection, board);
-            //TODO checks evtl
             //TODO wie genau tötet man spieler
         } else {
             // Do nothing
@@ -145,6 +145,7 @@ public class Player implements IInputHandler {
      * @param nextBoardCell Nächsten Zelle
      * @return true, wenn nächste Zelle schon gefärbt ist, false, wenn nicht
      */
+    //TODO zu zahl nicht leerer String
     public static boolean checkCollision(BoardCell nextBoardCell) {
         return !nextBoardCell.getColor().isEmpty();
     }
@@ -157,6 +158,7 @@ public class Player implements IInputHandler {
      * @param direction in welche Richtung man sich bewegt
      * @return true oder false
      */
+    //TODO
     public static boolean checkBorder(int cellId, String direction) {
         int nextCellId;
         boolean nextCellIsBorder = false;
@@ -177,8 +179,8 @@ public class Player implements IInputHandler {
         return nextCellIsBorder;
     }
 
-    public void setCurrentCellColor() {
-        currentCell.setColor(this.getColor());
+    public void setCurrentCellColor(String color) {
+        this.currentCell.setColor(color);
     }
 
 

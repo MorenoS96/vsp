@@ -9,6 +9,7 @@ import tron.view.interfaces.IViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 
 // Wird noch IGameLogic implementieren
@@ -26,15 +27,17 @@ public class GameLogic implements IInputHandler, Runnable {
 
     IViewModel iViewModel;
 
+    int delay;
     public GameLogic(IControllerModel iControllerModel, IViewModel iViewModel) {
         this.board = new Board(HEIGHT, WIDTH);
         players = initPlayers(); //playerCount ok in Controller oder Model?
 
         this.iControllerModel = iControllerModel;
         this.iViewModel = iViewModel;
+        Timer timer = new Timer();
+        // 1/ticks sekunden
+        // GameLoop drin
 
-        gameThread = new Thread(this);
-        gameThread.start();
     }
 
     @Override
@@ -66,12 +69,11 @@ public class GameLogic implements IInputHandler, Runnable {
             List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
 
             Player player = new Player(i, playerColor, board.getCellById(startPositionIds[i-1]), paintedCells);
-            player.setCurrentCellColor();
+            player.setCurrentCellColor(playerColor);
             players.add(player);
         }
         return players;
     }
-
 
     public  String getPlayerColor(int id) {
         switch (id) {

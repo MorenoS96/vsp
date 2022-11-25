@@ -14,9 +14,9 @@ public class Board {
     public BoardCell[] createCells(int height,int width) {
         BoardCell[] cells = new BoardCell[height*width];
         int idCounter = 0;
-        for(int i=1;i<=width;i++) {
-            for(int j=1;j<=height;j++) {
-                BoardCell boardCell = new BoardCell(i,j,idCounter);
+        for(int y=0;y<height;y++) {
+            for(int x=0;x<width;x++) {
+                BoardCell boardCell = new BoardCell(x,y,idCounter,"");
                 cells[idCounter] = boardCell;
                 idCounter++;
             }
