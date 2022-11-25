@@ -15,8 +15,8 @@ import tron.controller.interfaces.*;
 import tron.controller.util.OsUtil;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import tron.model.interfaces.IModelController;
-import tron.registrator.impl.Registrator;
-import tron.registrator.util.InterfaceType;
+import tron.lobby.impl.Registrator;
+import tron.lobby.util.InterfaceType;
 
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class BasicController implements IController {
         this.iGetInput = tastaturHandlerIFactory.getInstance();
         iGameKey=tastaturHandlerIFactory.getInstance();
         tastaturHandler= tastaturHandlerIFactory.getInstance();
-        iGameLoop=new GameLoopManager(iGetConfig,(IModelController) registrator.getInterfaceOfType(InterfaceType.IModelController));
+        iGameLoop=new GameLoopManager(iGetConfig,(IModelController) registrator.getInterfaceOfType(InterfaceType.IModelController),registrator);
         iClick=new ClickHandler(iGameLoop);
         if(OsUtil.getOS().equals( OsUtil.OS.WINDOWS)){
             GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);

@@ -1,9 +1,8 @@
-package tron.registrator.impl;
+package tron.lobby.impl;
 
-import tron.controller.interfaces.IController;
-import tron.registrator.interfaces.IRegistrator;
-import tron.registrator.util.InterFaceTypeToInterfaceHelper;
-import tron.registrator.util.InterfaceType;
+import tron.lobby.interfaces.IRegistrator;
+import tron.lobby.util.InterFaceTypeToInterfaceHelper;
+import tron.lobby.util.InterfaceType;
 
 import java.util.HashMap;
 import java.util.Map;

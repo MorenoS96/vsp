@@ -4,15 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 import java.awt.*;
-import java.awt.Robot.*;
 import java.awt.event.KeyEvent;
 
 import org.junit.jupiter.api.Test;
 import tron.controller.interfaces.IController;
 import tron.controller.factory.ControllerFactory;
-import tron.registrator.impl.Registrator;
-
-import javax.swing.*;
+import tron.lobby.impl.Registrator;
 
 public class controllerTest {
     @Test
