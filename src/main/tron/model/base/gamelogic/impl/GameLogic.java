@@ -17,8 +17,6 @@ public class GameLogic implements IInputHandler {
 
     List<Player> players;
 
-    public Thread gameThread;
-
     public Board board;
 
     IControllerModel iControllerModel;
@@ -26,6 +24,7 @@ public class GameLogic implements IInputHandler {
     IViewModel iViewModel;
 
     int delay;
+
     public GameLogic(IControllerModel iControllerModel, IViewModel iViewModel) {
         this.board = new Board(HEIGHT, WIDTH);
         players = initPlayers(); //playerCount ok in Controller oder Model?
@@ -38,6 +37,7 @@ public class GameLogic implements IInputHandler {
 
     }
 
+    //TODO das hier richtig schreiben oder tick() Methode implementieren
 //    @Override
 //    public void run() {
 //        // Soll eine Runde simulieren
@@ -61,9 +61,6 @@ public class GameLogic implements IInputHandler {
         int[] startPositionIds = getPlayerStartingPositions();
 
         for (int i = 1; i <= PLAYER_COUNT; i++) {
-            // id der Zelle soll == position der Array entsprechen
-            String playerColor = getPlayerColor(i);
-
             List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
 
             //System.out.println(board);
@@ -86,56 +83,35 @@ public class GameLogic implements IInputHandler {
             String moveRightString = config.get(moveRightKey);
             char moveRight = moveRightString.charAt(0);
 
-            Player player = new Player(i,playerColor,board.getCellById(startPositionIds[i-1]),paintedCells,moveUp,moveDown,moveLeft,moveRight,true);
+            Player player = new Player(i, i, board.getCellById(startPositionIds[i - 1]), paintedCells, moveUp, moveDown, moveLeft, moveRight, true);
 
             //System.out.println(player.getCurrentCell());
-            player.setCurrentCellColor(playerColor);
+            player.setCurrentCellColor(i);
             players.add(player);
         }
         return players;
     }
 
-    public  String getPlayerColor(int id) { // throws Fehler?
-        switch (id) {
-            case 1:
-                return "Blue";
-            case 2:
-                return "Red";
-            case 3:
-                return "Green";
-            case 4:
-                return "Yellow";
-            case 5:
-                return "Purple";
-            case 6:
-                return "Orange";
-            default:
-                System.out.println("Keine passende Farbe gefunden bzw zu viele Spieler");
-                return null;
-        }
-    }
-
     // Angepasst.
+
     /**
      * Die Berechnung soll so funktionieren, dass wir die Spieleranzahl+2 durch die Boardlänge (x Anzahl) teilen,
-     * und dann die mittleren Positionen als Startkoordianten für die Spieler nutzen.
+     * und dann die mittleren Positionen als Startkoordinaten für die Spieler nutzen.
      *
      * @return Alle XWerte bzw Ids wo gestartet werden soll
      */
-    public static int[] getPlayerStartingPositions() {
+    public int[] getPlayerStartingPositions() {
         int[] xWerte = new int[PLAYER_COUNT];
-        int posibleXCoord = WIDTH / (PLAYER_COUNT + 2);
-
+        int possibleXCoord = WIDTH / (PLAYER_COUNT + 2);
         int j = 0;
         for (int i = 2; i < PLAYER_COUNT + 2; i++) {
-            int x = i * posibleXCoord;
-            //coordinates[i] = new Coordinate(x - 1, HEIGHT - 1); //Wenn unsere Cells mit 1 anfangen das -1 weg
+            int x = i * possibleXCoord;
             xWerte[j++] = x;
         }
         return xWerte;
     }
 
-    public void moveEveryPlayer(char[] allInputs, Board board) {
+    public void moveEveryPlayer(char[] allInputs, Board board) { //TODO Test
         List<Player> playersToKill = new ArrayList<>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
             players.get(i).move(allInputs[i], board);
@@ -146,10 +122,13 @@ public class GameLogic implements IInputHandler {
         killPlayers(playersToKill);
     }
 
-    public void killPlayers(List<Player> players) {
+    public void killPlayers(List<Player> players) { //TODO Test
         for (Player player : players) {
             player.playerDies();
         }
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
