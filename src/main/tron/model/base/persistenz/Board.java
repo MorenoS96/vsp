@@ -1,8 +1,10 @@
 package tron.model.base.persistenz;
 
+import java.util.Arrays;
+
 public class Board {
-    int height,width;
-    BoardCell[] cells;
+    public int height,width;
+    public BoardCell[] cells;
 
     public Board(int height, int width) {
         this.height = height;
@@ -16,8 +18,8 @@ public class Board {
         int idCounter = 0;
         for(int y=0;y<height;y++) {
             for(int x=0;x<width;x++) {
-                BoardCell boardCell = new BoardCell(x,y,idCounter,"");
-                cells[idCounter] = boardCell;
+                //BoardCell boardCell = new BoardCell(x,y,idCounter,"");
+                cells[idCounter] = new BoardCell(x,y,idCounter,"");
                 idCounter++;
             }
         }
@@ -26,5 +28,14 @@ public class Board {
 
     public BoardCell getCellById(int id) {
         return cells[id];
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "height=" + height +
+                ", width=" + width +
+                ", cells=" + Arrays.toString(cells) +
+                '}';
     }
 }

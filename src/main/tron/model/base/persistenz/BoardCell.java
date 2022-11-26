@@ -12,7 +12,9 @@ public class BoardCell {
     }
 
     public BoardCell(int x, int y, int id, String color) {
-        new BoardCell(x,y,id);
+        this.x = x;
+        this.y = y;
+        this.id = id;
         this.color = color;
     }
 
@@ -33,5 +35,15 @@ public class BoardCell {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardCell{" +
+                "x=" + x +
+                ", y=" + y +
+                ", id=" + id +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

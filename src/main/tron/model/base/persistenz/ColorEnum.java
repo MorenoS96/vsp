@@ -15,4 +15,8 @@ enum ColorEnum {
 
     public int getId() {return id;}
 
+//    public ColorEnum getEnumByID(int id) {
+//        return this.
+//    }
+
 }

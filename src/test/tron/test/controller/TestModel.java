@@ -14,12 +14,13 @@ public class TestModel {
     Registrator registrator = new Registrator();
     IControllerModel iControllerModel = new BasicController(registrator);
     IViewModel iViewModel = null; // Später
-    //GameLogic gameLogic = new GameLogic(iControllerModel,iViewModel);
+    GameLogic gameLogic = new GameLogic(iControllerModel,iViewModel);
 
 
     @Test
     public void gameLogicCorrectColorTest(){
-        //assertEquals(gameLogic.getPlayerColor(0),"Blue");
+        assertEquals(gameLogic.getPlayerColor(1),"Blue");
+        assertEquals(gameLogic.getPlayerColor(6),"Orange");
 
     }
 

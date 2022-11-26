@@ -7,13 +7,11 @@ import tron.model.base.persistenz.BoardCell;
 import tron.model.base.persistenz.Player;
 import tron.view.interfaces.IViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
+import java.util.*;
 
 
 // Wird noch IGameLogic implementieren
-public class GameLogic implements IInputHandler, Runnable {
+public class GameLogic implements IInputHandler {
 
     boolean onePlayerRemaining = false; // Kommt noch was zu
 
@@ -40,23 +38,23 @@ public class GameLogic implements IInputHandler, Runnable {
 
     }
 
-    @Override
-    public void run() {
-        // Soll eine Runde simulieren
-        long lastRound = System.nanoTime();
-        double nsTicks = 1000000000 / 60.0;
-        double delta = 0;
-        while (true) { // Später noch ersetzten
-            long now = System.nanoTime();
-            long timePassed = now - lastRound;
-            delta += timePassed / nsTicks;
-            lastRound = now;
-            if (delta >= 1) {
-                moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
-                iViewModel.displayBoard(board, players);
-            }
-        }
-    }
+//    @Override
+//    public void run() {
+//        // Soll eine Runde simulieren
+//        long lastRound = System.nanoTime();
+//        double nsTicks = 1000000000 / 60.0;
+//        double delta = 0;
+//        while (true) { // Später noch ersetzten
+//            long now = System.nanoTime();
+//            long timePassed = now - lastRound;
+//            delta += timePassed / nsTicks;
+//            lastRound = now;
+//            if (delta >= 1) {
+//                moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
+//                iViewModel.displayBoard(board, players);
+//            }
+//        }
+//    }
 
     public List<Player> initPlayers() {
         List<Player> players = new ArrayList<>();
@@ -68,14 +66,36 @@ public class GameLogic implements IInputHandler, Runnable {
 
             List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
 
-            Player player = new Player(i, playerColor, board.getCellById(startPositionIds[i-1]), paintedCells);
+            //System.out.println(board);
+
+            //System.out.println(board.getCellById(startPositionIds[i-1]));
+
+            String moveUpKey = "player" + i + "MoveUp";
+            String moveUpString = config.get(moveUpKey);
+            char moveUp = moveUpString.charAt(0);
+
+            String moveDownKey = "player" + i + "MoveDown";
+            String moveDownString = config.get(moveDownKey);
+            char moveDown = moveDownString.charAt(0);
+
+            String moveLeftKey = "player" + i + "MoveLeft";
+            String moveLeftString = config.get(moveLeftKey);
+            char moveLeft = moveLeftString.charAt(0);
+
+            String moveRightKey = "player" + i + "MoveRight";
+            String moveRightString = config.get(moveRightKey);
+            char moveRight = moveRightString.charAt(0);
+
+            Player player = new Player(i,playerColor,board.getCellById(startPositionIds[i-1]),paintedCells,moveUp,moveDown,moveLeft,moveRight,true);
+
+            //System.out.println(player.getCurrentCell());
             player.setCurrentCellColor(playerColor);
             players.add(player);
         }
         return players;
     }
 
-    public  String getPlayerColor(int id) {
+    public  String getPlayerColor(int id) { // throws Fehler?
         switch (id) {
             case 1:
                 return "Blue";
@@ -95,6 +115,7 @@ public class GameLogic implements IInputHandler, Runnable {
         }
     }
 
+    // Angepasst.
     /**
      * Die Berechnung soll so funktionieren, dass wir die Spieleranzahl+2 durch die Boardlänge (x Anzahl) teilen,
      * und dann die mittleren Positionen als Startkoordianten für die Spieler nutzen.
@@ -109,7 +130,6 @@ public class GameLogic implements IInputHandler, Runnable {
         for (int i = 2; i < PLAYER_COUNT + 2; i++) {
             int x = i * posibleXCoord;
             //coordinates[i] = new Coordinate(x - 1, HEIGHT - 1); //Wenn unsere Cells mit 1 anfangen das -1 weg
-            x += 1;
             xWerte[j++] = x;
         }
         return xWerte;
@@ -131,4 +151,5 @@ public class GameLogic implements IInputHandler, Runnable {
             player.playerDies();
         }
     }
+
 }

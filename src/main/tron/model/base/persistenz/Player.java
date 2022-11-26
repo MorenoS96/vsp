@@ -20,27 +20,6 @@ public class Player implements IInputHandler {
 
     boolean isAlive = false;
 
-
-    public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells) {
-
-        String moveUpKey = "player" + id + "MoveUp";
-        String moveUpString = config.get(moveUpKey);
-        char moveUp = moveUpString.charAt(0);
-
-        String moveDownKey = "player" + id + "MoveDown";
-        String moveDownString = config.get(moveDownKey);
-        char moveDown = moveDownString.charAt(0);
-
-        String moveLeftKey = "player" + id + "MoveLeft";
-        String moveLeftString = config.get(moveLeftKey);
-        char moveLeft = moveLeftString.charAt(0);
-
-        String moveRightKey = "player" + id + "MoveRight";
-        String moveRightString = config.get(moveRightKey);
-        char moveRight = moveRightString.charAt(0);
-        new Player(id,color,currentCell,paintedCells,moveUp,moveDown,moveLeft,moveRight,true);
-    }
-
     public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells, char moveUp, char moveDown, char moveLeft, char moveRight,boolean isAlive) {
         this.id = id;
         this.color = color;
