@@ -21,7 +21,6 @@ public class TestGamelogic implements IInputHandler {
     IViewModel iViewModel = null; // Später
     GameLogic gameLogic = new GameLogic(iControllerModel,iViewModel);
 
-
     @Test
     public void testGetPlayerStartingPositions(){
         int[] xWerte = gameLogic.getPlayerStartingPositions();

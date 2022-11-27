@@ -99,7 +99,7 @@ public class Player implements IInputHandler {
 
     public void playerDies() { // Muss keinen Spieler übergeben wegen this ? TODO Tests aber eher in GameLogic
         // Zellen werden alle wieder entfärbt
-        this.setAlive(false);
+        //this.setAlive(false);
         for (BoardCell boardCell : this.paintedCells) {
             boardCell.setColorId(0);
         }
@@ -108,7 +108,7 @@ public class Player implements IInputHandler {
     /**
      * Checkt, ob man eine 180 Grad Drehung machen möchte
      *
-     * @return true wenn man sich Illegal bewegen möchte sonst false
+     * @return true, wenn man sich Illegal bewegen möchte sonst false
      */
     public boolean isMoveIncorrect(Character InputDirection) { //TODO falscher input zu leerem char umwandeln (?)
         if (InputDirection == moveUp && currentDirection == moveDown ||

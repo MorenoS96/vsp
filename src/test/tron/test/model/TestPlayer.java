@@ -24,7 +24,6 @@ public class TestPlayer implements IInputHandler {
 
     GameLogic gameLogic = new GameLogic(iControllerModel, null);
 
-    @AfterEach
     public void cleanUp() {
         for(BoardCell boardCell: gameLogic.board.getCells()) {
             boardCell.setColorId(0);

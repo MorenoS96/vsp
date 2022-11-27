@@ -73,7 +73,7 @@ public interface IViewModel {
      */
     //void highlightCell(Coordinate cell);
 
-    void displayView(String view);
+    void displayView(int view);
 
     void displayBoard(Board board, List<Player> players);
 }

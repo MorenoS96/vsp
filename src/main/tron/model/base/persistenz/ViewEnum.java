@@ -1,6 +1,6 @@
 package tron.model.base.persistenz;
 
-enum ViewEnum { // Keine View, sondern IDs für Views
+public enum ViewEnum { // Keine View, sondern IDs für Views
     VIEW1(1), // Startbildschirm
     VIEW2(2), // Wartebildschirm
     VIEW3(3), // Spielbildschirm
