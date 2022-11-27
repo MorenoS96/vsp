@@ -14,7 +14,7 @@ public class Player implements IInputHandler {
 
     BoardCell currentCell;
 
-    private final List<BoardCell> paintedCells;
+    private List<BoardCell> paintedCells;
 
     char moveUp, moveDown, moveLeft, moveRight;
 
@@ -41,7 +41,7 @@ public class Player implements IInputHandler {
      * @param direction richtung
      * @param board board
      */
-    public void move(char direction, Board board) { //TODO Tests
+    public void move(char direction, Board board) {
         BoardCell previousCell = currentCell;
         int idPreviousCell = previousCell.getId();
 
@@ -84,10 +84,12 @@ public class Player implements IInputHandler {
             currentCell = board.getCellById(newCellId);
         } else if (direction == ' ') {
             move(currentDirection, board);
-            //TODO wie genau tötet man spieler
+            return;
+            //TO-DO wie genau tötet man spieler
         } else {
             System.out.println("Eingabe nicht gemapt, letzter richtige Input wird genommen");
             move(currentDirection,board);
+            return;
         }
 
         //Position färben und als gefärbt markieren
@@ -95,13 +97,12 @@ public class Player implements IInputHandler {
         paintedCells.add(currentCell);
     }
 
-    public void playerDies() { // Muss keinen Spieler übergeben wegen this ? TODO Tests
+    public void playerDies() { // Muss keinen Spieler übergeben wegen this ? TODO Tests aber eher in GameLogic
         // Zellen werden alle wieder entfärbt
         this.setAlive(false);
         for (BoardCell boardCell : this.paintedCells) {
             boardCell.setColorId(0);
         }
-
     }
 
     /**
@@ -109,7 +110,7 @@ public class Player implements IInputHandler {
      *
      * @return true wenn man sich Illegal bewegen möchte sonst false
      */
-    public boolean isMoveIncorrect(Character InputDirection) { //TODO Tests
+    public boolean isMoveIncorrect(Character InputDirection) { //TODO falscher input zu leerem char umwandeln (?)
         if (InputDirection == moveUp && currentDirection == moveDown ||
                 InputDirection == moveDown && currentDirection == moveUp ||
                 InputDirection == moveRight && currentDirection == moveLeft ||
@@ -126,9 +127,9 @@ public class Player implements IInputHandler {
      * @param nextBoardCell Nächsten Zelle
      * @return true, wenn nächste Zelle schon gefärbt ist, false, wenn nicht
      */
-    public static boolean checkCollision(BoardCell nextBoardCell) {
+    public boolean checkCollision(BoardCell nextBoardCell) {
         return nextBoardCell.getColorId() != 0;
-    } //TODO Tests
+    }
 
     /**
      * Wenn der nächste Block über das Raster hinausgeht, wird true ausgegeben sonst false.
@@ -158,13 +159,9 @@ public class Player implements IInputHandler {
         return nextCellIsBorder;
     }
 
-    public void setCurrentCellColor(int color) { // TODO evtl Tests
+    public void setCurrentCellColor(int color) {
         this.currentCell.setColorId(color);
-        this.paintedCells.add(currentCell);
     }
-
-
-
 
     public int getId() {
         return id;
@@ -172,10 +169,6 @@ public class Player implements IInputHandler {
 
     public int getColor() {
         return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     public BoardCell getCurrentCell() {
@@ -199,5 +192,33 @@ public class Player implements IInputHandler {
 
     public void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    public char getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void setCurrentDirection(char currentDirection) {
+        this.currentDirection = currentDirection;
+    }
+
+    public char getMoveUp() {
+        return moveUp;
+    }
+
+    public char getMoveDown() {
+        return moveDown;
+    }
+
+    public char getMoveLeft() {
+        return moveLeft;
+    }
+
+    public char getMoveRight() {
+        return moveRight;
+    }
+
+    public void setPaintedCells(List<BoardCell> paintedCells) {
+        this.paintedCells = paintedCells;
     }
 }

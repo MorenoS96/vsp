@@ -130,6 +130,7 @@ public class GameLogic implements IInputHandler, Runnable {
 
             //System.out.println(player.getCurrentCell());
             player.setCurrentCellColor(i);
+            player.getPaintedCells().add(player.getCurrentCell());
             players.add(player);
         }
         return players;
