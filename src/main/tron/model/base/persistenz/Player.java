@@ -97,6 +97,7 @@ public class Player implements IInputHandler {
 
     public void playerDies() { // Muss keinen Spieler übergeben wegen this ? TODO Tests
         // Zellen werden alle wieder entfärbt
+        this.setAlive(false);
         for (BoardCell boardCell : this.paintedCells) {
             boardCell.setColorId(0);
         }
@@ -137,7 +138,7 @@ public class Player implements IInputHandler {
      * @param direction in welche Richtung man sich bewegt
      * @return true oder false
      */
-    public static boolean checkBorder(int cellId, String direction) { //TODO Tests
+    public boolean checkBorder(int cellId, String direction) {
         int nextCellId;
         boolean nextCellIsBorder = false;
         switch (direction) {
@@ -150,17 +151,19 @@ public class Player implements IInputHandler {
                 nextCellIsBorder = nextCellId > (WIDTH * HEIGHT - 1);  // Nächste ZellenId darf nicht größer als höchste ID sein
             }
             case "moveRight" ->
-                    nextCellIsBorder = (Math.abs(cellId-WIDTH-1) % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
+                nextCellIsBorder = (Math.abs(cellId-(WIDTH-1)) % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
             case "moveLeft" ->
-                    nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
+                nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
         }
         return nextCellIsBorder;
     }
 
-    public void setCurrentCellColor(int color) {
+    public void setCurrentCellColor(int color) { // TODO evtl Tests
         this.currentCell.setColorId(color);
         this.paintedCells.add(currentCell);
     }
+
+
 
 
     public int getId() {
@@ -179,8 +182,11 @@ public class Player implements IInputHandler {
         return currentCell;
     }
 
-    public void setCurrentCell(BoardCell currentCell) {
-        this.currentCell = currentCell;
+    public void setCurrentCell(BoardCell nextCell) {
+        if(nextCell.getColorId() != 0) return;
+        this.currentCell = nextCell;
+        currentCell.setColorId(this.getColor());
+        this.paintedCells.add(currentCell);
     }
 
     public boolean isAlive() {
@@ -189,5 +195,9 @@ public class Player implements IInputHandler {
 
     public List<BoardCell> getPaintedCells() {
         return paintedCells;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 }

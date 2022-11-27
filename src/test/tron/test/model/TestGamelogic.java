@@ -6,8 +6,6 @@ import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
 import tron.model.base.gamelogic.impl.GameLogic;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
-import tron.model.base.persistenz.Board;
-import tron.model.base.persistenz.BoardCell;
 import tron.model.base.persistenz.Player;
 import tron.registrator.impl.Registrator;
 import tron.view.interfaces.IViewModel;
@@ -15,7 +13,6 @@ import tron.view.interfaces.IViewModel;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestGamelogic implements IInputHandler {
 

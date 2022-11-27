@@ -11,7 +11,7 @@ import java.util.*;
 
 
 // Wird noch IGameLogic implementieren
-public class GameLogic implements IInputHandler {
+public class GameLogic implements IInputHandler, Runnable {
 
     boolean onePlayerRemaining = false; // Kommt noch was zu
 
@@ -25,22 +25,58 @@ public class GameLogic implements IInputHandler {
 
     int delay;
 
+    Thread gameThread;
+
+    //TODO vermutlich mind 10er tickspeed und eher width und height bei 20+
+
     public GameLogic(IControllerModel iControllerModel, IViewModel iViewModel) {
         this.board = new Board(HEIGHT, WIDTH);
         players = initPlayers(); //playerCount ok in Controller oder Model?
 
         this.iControllerModel = iControllerModel;
         this.iViewModel = iViewModel;
-        Timer timer = new Timer();
-        // 1/ticks sekunden
-        // GameLoop drin
+
+        //startGameThread();
 
     }
 
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
     //TODO das hier richtig schreiben oder tick() Methode implementieren
-//    @Override
-//    public void run() {
-//        // Soll eine Runde simulieren
+    @Override
+    public void run() {
+
+        // Hier wird geupdated und dargestellt
+        // das ganze wird FPS times per second gemacht
+
+        double updateIntervall = 1000000000.0/VELOCITYOFPLAYERS; // (FPS)
+        double nextUpdateTime = System.nanoTime() + updateIntervall;
+
+        while (gameThread != null) {
+            System.out.println("GameThread is running");
+
+            gametick();
+
+            iViewModel.displayBoard(board, players);
+
+            try {
+                double remainingTimeUpdate = (nextUpdateTime - System.nanoTime())/1000000; // in ms nicht ns
+
+                if(remainingTimeUpdate < 0) { // Wenn die Aktionen zu lang gedauert haben, wird sofort weiter gemacht
+                    remainingTimeUpdate = 0;
+                }
+                Thread.sleep((long) remainingTimeUpdate);
+                nextUpdateTime += updateIntervall;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        //Delta Version testen ob besser
 //        long lastRound = System.nanoTime();
 //        double nsTicks = 1000000000 / 60.0;
 //        double delta = 0;
@@ -52,9 +88,16 @@ public class GameLogic implements IInputHandler {
 //            if (delta >= 1) {
 //                moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
 //                iViewModel.displayBoard(board, players);
+//                    delta--;
 //            }
 //        }
-//    }
+
+    }
+
+    public void gametick() {
+        // Was in einem Tick passieren soll
+        moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
+    }
 
     public List<Player> initPlayers() {
         List<Player> players = new ArrayList<>();

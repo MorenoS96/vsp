@@ -13,4 +13,6 @@ public interface IInputHandler {
     int HEIGHT =  Integer.parseInt(config.get("verticalRasterPoints"));
     int PLAYER_COUNT = Integer.parseInt(config.get("defaultPlayerCount"));
 
+    int VELOCITYOFPLAYERS = Integer.parseInt(config.get("velocityOfPlayers"));
+
 }
