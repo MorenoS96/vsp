@@ -13,10 +13,10 @@ public class ModelController implements IModelController {
     IControllerModel iControllerModel = new BasicController(registrator);
     IViewModel iViewModel = null; // Später
 
-
     @Override
     public void startGame(int playerCount) {
         iViewModel.displayView(ViewEnum.VIEW3.getViewId());
-        new GameLogic(iControllerModel,iViewModel);
+        GameLogic gameLogic = new GameLogic(iControllerModel,iViewModel);
+        gameLogic.startGameThread();
     }
 }

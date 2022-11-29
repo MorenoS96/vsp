@@ -2,6 +2,7 @@ package tron.model.base.persistenz;
 
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements IInputHandler {
@@ -53,32 +54,52 @@ public class Player implements IInputHandler {
         if (direction == moveUp) {
             currentDirection = moveUp;
             int newCellId = idPreviousCell - WIDTH;
-            if (checkBorder(currentCell.getId(), "moveUp") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveUp")) { // nochmal hübscher machen
                 this.isAlive = false;
+                return;
+            }
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
                 return;
             }
             currentCell = board.getCellById(newCellId);
         } else if (direction == moveDown) {
             currentDirection = moveDown;
             int newCellId = idPreviousCell + WIDTH;
-            if (checkBorder(currentCell.getId(), "moveDown") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveDown")) { // nochmal hübscher machen
                 this.isAlive = false;
+                return;
+            }
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
                 return;
             }
             currentCell = board.getCellById(newCellId);
         } else if (direction == moveRight) {
             currentDirection = moveRight;
             int newCellId = idPreviousCell + 1;
-            if (checkBorder(currentCell.getId(), "moveRight") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveRight")) { // nochmal hübscher machen
                 this.isAlive = false;
+                return;
+            }
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
                 return;
             }
             currentCell = board.getCellById(newCellId);
         } else if (direction == moveLeft) {
             currentDirection = moveLeft;
             int newCellId = idPreviousCell - 1;
-            if (checkBorder(currentCell.getId(), "moveLeft") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveLeft")) { // nochmal hübscher machen
                 this.isAlive = false;
+                return;
+            }
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
                 return;
             }
             currentCell = board.getCellById(newCellId);
@@ -103,6 +124,7 @@ public class Player implements IInputHandler {
         for (BoardCell boardCell : this.paintedCells) {
             boardCell.setColorId(0);
         }
+        this.paintedCells = new ArrayList<>(); // Für die View vermutlich wichtig
     }
 
     /**

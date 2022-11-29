@@ -42,4 +42,17 @@ public class Board {
                 ", cells=" + Arrays.toString(cells) +
                 '}';
     }
+
+    public String toStringTest() {
+        int cellsId=0;
+        String ausgabe = "";
+        for(int i=0;i<this.height;i++) {
+            String line = "";
+            for(int j=0;j<this.width;j++) {
+                line += this.cells[cellsId++].colorId + " ";
+            }
+            ausgabe += line + "\n";
+        }
+        return ausgabe;
+    }
 }

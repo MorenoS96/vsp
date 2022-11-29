@@ -9,6 +9,7 @@ import tron.model.base.persistenz.Player;
 import tron.registrator.impl.Registrator;
 import tron.view.interfaces.IViewModel;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,6 @@ public class GameLogic implements IInputHandler, Runnable {
         this.iControllerModel = iControllerModel;
         this.iViewModel = iViewModel;
 
-        //startGameThread();
-
     }
 
     public void startGameThread() {
@@ -55,11 +54,12 @@ public class GameLogic implements IInputHandler, Runnable {
         double updateIntervall = 1000000000.0 / VELOCITYOFPLAYERS; // (FPS)
         double nextUpdateTime = System.nanoTime() + updateIntervall;
 
-        while (!gameThread.isInterrupted()) {
+        while (gameThread != null) {
             //System.out.println("GameThread is running");
+            double startTime = System.nanoTime();
 
             gametick();
-            System.out.println(board);
+            System.out.println(board.toStringTest());
 
             //iViewModel.displayBoard(board, players); //TODO einkommentieren wenn view soweit ist
 
@@ -69,7 +69,7 @@ public class GameLogic implements IInputHandler, Runnable {
                 if (remainingTimeUpdate < 0) { // Wenn die Aktionen zu lang gedauert haben, wird sofort weiter gemacht
                     remainingTimeUpdate = 0;
                 }
-                Thread.sleep((long) remainingTimeUpdate); //TODO noch nicht richtig
+                Thread.sleep((long) remainingTimeUpdate);
                 nextUpdateTime += updateIntervall;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -77,41 +77,32 @@ public class GameLogic implements IInputHandler, Runnable {
 
         }
 
-        //Delta Version testen ob besser
-//        long lastRound = System.nanoTime();
-//        double nsTicks = 1000000000 / 60.0;
-//        double delta = 0;
-//        while (true) { // Später noch ersetzten
-//            long now = System.nanoTime();
-//            long timePassed = now - lastRound;
-//            delta += timePassed / nsTicks;
-//            lastRound = now;
-//            if (delta >= 1) {
-//                moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
-//                iViewModel.displayBoard(board, players);
-//                    delta--;
-//            }
-//        }
-
     }
 
-    public void gametick() {
+    public void gametick() { //TODO Test
         // Was in einem Tick passieren soll
-        moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
-        long playersAlive = players.stream().filter(Player -> Player.isAlive() == true).count(); //TODO evtl simplify
+        // Zum testen:
+        char[] inputrndm = new char[2];
+        inputrndm[0] = 'w';
+        inputrndm[1] = 'z';
+
+        moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board); //iControllerModel.getInputForCurrentCycle()
+        long playersAlive = players.stream().filter(Player::isAlive).count();
 
         if (playersAlive <= 1) {
             onePlayerRemaining = true;
             // iControllerModel.endGame(); //TODO einkommentieren wenn drin
-            List<Player> winningPlayer = players.stream().filter(Player::isAlive).collect(Collectors.toList());
+            List<Player> winningPlayer = players.stream().filter(Player::isAlive).toList();
             Player lastStandingPlayer; //TODO den müssen wir noch mitgeben
             if (winningPlayer.size() == 1) {
                 lastStandingPlayer = winningPlayer.get(0);
+                System.out.println("Winner is " + lastStandingPlayer.getId());
+
             } else {
-                lastStandingPlayer = null;
+                System.out.println("Beide Spieler sind gleichzeitig gecrasht.");
             }
-            System.out.println("Winner is " + lastStandingPlayer.getId());
-            gameThread.interrupt();
+            System.out.println(board.toStringTest());
+            gameThread.stop();
             //iViewModel.displayView(ViewEnum.VIEW4.getViewId());
         }
 
@@ -121,10 +112,10 @@ public class GameLogic implements IInputHandler, Runnable {
         List<Player> players = new ArrayList<>();
         int[] startPositionIds = getPlayerStartingPositions();
 
+        //System.out.println(board.toStringTest());
+
         for (int i = 1; i <= PLAYER_COUNT; i++) {
             List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
-
-            //System.out.println(board);
 
             //System.out.println(board.getCellById(startPositionIds[i-1]));
 
@@ -173,12 +164,22 @@ public class GameLogic implements IInputHandler, Runnable {
         return xWerte;
     }
 
-    public void moveEveryPlayer(char[] allInputs, Board board) { //TODO Test
+    public void moveEveryPlayer(char[] allInputs, Board board) {
         List<Player> playersToKill = new ArrayList<>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
             Player currentPlayer = players.get(i);
-            if (currentPlayer.isAlive()) {
+            if (currentPlayer.isAlive()) { // Wenn currentCell von einem Spieler auf CurrentCell eines anderen ist, beide dead
                 currentPlayer.move(allInputs[i], board);
+            }
+            for(int j=0;j<PLAYER_COUNT;j++) {
+                for(int k=j+1;k<PLAYER_COUNT;k++) {
+                    if(players.get(j).getCurrentCell().getId()==players.get(k).getCurrentCell().getId()) {
+                        playersToKill.add(players.get(j));
+                        players.get(j).setAlive(false);
+                        playersToKill.add(players.get(k));
+                        players.get(k).setAlive(false);
+                    }
+                }
             }
             if (!currentPlayer.isAlive()) {
                 playersToKill.add(currentPlayer);
@@ -187,7 +188,7 @@ public class GameLogic implements IInputHandler, Runnable {
         killPlayers(playersToKill);
     }
 
-    public void killPlayers(List<Player> players) { //TODO Test
+    public void killPlayers(List<Player> players) {
         for (Player player : players) {
             player.playerDies();
         }
@@ -201,6 +202,7 @@ public class GameLogic implements IInputHandler, Runnable {
         Registrator registrator = new Registrator();
         IControllerModel iControllerModel = new BasicController(registrator);
         IViewModel iViewModel = null; // Später
-        //new GameLogic(iControllerModel,iViewModel);
+        GameLogic gameLogic =  new GameLogic(iControllerModel,iViewModel);
+        gameLogic.startGameThread();
     }
 }
