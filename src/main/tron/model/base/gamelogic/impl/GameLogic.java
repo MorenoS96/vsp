@@ -50,7 +50,7 @@ public class GameLogic implements IInputHandler, Runnable {
             lastRound = now;
             if (delta >= 1) {
                 moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
-                iViewModel.displayBoard(board, players);
+                iViewModel.displayBoard(players);
             }
         }
     }
