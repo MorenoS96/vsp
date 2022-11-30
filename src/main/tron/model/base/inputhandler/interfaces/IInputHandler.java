@@ -1,7 +1,7 @@
 package tron.model.base.inputhandler.interfaces;
 
 import tron.controller.impl.basicController.composite.BasicController;
-import tron.registrator.impl.Registrator;
+import tron.lobby.impl.Registrator;
 
 import java.util.Map;
 
