@@ -2,13 +2,14 @@ package tron.model.base.persistenz;
 
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements IInputHandler {
 
     int id;
 
-    String color;
+    int color;
 
     char currentDirection;
 
@@ -18,35 +19,14 @@ public class Player implements IInputHandler {
 
     char moveUp, moveDown, moveLeft, moveRight;
 
-    boolean isAlive = false;
+    boolean isAlive;
 
-
-    public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells) {
-
-        String moveUpKey = "player" + id + 1 + "MoveUp";
-        String moveUpString = config.get(moveUpKey);
-        char moveUp = moveUpString.charAt(0);
-
-        String moveDownKey = "player" + id + 1 + "MoveDown";
-        String moveDownString = config.get(moveDownKey);
-        char moveDown = moveDownString.charAt(0);
-
-        String moveLeftKey = "player" + id + 1 + "MoveLeft";
-        String moveLeftString = config.get(moveLeftKey);
-        char moveLeft = moveLeftString.charAt(0);
-
-        String moveRightKey = "player" + id + 1 + "MoveRight";
-        String moveRightString = config.get(moveRightKey);
-        char moveRight = moveRightString.charAt(0);
-        new Player(id,color,currentCell,paintedCells,moveUp,moveDown,moveLeft,moveRight,true);
-    }
-
-    public Player(int id, String color, BoardCell currentCell, List<BoardCell> paintedCells, char moveUp, char moveDown, char moveLeft, char moveRight,boolean isAlive) {
+    public Player(int id, int color, BoardCell currentCell, List<BoardCell> paintedCells, char moveUp, char moveDown, char moveLeft, char moveRight, boolean isAlive) {
         this.id = id;
         this.color = color;
         this.currentCell = currentCell;
         this.paintedCells = paintedCells;
-        this.currentDirection = moveUp;
+        this.currentDirection = moveDown;
         this.moveUp = moveUp;
         this.moveDown = moveDown;
         this.moveLeft = moveLeft;
@@ -59,80 +39,104 @@ public class Player implements IInputHandler {
      * wenn eine Eingabe gemacht wird dann einfach über die if Kaskade sonst ist der char ' '
      * und es wird die Richtung genommen, die das letzte mal ausgewählt wurde oder der Standart Up.
      *
-     * @param direction
-     * @param board
+     * @param direction richtung
+     * @param board board
      */
     public void move(char direction, Board board) {
-        paintedCells.add(currentCell); // Alte Position als gefärbt markieren
         BoardCell previousCell = currentCell;
         int idPreviousCell = previousCell.getId();
 
         // Checkt ob Spieler eine 180 Grad Drehung machen würde, wenn ja, wird die Richtung einfach beibehalten
-        if(isMoveIncorrect(direction)) {
+        if (isMoveIncorrect(direction)) {
             direction = currentDirection;
         }
 
         if (direction == moveUp) {
             currentDirection = moveUp;
-            int newCellId = idPreviousCell + WIDTH;
-            if (checkBorder(currentCell.getId(), "moveUp") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            int newCellId = idPreviousCell - WIDTH;
+            if (checkBorder(currentCell.getId(), "moveUp")) { // nochmal hübscher machen
                 this.isAlive = false;
                 return;
             }
-            currentCell = board.getCellById(idPreviousCell + WIDTH);
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
+                return;
+            }
+            currentCell = board.getCellById(newCellId);
         } else if (direction == moveDown) {
             currentDirection = moveDown;
-            int newCellId = idPreviousCell - WIDTH;
-            if (checkBorder(currentCell.getId(), "moveDown") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            int newCellId = idPreviousCell + WIDTH;
+            if (checkBorder(currentCell.getId(), "moveDown")) { // nochmal hübscher machen
                 this.isAlive = false;
                 return;
             }
-            currentCell = board.getCellById(idPreviousCell - WIDTH);
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
+                return;
+            }
+            currentCell = board.getCellById(newCellId);
         } else if (direction == moveRight) {
             currentDirection = moveRight;
             int newCellId = idPreviousCell + 1;
-            if (checkBorder(currentCell.getId(), "moveRight") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveRight")) { // nochmal hübscher machen
                 this.isAlive = false;
                 return;
             }
-            currentCell = board.getCellById(idPreviousCell + 1);
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
+                return;
+            }
+            currentCell = board.getCellById(newCellId);
         } else if (direction == moveLeft) {
             currentDirection = moveLeft;
             int newCellId = idPreviousCell - 1;
-            if (checkBorder(currentCell.getId(), "moveLeft") || checkCollision(board.getCellById(newCellId))) { // nochmal hübscher machen
+            if (checkBorder(currentCell.getId(), "moveLeft")) { // nochmal hübscher machen
                 this.isAlive = false;
                 return;
             }
-            currentCell = board.getCellById(idPreviousCell - 1);
+            if(checkCollision(board.getCellById(newCellId))) {
+                this.isAlive = false;
+                currentCell = board.getCellById(newCellId);
+                return;
+            }
+            currentCell = board.getCellById(newCellId);
         } else if (direction == ' ') {
             move(currentDirection, board);
-            //TODO checks evtl
-            //TODO wie genau tötet man spieler
+            return;
+            //TO-DO wie genau tötet man spieler
         } else {
-            // Do nothing
-            System.out.println("Eingabe nicht gemapt");
+            System.out.println("Eingabe nicht gemapt, letzter richtige Input wird genommen");
+            move(currentDirection,board);
+            return;
         }
-        currentCell.setColor(this.getColor());
+
+        //Position färben und als gefärbt markieren
+        currentCell.setColorId(this.getColor());
+        paintedCells.add(currentCell);
     }
 
-    public void playerDies() { // Muss keinen Spieler übergeben wegen this ?
+    public void playerDies() { // Muss keinen Spieler übergeben wegen this ? TODO Tests aber eher in GameLogic
         // Zellen werden alle wieder entfärbt
-        for(BoardCell boardCell: this.paintedCells) {
-            boardCell.setColor(" ");
+        //this.setAlive(false);
+        for (BoardCell boardCell : this.paintedCells) {
+            boardCell.setColorId(0);
         }
-
+        this.paintedCells = new ArrayList<>(); // Für die View vermutlich wichtig
     }
 
     /**
      * Checkt, ob man eine 180 Grad Drehung machen möchte
      *
-     * @return true wenn man sich Illegal bewegen möchte sonst false
+     * @return true, wenn man sich Illegal bewegen möchte sonst false
      */
-    public  boolean isMoveIncorrect(Character InputDirection) {
+    public boolean isMoveIncorrect(Character InputDirection) { //TODO falscher input zu leerem char umwandeln (?)
         if (InputDirection == moveUp && currentDirection == moveDown ||
-            InputDirection == moveDown && currentDirection == moveUp ||
-            InputDirection == moveRight && currentDirection == moveLeft ||
-            InputDirection == moveLeft && currentDirection == moveRight
+                InputDirection == moveDown && currentDirection == moveUp ||
+                InputDirection == moveRight && currentDirection == moveLeft ||
+                InputDirection == moveLeft && currentDirection == moveRight
         ) {
             return true;
         }
@@ -140,13 +144,13 @@ public class Player implements IInputHandler {
     }
 
     /**
-     * Ist "" wenn nicht gefärbt sonst sollte da eine Farbe drin stehen
+     * Ist 0, wenn nicht gefärbt sonst sollte da eine Farbe drin stehen
      *
      * @param nextBoardCell Nächsten Zelle
      * @return true, wenn nächste Zelle schon gefärbt ist, false, wenn nicht
      */
-    public static boolean checkCollision(BoardCell nextBoardCell) {
-        return !nextBoardCell.getColor().isEmpty();
+    public boolean checkCollision(BoardCell nextBoardCell) {
+        return nextBoardCell.getColorId() != 0;
     }
 
     /**
@@ -157,55 +161,47 @@ public class Player implements IInputHandler {
      * @param direction in welche Richtung man sich bewegt
      * @return true oder false
      */
-    public static boolean checkBorder(int cellId, String direction) {
+    public boolean checkBorder(int cellId, String direction) {
         int nextCellId;
         boolean nextCellIsBorder = false;
         switch (direction) {
-            case "moveUp":
-                nextCellId = cellId + WIDTH;
-                nextCellIsBorder = nextCellId <= (WIDTH * HEIGHT - 1); // Nächste ZellenId muss kleiner= sein als max Zellen ID
-                break;
-            case "moveDown":
+            case "moveUp" -> {
                 nextCellId = cellId - WIDTH;
-                nextCellIsBorder = nextCellId >= 0; // Nächste ZellenId muss größer= sein als 0
-                break;
-            case "moveRight":
-                nextCellIsBorder = (cellId + 1 % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
-                break;
-            case "moveLeft":
+                nextCellIsBorder = nextCellId < 0; // Nächste ZellenId darf nicht kleiner als 0 sein
+            }
+            case "moveDown" -> {
+                nextCellId = cellId + WIDTH;
+                nextCellIsBorder = nextCellId > (WIDTH * HEIGHT - 1);  // Nächste ZellenId darf nicht größer als höchste ID sein
+            }
+            case "moveRight" ->
+                nextCellIsBorder = (Math.abs(cellId-(WIDTH-1)) % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
+            case "moveLeft" ->
                 nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
-                break;
         }
         return nextCellIsBorder;
     }
 
-    public void setCurrentCellColor() {
-        currentCell.setColor(this.getColor());
+    public void setCurrentCellColor(int color) {
+        this.currentCell.setColorId(color);
     }
-
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getColor() {
+    public int getColor() {
         return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public BoardCell getCurrentCell() {
         return currentCell;
     }
 
-    public void setCurrentCell(BoardCell currentCell) {
-        this.currentCell = currentCell;
+    public void setCurrentCell(BoardCell nextCell) {
+        if(nextCell.getColorId() != 0) return;
+        this.currentCell = nextCell;
+        currentCell.setColorId(this.getColor());
+        this.paintedCells.add(currentCell);
     }
 
     public boolean isAlive() {
@@ -214,5 +210,37 @@ public class Player implements IInputHandler {
 
     public List<BoardCell> getPaintedCells() {
         return paintedCells;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public char getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void setCurrentDirection(char currentDirection) {
+        this.currentDirection = currentDirection;
+    }
+
+    public char getMoveUp() {
+        return moveUp;
+    }
+
+    public char getMoveDown() {
+        return moveDown;
+    }
+
+    public char getMoveLeft() {
+        return moveLeft;
+    }
+
+    public char getMoveRight() {
+        return moveRight;
+    }
+
+    public void setPaintedCells(List<BoardCell> paintedCells) {
+        this.paintedCells = paintedCells;
     }
 }

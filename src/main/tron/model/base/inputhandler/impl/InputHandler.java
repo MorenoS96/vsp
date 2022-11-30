@@ -18,4 +18,8 @@ public class InputHandler {
         this.registrator = registrator;
         this.config = ((IControllerModel) registrator.getInterfaceOfType(InterfaceType.IControllerModel)).getConfig();
     }
+
+    public char[] getII() {
+        return  ((IControllerModel) registrator.getInterfaceOfType(InterfaceType.IControllerModel)).getInputForCurrentCycle();
+    }
 }

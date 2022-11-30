@@ -65,19 +65,19 @@ public class ViewModel implements IViewModel {
         return coordinates;
     }
 
-    public Color getPlayerColor(String id) {
+    public Color getPlayerColor(int id) {
         switch (id) {
-            case "1":
+            case 1:
                 return Color.BLUE;
-            case "2":
+            case 2:
                 return Color.RED;
-            case "3":
+            case 3:
                 return Color.GREEN;
-            case "4":
+            case 4:
                 return Color.YELLOW;
-            case "5":
+            case 5:
                 return Color.PURPLE;
-            case "6":
+            case 6:
                 return Color.ORANGE;
             default:
                 System.out.println("Keine passende Farbe gefunden bzw zu viele Spieler");
