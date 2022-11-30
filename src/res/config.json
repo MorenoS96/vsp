@@ -1,9 +1,9 @@
 {
-  "defaultPlayerCount": 2,
+  "defaultPlayerCount": 3,
   "maxWaitTimeMs": 100,
   "sizeOfRasterPointInPx": 10,
-  "horizontalRasterPoints": 10,
-  "verticalRasterPoints": 10,
+  "horizontalRasterPoints": 20,
+  "verticalRasterPoints": 20,
   "velocityOfPlayers": 1,
   "player1MoveRight": "e",
   "player1MoveLeft": "q",

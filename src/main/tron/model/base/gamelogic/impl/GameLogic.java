@@ -60,8 +60,6 @@ public class GameLogic implements IInputHandler, Runnable {
 
 
 
-            //iViewModel.displayBoard(board, players); //TODO einkommentieren wenn view soweit ist
-
             try {
                 double remainingTimeUpdate = (nextUpdateTime - System.nanoTime()) / 1000000; // in ms nicht ns
 
@@ -74,9 +72,11 @@ public class GameLogic implements IInputHandler, Runnable {
                 throw new RuntimeException(e);
             }
             gametick();
+            List<Player> playersToPaint = players.stream().filter(Player::isAlive).toList();
+            iViewModel.displayBoard(playersToPaint);
+
             System.out.println(board.toStringTest());
         }
-
     }
 
     public void gametick() { //TODO Test
@@ -87,7 +87,7 @@ public class GameLogic implements IInputHandler, Runnable {
         inputrndm[1] = 'z';
 
         moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board); //iControllerModel.getInputForCurrentCycle()
-        iViewModel.displayBoard(players);
+        //iViewModel.displayBoard(players);
         long playersAlive = players.stream().filter(Player::isAlive).count();
 
         if (playersAlive <= 1) {
