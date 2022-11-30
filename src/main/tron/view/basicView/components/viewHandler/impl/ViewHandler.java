@@ -35,9 +35,9 @@ public class ViewHandler implements IViewHandler {
     private StackPane base;
     private Map<String, Node> overlays;
     private Color gameBoardBackgroundColor;
-
+    static String defaultPath="src/res/view.properties";
     public ViewHandler() throws IOException, NumberFormatException {
-        this("view.properties", Color.BLUEVIOLET.darker().darker().darker().desaturate());
+        this(defaultPath, Color.BLUEVIOLET.darker().darker().darker().desaturate());
     }
 
     public ViewHandler(String configFile) throws IOException, NumberFormatException {

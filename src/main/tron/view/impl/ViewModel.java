@@ -3,6 +3,8 @@ package tron.view.impl;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tron.model.base.persistenz.Player;
+import tron.registrator.interfaces.IRegistrator;
+import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 import tron.view.basicView.components.viewHandler.impl.Coordinate;
 import tron.view.basicView.components.viewHandler.impl.ViewHandler;
 import tron.view.basicView.overlays.StartMenu;
@@ -14,19 +16,20 @@ import java.util.List;
 
 public class ViewModel implements IViewModel {
 
-    private ViewHandler view;
+    private IViewHandler view;
     private StartMenu startMenu;
 
-    public ViewModel(Stage stage) {
+    public ViewModel(Stage stage, IRegistrator iRegistrator) {
 
         try {
-            view = new ViewHandler();
+            this.view = new ViewHandler();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        startMenu=new StartMenu("startMenu.css",view,iRegistrator);
         // configure and show stage
         stage.setTitle("TRON - Light Cycles");
-        stage.setScene(view.getScene());
+        stage.setScene(this.view.getScene());
         stage.show();
     }
 

@@ -17,13 +17,14 @@ import java.util.List;
 import tron.controller.util.ConfigHelper;
 public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,KeyListener, NativeKeyListener {
     private HashSet<Character> mappedKeys;
-    private HashMap<Character,Long> pressedKeys;
+    private static HashMap<Character,Long> pressedKeys=new HashMap<>();
+
     private char lastInput;
     private String[] moveConfigNames;
     private IGetConfig iGetConfig;
     public TastaturHandler(IGetConfig iGetConfig) {
         mappedKeys  = new HashSet<>();
-        pressedKeys=new HashMap<>();
+
         moveConfigNames= ConfigHelper.getMoveConfigNames();
         this.iGetConfig=iGetConfig;
         reMapKeys();
@@ -32,7 +33,7 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
     public void reMapKeys(){
         mappedKeys  = new HashSet<>();
         for (int i=0;i< moveConfigNames.length;i++){
-            String mappedKey=iGetConfig.getConfigVal(moveConfigNames[i]).strip().toLowerCase();
+            String mappedKey=iGetConfig.getConfigVal(moveConfigNames[i]).trim().toLowerCase();
             mappedKeys.add(mappedKey.charAt(0));
         }
     }
@@ -46,17 +47,19 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
     @Override
     public char[] getInputsForCurrentCycle() {
         char[] arrayToReturn=new char[6];
+        System.out.println("getInput");
+        System.out.println(this.pressedKeys);
         int moveDirections=4;
         for(int i=0;i< moveConfigNames.length;i+=moveDirections){
-            char moveRight=iGetConfig.getConfigVal(moveConfigNames[i]).strip().toLowerCase().charAt(0);
-            char moveLeft=iGetConfig.getConfigVal(moveConfigNames[i+1]).strip().toLowerCase().charAt(0);
-            char moveUp=iGetConfig.getConfigVal(moveConfigNames[i+2]).strip().toLowerCase().charAt(0);
-            char moveDown=iGetConfig.getConfigVal(moveConfigNames[i+3]).strip().toLowerCase().charAt(0);
+            char moveRight=iGetConfig.getConfigVal(moveConfigNames[i]).trim().toLowerCase().charAt(0);
+            char moveLeft=iGetConfig.getConfigVal(moveConfigNames[i+1]).trim().toLowerCase().charAt(0);
+            char moveUp=iGetConfig.getConfigVal(moveConfigNames[i+2]).trim().toLowerCase().charAt(0);
+            char moveDown=iGetConfig.getConfigVal(moveConfigNames[i+3]).trim().toLowerCase().charAt(0);
             char[] moves=new char[]{moveRight,moveLeft,moveUp,moveDown};
             Long maxTime=0l;
             int maxTimeIndex=-1;
             for(int a=0;a<moves.length;a++){
-                Long pressedKeyTime=pressedKeys.get(moves[a]);
+                Long pressedKeyTime=this.pressedKeys.get(moves[a]);
                 if(pressedKeyTime!=null){
                     if(pressedKeyTime>maxTime){
                         maxTime=pressedKeyTime;
@@ -76,20 +79,25 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
 
 
         }
-        pressedKeys.clear();
-        return arrayToReturn;
+
+     return arrayToReturn;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
         handleKeyBoardChar(e.getKeyChar());
     }
-    private void handleKeyBoardChar(char c){
+    private void  handleKeyBoardChar(char c){
         System.out.println("key typed "+String.valueOf(c));
-        lastInput= c;
-        if(mappedKeys.contains(Character.valueOf(lastInput))|| true){
+        this.lastInput= c;
+        if(mappedKeys.contains(c)){
             pressedKeys.put(lastInput,new Date().getTime());
+
         }
+        System.out.println("end handle");
+        System.out.println(this.pressedKeys);
+
+
     }
     @Override
     public void keyPressed(KeyEvent e) {

@@ -58,8 +58,7 @@ public class GameLogic implements IInputHandler, Runnable {
             //System.out.println("GameThread is running");
             double startTime = System.nanoTime();
 
-            gametick();
-            System.out.println(board.toStringTest());
+
 
             //iViewModel.displayBoard(board, players); //TODO einkommentieren wenn view soweit ist
 
@@ -74,7 +73,8 @@ public class GameLogic implements IInputHandler, Runnable {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
+            gametick();
+            System.out.println(board.toStringTest());
         }
 
     }
@@ -87,6 +87,7 @@ public class GameLogic implements IInputHandler, Runnable {
         inputrndm[1] = 'z';
 
         moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board); //iControllerModel.getInputForCurrentCycle()
+        iViewModel.displayBoard(players);
         long playersAlive = players.stream().filter(Player::isAlive).count();
 
         if (playersAlive <= 1) {
@@ -165,6 +166,7 @@ public class GameLogic implements IInputHandler, Runnable {
     }
 
     public void moveEveryPlayer(char[] allInputs, Board board) {
+
         List<Player> playersToKill = new ArrayList<>();
         for (int i = 0; i < PLAYER_COUNT; i++) {
             Player currentPlayer = players.get(i);

@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import tron.controller.interfaces.IControllerView;
+import tron.registrator.interfaces.IRegistrator;
+import tron.registrator.util.InterfaceType;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 import tron.view.basicView.components.viewHandler.impl.ViewUtility;
 
@@ -14,7 +16,7 @@ public class StartMenu extends VBox {
     private final Button btnStart;
     public IControllerView iControllerView;
 
-    public StartMenu(String stylesheet, IViewHandler view) {
+    public StartMenu(String stylesheet, IViewHandler view, IRegistrator iRegistrator) {
         super(20.0);
         this.getStylesheets().add(stylesheet);
         this.setAlignment(Pos.CENTER);
@@ -25,7 +27,10 @@ public class StartMenu extends VBox {
         btnStart = new Button("Start Game");
         btnStart.setOnAction(event -> {
             System.out.println("click!");
-            this.iControllerView.pushClick("startGame");
+            if(iControllerView==null){
+                iControllerView=(IControllerView)iRegistrator.getInterfaceOfType(InterfaceType.IControllerView);
+            }
+            this.iControllerView.pushClick("startGameButton");
             view.hideOverlays();
         });
 

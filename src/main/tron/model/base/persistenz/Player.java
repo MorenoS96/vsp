@@ -165,17 +165,17 @@ public class Player implements IInputHandler {
         int nextCellId;
         boolean nextCellIsBorder = false;
         switch (direction) {
-            case "moveUp" -> {
+            case "moveUp" : {
                 nextCellId = cellId - WIDTH;
                 nextCellIsBorder = nextCellId < 0; // Nächste ZellenId darf nicht kleiner als 0 sein
             }
-            case "moveDown" -> {
+            case "moveDown" : {
                 nextCellId = cellId + WIDTH;
                 nextCellIsBorder = nextCellId > (WIDTH * HEIGHT - 1);  // Nächste ZellenId darf nicht größer als höchste ID sein
             }
-            case "moveRight" ->
+            case "moveRight" :
                 nextCellIsBorder = (Math.abs(cellId-(WIDTH-1)) % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
-            case "moveLeft" ->
+            case "moveLeft" :
                 nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
         }
         return nextCellIsBorder;

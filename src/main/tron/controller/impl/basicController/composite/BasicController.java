@@ -16,6 +16,7 @@ import tron.controller.util.OsUtil;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import tron.model.interfaces.IModelController;
 import tron.registrator.impl.Registrator;
+import tron.registrator.interfaces.IRegistrator;
 import tron.registrator.util.InterfaceType;
 
 import java.util.Map;
@@ -28,7 +29,7 @@ public class BasicController implements IController {
     TastaturHandler tastaturHandler;
     IClick iClick;
     IGameLoop iGameLoop;
-    public BasicController(Registrator registrator) {
+    public BasicController(IRegistrator registrator) {
         this.iGetConfig = new ConfigHandler();
         tastaturHandlerIFactory=new TastaturHandlerFactory(iGetConfig);
 
