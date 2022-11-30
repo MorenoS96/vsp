@@ -36,7 +36,7 @@ public class BasicController implements IController {
         this.iGetInput = tastaturHandlerIFactory.getInstance();
         iGameKey=tastaturHandlerIFactory.getInstance();
         tastaturHandler= tastaturHandlerIFactory.getInstance();
-        iGameLoop=new GameLoopManager(iGetConfig,(IModelController) registrator.getInterfaceOfType(InterfaceType.IModelController));
+        iGameLoop=new GameLoopManager(registrator,iGetConfig);
         iClick=new ClickHandler(iGameLoop);
         if(OsUtil.getOS().equals( OsUtil.OS.WINDOWS)){
             GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
@@ -100,5 +100,11 @@ public class BasicController implements IController {
     @Override
     public void pushInput(String elementIdentifier, String input) {
         iClick.pushInput(elementIdentifier,input);
+    }
+
+    @Override
+    public Map<String, String> getConfigMap(String filePath) {
+        this.iGetConfig.setConfigPath(filePath);
+        return this.iGetConfig.getConfigMap();
     }
 }

@@ -10,11 +10,12 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfigHandler implements IGetConfig{
+public class ConfigHandler implements IGetConfig,ILoadConfig{
     static String defaultPath="src/res/config.json";
     private Map<String,String> classConfigMap;
     private static String filePath=null;
-    private Map<String, String> loadConfigMap(String absolutePathToConfigFile) throws IOException, ParseException, org.json.simple.parser.ParseException {
+    @Override
+    public Map<String, String> loadConfigMap(String absolutePathToConfigFile) throws IOException, ParseException, org.json.simple.parser.ParseException {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader(absolutePathToConfigFile)); //the location of the file
         JSONObject jsonObject = (JSONObject) obj;
