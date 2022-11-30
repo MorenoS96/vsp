@@ -211,4 +211,8 @@ public class Player implements IInputHandler {
     public boolean isAlive() {
         return isAlive;
     }
+
+    public List<BoardCell> getPaintedCells() {
+        return paintedCells;
+    }
 }
