@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import tron.model.base.persistenz.Player;
 import tron.view.basicView.components.viewHandler.impl.Coordinate;
 import tron.view.basicView.components.viewHandler.impl.ViewHandler;
+import tron.view.basicView.overlays.StartMenu;
 import tron.view.interfaces.IViewModel;
 
 import java.io.IOException;
@@ -14,6 +15,8 @@ import java.util.List;
 public class ViewModel implements IViewModel {
 
     private ViewHandler view;
+    private StartMenu startMenu;
+
     public ViewModel(Stage stage) {
 
         try {
@@ -29,6 +32,19 @@ public class ViewModel implements IViewModel {
 
     @Override
     public void displayView(int view) {
+        switch (view) {
+            case 1:
+                showStartMenu();
+                break;
+            case 2:
+                showWaitScreen();
+                break;
+            case 3:
+                showGame();
+                break;
+            case 4:
+                showEndScreen();
+        }
 
     }
 
@@ -48,6 +64,7 @@ public class ViewModel implements IViewModel {
         coordinates.add(new Coordinate(player.getCurrentCell().getX(), player.getCurrentCell().getY()));
         return coordinates;
     }
+
     public Color getPlayerColor(String id) {
         switch (id) {
             case "1":
@@ -66,6 +83,28 @@ public class ViewModel implements IViewModel {
                 System.out.println("Keine passende Farbe gefunden bzw zu viele Spieler");
                 return null;
         }
+    }
+
+    public void showStartMenu() {
+        view.hideOverlays();
+        view.registerOverlay("startMenu", startMenu);
+        view.showOverlay("startMenu");
+    }
+
+    public void showWaitScreen() {
+        view.hideOverlays();
+        view.registerOverlay("waitScreen", startMenu);
+        view.showOverlay("waitScreen");
+    }
+
+    public void showGame() {
+        view.hideOverlays();
+    }
+
+    public void showEndScreen() {
+        view.hideOverlays();
+        view.registerOverlay("endScreen", startMenu);
+        view.showOverlay("endScreen");
     }
 
 }
