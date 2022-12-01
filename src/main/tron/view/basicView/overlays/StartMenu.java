@@ -16,7 +16,7 @@ public class StartMenu extends VBox {
     private final Button btnStart;
     public IControllerView iControllerView;
 
-    public StartMenu(String stylesheet, IViewHandler view, IRegistrator iRegistrator) {
+    public StartMenu(String stylesheet, IViewHandler view) {
         super(20.0);
         this.getStylesheets().add(stylesheet);
         this.setAlignment(Pos.CENTER);
@@ -27,10 +27,7 @@ public class StartMenu extends VBox {
         btnStart = new Button("Start Game");
         btnStart.setOnAction(event -> {
             System.out.println("click!");
-            if(iControllerView==null){
-                iControllerView=(IControllerView)iRegistrator.getInterfaceOfType(InterfaceType.IControllerView);
-            }
-            this.iControllerView.pushClick("startGameButton");
+            view.pushClick("startGameButton");
             view.hideOverlays();
         });
 

@@ -22,15 +22,16 @@ public class ViewModel implements IViewModel {
     public ViewModel(Stage stage, IRegistrator iRegistrator) {
 
         try {
-            this.view = new ViewHandler();
+            this.view = new ViewHandler(iRegistrator);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        startMenu=new StartMenu("startMenu.css",view,iRegistrator);
+        startMenu=new StartMenu("startMenu.css",view);
         // configure and show stage
         stage.setTitle("TRON - Light Cycles");
         stage.setScene(this.view.getScene());
         stage.show();
+
     }
 
     @Override

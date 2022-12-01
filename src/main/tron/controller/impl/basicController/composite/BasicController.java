@@ -38,13 +38,14 @@ public class BasicController implements IController {
         tastaturHandler= tastaturHandlerIFactory.getInstance();
         iGameLoop=new GameLoopManager(registrator,iGetConfig);
         iClick=new ClickHandler(iGameLoop);
+        /*
         if(OsUtil.getOS().equals( OsUtil.OS.WINDOWS)){
             GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
             keyboardHook.addKeyListener(tastaturHandler);
 
         }else {
             GlobalScreen.addNativeKeyListener(tastaturHandler);
-        }
+        }*/
         registrator.registerComponent(InterfaceType.IControllerModel,this);
         registrator.registerComponent(InterfaceType.IControllerView,this);
         registrator.registerComponent(InterfaceType.IConfig,this);
@@ -100,6 +101,11 @@ public class BasicController implements IController {
     @Override
     public void pushInput(String elementIdentifier, String input) {
         iClick.pushInput(elementIdentifier,input);
+    }
+
+    @Override
+    public void pushKeyboardInput(char input) {
+        iGameKey.pushInput(input);
     }
 
     @Override
