@@ -73,7 +73,7 @@ public class TestGamelogic implements IInputHandler {
                 player.move(player.getMoveDown(), gameLogic.board);
             }
         }
-        System.out.println(gameLogic.board);
+        //System.out.println(gameLogic.board);
         List<Player> playersToKill = new ArrayList<>();
         playersToKill.add(players.get(0));
         Assertions.assertEquals(4, players.get(0).getPaintedCells().size());
@@ -94,10 +94,10 @@ public class TestGamelogic implements IInputHandler {
         }
         Assertions.assertEquals(paintedCellsInBoard, (3 * (PLAYER_COUNT - 1) + PLAYER_COUNT - 1 + 7));
 
-        // Erster Spieler wird getötet
+        // Erster Spieler wird getötet, seine Liste soll erhalten bleiben
         gameLogic.killPlayers(playersToKill);
         List<BoardCell> boardCells = new ArrayList<>();
-        Assertions.assertEquals(boardCells, players.get(0).getPaintedCells());
+        Assertions.assertEquals(4, players.get(0).getPaintedCells().size());
 
         paintedCellsInBoard = 0;
         for (int i = 0; i < WIDTH * HEIGHT; i++) {
@@ -121,8 +121,12 @@ public class TestGamelogic implements IInputHandler {
         }
         Assertions.assertEquals(paintedCellsInBoard, 0);
 
-        for (Player player1 : players) {
-            Assertions.assertEquals(boardCells, player1.getPaintedCells());
+        for (int i=0;i<PLAYER_COUNT;i++) {
+            if(i==PLAYER_COUNT-1) {
+                Assertions.assertEquals(7, players.get(i).getPaintedCells().size());
+                break;
+            }
+            Assertions.assertEquals(4, players.get(i).getPaintedCells().size());
         }
 
     }

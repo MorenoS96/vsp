@@ -6,5 +6,5 @@ public interface IGameLoop {
     int getPlayerCount();
     void startGame();
     void setPlayerCount(int playerCount);
-    ILobby joinGame(int playerID);
+
 }

@@ -5,16 +5,32 @@ import tron.controller.interfaces.IControllerModel;
 import tron.lobby.impl.Registrator;
 import tron.model.base.persistenz.ViewEnum;
 import tron.model.interfaces.IModelController;
+import tron.registrator.impl.Registrator;
+import tron.registrator.interfaces.IRegistrator;
+import tron.registrator.util.InterfaceType;
 import tron.view.interfaces.IViewModel;
 
 public class ModelController implements IModelController {
 
-    Registrator registrator = new Registrator();
-    IControllerModel iControllerModel = new BasicController(registrator);
-    IViewModel iViewModel = null; // Später
+    IRegistrator registrator;
+    IControllerModel iControllerModel;
+    IViewModel iViewModel; // Später
+
+    public ModelController(IRegistrator registrator) {
+        this.registrator = registrator;
+        iControllerModel=(IControllerModel)registrator.getInterfaceOfType(InterfaceType.IControllerModel);
+        iViewModel=(IViewModel)registrator.getInterfaceOfType(InterfaceType.IViewModel);
+    }
+
 
     @Override
     public void startGame(int playerCount) {
+        if(iViewModel==null){
+            iViewModel=(IViewModel)registrator.getInterfaceOfType(InterfaceType.IViewModel);
+        }
+        if(iControllerModel==null){
+            iControllerModel=(IControllerModel)registrator.getInterfaceOfType(InterfaceType.IControllerModel);
+        }
         iViewModel.displayView(ViewEnum.VIEW3.getViewId());
         GameLogic gameLogic = new GameLogic(iControllerModel,iViewModel);
         gameLogic.startGameThread();

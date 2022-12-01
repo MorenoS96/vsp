@@ -15,8 +15,9 @@ import tron.controller.interfaces.*;
 import tron.controller.util.OsUtil;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import tron.model.interfaces.IModelController;
-import tron.lobby.impl.Registrator;
-import tron.lobby.util.InterfaceType;
+import tron.registrator.impl.Registrator;
+import tron.registrator.interfaces.IRegistrator;
+import tron.registrator.util.InterfaceType;
 
 import java.util.Map;
 
@@ -28,22 +29,23 @@ public class BasicController implements IController {
     TastaturHandler tastaturHandler;
     IClick iClick;
     IGameLoop iGameLoop;
-    public BasicController(Registrator registrator) {
+    public BasicController(IRegistrator registrator) {
         this.iGetConfig = new ConfigHandler();
         tastaturHandlerIFactory=new TastaturHandlerFactory(iGetConfig);
 
         this.iGetInput = tastaturHandlerIFactory.getInstance();
         iGameKey=tastaturHandlerIFactory.getInstance();
         tastaturHandler= tastaturHandlerIFactory.getInstance();
-        iGameLoop=new GameLoopManager(iGetConfig,(IModelController) registrator.getInterfaceOfType(InterfaceType.IModelController),registrator);
+        iGameLoop=new GameLoopManager(registrator,iGetConfig);
         iClick=new ClickHandler(iGameLoop);
+        /*
         if(OsUtil.getOS().equals( OsUtil.OS.WINDOWS)){
             GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
             keyboardHook.addKeyListener(tastaturHandler);
 
         }else {
             GlobalScreen.addNativeKeyListener(tastaturHandler);
-        }
+        }*/
         registrator.registerComponent(InterfaceType.IControllerModel,this);
         registrator.registerComponent(InterfaceType.IControllerView,this);
         registrator.registerComponent(InterfaceType.IConfig,this);
@@ -99,5 +101,16 @@ public class BasicController implements IController {
     @Override
     public void pushInput(String elementIdentifier, String input) {
         iClick.pushInput(elementIdentifier,input);
+    }
+
+    @Override
+    public void pushKeyboardInput(char input) {
+        iGameKey.pushInput(input);
+    }
+
+    @Override
+    public Map<String, String> getConfigMap(String filePath) {
+        this.iGetConfig.setConfigPath(filePath);
+        return this.iGetConfig.getConfigMap();
     }
 }
