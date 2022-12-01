@@ -34,4 +34,9 @@ public class ModelController implements IModelController {
         GameLogic gameLogic = new GameLogic(iControllerModel,iViewModel);
         gameLogic.startGameThread();
     }
+
+    @Override
+    public void startApplication() {
+
+    }
 }

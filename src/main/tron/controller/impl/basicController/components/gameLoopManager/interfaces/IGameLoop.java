@@ -4,5 +4,6 @@ public interface IGameLoop {
     int getPlayerCount();
     void startGame();
     void setPlayerCount(int playerCount);
+    void startApplication();
 
 }

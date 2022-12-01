@@ -13,11 +13,16 @@ public class GameLoopManager implements IGameLoop {
     public GameLoopManager(IRegistrator registrator,IGetConfig iGetConfig) {
         this.iModelController=(IModelController) registrator.getInterfaceOfType(InterfaceType.IModelController);
         this.iGetConfig=iGetConfig;
-        playerCount=Integer.valueOf(iGetConfig.getConfigVal("defaultPlayerCount"));
+        playerCount=Integer.parseInt(iGetConfig.getConfigVal("defaultPlayerCount"));
     }
     @Override
     public void setPlayerCount(int playerCount) {
         this.playerCount = playerCount;
+    }
+
+    @Override
+    public void startApplication() {
+        iModelController.startApplication();
     }
 
     @Override
