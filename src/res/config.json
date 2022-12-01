@@ -4,6 +4,8 @@
   "sizeOfRasterPointInPx": 10,
   "horizontalRasterPoints": 20,
   "verticalRasterPoints": 20,
+  "windowWidth": 400,
+  "windowHeight": 400,
   "velocityOfPlayers": 1,
   "player1MoveRight": "e",
   "player1MoveLeft": "q",

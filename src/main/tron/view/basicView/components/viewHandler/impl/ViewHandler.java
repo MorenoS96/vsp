@@ -7,14 +7,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import tron.controller.impl.basicController.composite.BasicController;
+import tron.registrator.impl.Registrator;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 
 /**
@@ -36,23 +36,19 @@ public class ViewHandler implements IViewHandler {
     private Map<String, Node> overlays;
     private Color gameBoardBackgroundColor;
     static String defaultPath="src/res/view.properties";
+
     public ViewHandler() throws IOException, NumberFormatException {
-        this(defaultPath, Color.BLUEVIOLET.darker().darker().darker().desaturate());
+        this(Color.BLUEVIOLET.darker().darker().darker().desaturate());
     }
 
-    public ViewHandler(String configFile) throws IOException, NumberFormatException {
-        this(configFile, Color.BLUEVIOLET.darker().darker().darker().desaturate());
-    }
-
-    public ViewHandler(String configFile, Color gameBoardBackgroundColor) throws IOException {
+    public ViewHandler(Color gameBoardBackgroundColor) throws IOException {
         this.gameBoardBackgroundColor = gameBoardBackgroundColor;
-        Properties prop = new Properties();
-        prop.load(new FileInputStream(configFile));
 
-        this.WIDTH = Integer.parseInt(prop.getProperty("width"));
-        this.HEIGHT = Integer.parseInt(prop.getProperty("height"));
-        this.ROWS = Integer.parseInt(prop.getProperty("rows"));
-        this.COLUMNS = Integer.parseInt(prop.getProperty("columns"));
+        Map<String, String> config = new BasicController(new Registrator()).getConfig();
+        this.WIDTH = Integer.parseInt(config.get("windowWidth"));
+        this.HEIGHT = Integer.parseInt(config.get("windowHeight"));
+        this.ROWS = Integer.parseInt(config.get("verticalRasterPoints"));
+        this.COLUMNS = Integer.parseInt(config.get("horizontalRasterPoints"));
 
         this.overlays = new HashMap<>();
         base = new StackPane();
