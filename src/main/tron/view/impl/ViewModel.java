@@ -55,16 +55,16 @@ public class ViewModel implements IViewModel {
     public void displayBoard(List<Player> players) {
         for (Player player : players) {
             view.draw(getPlayerCoordinates(player), getPlayerColor(player.getColor()));
-            view.highlightCell(new Coordinate(player.getCurrentCell().getX(), player.getCurrentCell().getY()));
+            view.highlightCell(new Coordinate(player.getCurrentCell().getX(), player.getCurrentCell().getY()), getPlayerColor(player.getColor()));
         }
     }
 
     public List<Coordinate> getPlayerCoordinates(Player player) {
         List<Coordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < player.getPaintedCells().size(); i++) {
-            coordinates.add(new Coordinate(player.getPaintedCells().get(i).getX(), player.getPaintedCells().get(i).getY()));
+            coordinates.add(0, new Coordinate(player.getPaintedCells().get(i).getX(), player.getPaintedCells().get(i).getY()));
         }
-        coordinates.add(new Coordinate(player.getCurrentCell().getX(), player.getCurrentCell().getY()));
+        coordinates.add(0, new Coordinate(player.getCurrentCell().getX(), player.getCurrentCell().getY()));
         return coordinates;
     }
 

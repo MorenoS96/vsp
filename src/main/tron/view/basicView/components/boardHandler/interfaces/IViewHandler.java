@@ -34,12 +34,12 @@ public interface IViewHandler {
     /**
      * Draws a bike in the gen color
      *
-     * @param bike list of coordinates to cells. First element of the list is the bike, rest is the tail.
+     * @param player list of coordinates to cells. First element of the list is the bike, rest is the tail.
      * @param color color of the bike
      *
      * @throws IllegalArgumentException - if at least one of the coordinates is outside of the canvas, i.e. game board
      */
-    void draw(List<Coordinate> bike, Color color);
+    void draw(List<Coordinate> player, Color color);
 
     /**
      * Registers a new overlay, e.g. a menu. If a mapping for the name already exists, the old value is replaced by
@@ -70,5 +70,5 @@ public interface IViewHandler {
      *
      * @param cell the cell to be highlighted
      */
-    void highlightCell(Coordinate cell);
+    void highlightCell(Coordinate cell, Color color);
 }

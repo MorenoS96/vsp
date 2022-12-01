@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 /**
- * Implementation of IViewHandler. A config files (view.properties) is read upon object creation.
+ * Implementation of IViewHandler.
  *
  * @author Daniel Sarnow (daniel.sarnow@haw-hamburg.de)
  * @version 0.1
@@ -83,11 +83,11 @@ public class ViewHandler implements IViewHandler {
     }
 
     @Override
-    public void draw(List<Coordinate> bike, Color color) {
-        if(bike == null || color == null){
+    public void draw(List<Coordinate> player, Color color) {
+        if(player == null || color == null){
             throw new NullPointerException();
         }
-        for(Coordinate pos : bike){
+        for(Coordinate pos : player){
             if(pos.x < 0 || pos.x >= COLUMNS){
                 throw new IllegalArgumentException("x value out of bounds: x is " + pos.x + ", but should be 0 <= x < " + COLUMNS);
             }
@@ -130,10 +130,10 @@ public class ViewHandler implements IViewHandler {
     }
 
     @Override
-    public void highlightCell(Coordinate cell) {
-        // highlight last bike position
+    public void highlightCell(Coordinate cell, Color color) {
+        // highlight last player position
         GraphicsContext g = gameBoard.getGraphicsContext2D();
-        g.setFill(Color.RED.darker());
+        g.setFill(color.darker().darker());
         g.fillRect(cell.x*WIDTH/COLUMNS, cell.y*HEIGHT/ROWS, WIDTH/COLUMNS, HEIGHT/ROWS);
     }
 }
