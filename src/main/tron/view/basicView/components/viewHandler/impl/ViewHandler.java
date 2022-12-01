@@ -99,7 +99,7 @@ public class ViewHandler implements IViewHandler {
     }
 
     @Override
-    public void draw(List<Coordinate> player, Color color) {
+    public void draw(List<Coordinate> player, Color color,boolean isAlive) {
         if(player == null || color == null){
             throw new NullPointerException();
         }

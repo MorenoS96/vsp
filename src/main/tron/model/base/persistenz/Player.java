@@ -119,12 +119,12 @@ public class Player implements IInputHandler {
     }
 
     public void playerDies() { // Muss keinen Spieler übergeben wegen this ? TODO Tests aber eher in GameLogic
-        // Zellen werden alle wieder entfärbt
+        // Zellen des Boards werden alle wieder entfärbt
         //this.setAlive(false);
         for (BoardCell boardCell : this.paintedCells) {
             boardCell.setColorId(0);
         }
-        this.paintedCells = new ArrayList<>(); // Für die View vermutlich wichtig
+        //this.paintedCells = new ArrayList<>(); // Für die View vermutlich wichtig
     }
 
     /**
@@ -168,15 +168,19 @@ public class Player implements IInputHandler {
             case "moveUp" : {
                 nextCellId = cellId - WIDTH;
                 nextCellIsBorder = nextCellId < 0; // Nächste ZellenId darf nicht kleiner als 0 sein
+                break;
             }
             case "moveDown" : {
                 nextCellId = cellId + WIDTH;
                 nextCellIsBorder = nextCellId > (WIDTH * HEIGHT - 1);  // Nächste ZellenId darf nicht größer als höchste ID sein
+                break;
             }
             case "moveRight" :
                 nextCellIsBorder = (Math.abs(cellId-(WIDTH-1)) % WIDTH == 0); // Wenn Zelle am rechten Rand, dann nicht nach rechts bewegen.
+                break;
             case "moveLeft" :
                 nextCellIsBorder = (cellId % WIDTH == 0); // Wenn Zelle ganz links, dann nicht nach links bewegen.
+                break;
         }
         return nextCellIsBorder;
     }
