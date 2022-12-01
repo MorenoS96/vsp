@@ -1,4 +1,4 @@
-package tron.registrator.util;
+package tron.lobby.util;
 
 import tron.controller.interfaces.IConfig;
 import tron.controller.interfaces.IControllerModel;

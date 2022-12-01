@@ -3,11 +3,11 @@ package tron.test.model;
 import org.junit.jupiter.api.Test;
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
+import tron.lobby.impl.Registrator;
 import tron.model.base.gamelogic.impl.GameLogic;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.Board;
 import tron.model.base.persistenz.BoardCell;
-import tron.registrator.impl.Registrator;
 import tron.view.interfaces.IViewModel;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

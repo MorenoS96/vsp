@@ -1,7 +1,7 @@
-package tron.registrator.interfaces;
+package tron.lobby.interfaces;
 
 
-import tron.registrator.util.InterfaceType;
+import tron.lobby.util.InterfaceType;
 
 public interface IRegistrator {
    void registerComponent(InterfaceType interfaceType, Object obj);
