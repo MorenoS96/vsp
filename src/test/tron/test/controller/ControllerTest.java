@@ -7,14 +7,15 @@ import org.junit.jupiter.api.Test;
 import tron.controller.interfaces.IController;
 import tron.controller.factory.ControllerFactory;
 import tron.controller.interfaces.IControllerView;
-import tron.registrator.impl.Registrator;
-import tron.registrator.util.InterfaceType;
+import tron.lobby.impl.Registrator;
+import tron.lobby.interfaces.IRegistrator;
+import tron.lobby.util.InterfaceType;
 
 
 public class ControllerTest {
     @Test
   public void testIConfig(){
-        Registrator registrator=new Registrator();
+        IRegistrator registrator=new Registrator();
         ControllerFactory controllerFactory=new ControllerFactory(registrator);
       IController controller= controllerFactory.getInstance();
       String testConfigPath= "src/test/res/default_config.json";

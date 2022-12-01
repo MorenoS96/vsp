@@ -1,16 +1,17 @@
 package tron.controller.impl.basicController.components.gameLoopManager.impl;
 import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
 import tron.controller.impl.basicController.components.gameLoopManager.interfaces.IGameLoop;
+import tron.lobby.interfaces.IRegistrator;
+import tron.lobby.util.InterfaceType;
 import tron.model.interfaces.IModelController;
-import tron.registrator.interfaces.IRegistrator;
-import tron.registrator.util.InterfaceType;
+
 
 public class GameLoopManager implements IGameLoop {
     private int playerCount;
     IGetConfig iGetConfig;
     IModelController iModelController;
     IRegistrator iRegistrator;
-    public GameLoopManager(IRegistrator registrator,IGetConfig iGetConfig) {
+    public GameLoopManager(IRegistrator registrator, IGetConfig iGetConfig) {
         this.iModelController=(IModelController) registrator.getInterfaceOfType(InterfaceType.IModelController);
         this.iGetConfig=iGetConfig;
         playerCount=Integer.parseInt(iGetConfig.getConfigVal("defaultPlayerCount"));

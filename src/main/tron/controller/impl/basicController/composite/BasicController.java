@@ -10,8 +10,9 @@ import tron.controller.impl.basicController.components.gameLoopManager.interface
 import tron.controller.impl.basicController.components.tastaturHandler.impl.*;
 import tron.controller.impl.basicController.components.tastaturHandler.interfaces.*;
 import tron.controller.interfaces.*;
-import tron.registrator.interfaces.IRegistrator;
-import tron.registrator.util.InterfaceType;
+import tron.lobby.interfaces.IRegistrator;
+import tron.lobby.util.InterfaceType;
+
 
 import java.util.Map;
 

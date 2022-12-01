@@ -6,8 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import tron.controller.interfaces.IControllerView;
-import tron.registrator.interfaces.IRegistrator;
-import tron.registrator.util.InterfaceType;
+
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 import tron.view.basicView.components.viewHandler.impl.ViewUtility;
 

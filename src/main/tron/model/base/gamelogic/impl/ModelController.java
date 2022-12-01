@@ -2,11 +2,11 @@ package tron.model.base.gamelogic.impl;
 
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
+import tron.lobby.interfaces.IRegistrator;
+import tron.lobby.util.InterfaceType;
 import tron.model.base.persistenz.ViewEnum;
 import tron.model.interfaces.IModelController;
-import tron.registrator.impl.Registrator;
-import tron.registrator.interfaces.IRegistrator;
-import tron.registrator.util.InterfaceType;
+;
 import tron.view.interfaces.IViewModel;
 
 public class ModelController implements IModelController {

@@ -2,8 +2,9 @@ package tron.view.impl;
 
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import tron.lobby.interfaces.IRegistrator;
 import tron.model.base.persistenz.Player;
-import tron.registrator.interfaces.IRegistrator;
+
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 import tron.view.basicView.components.viewHandler.impl.Coordinate;
 import tron.view.basicView.components.viewHandler.impl.ViewHandler;

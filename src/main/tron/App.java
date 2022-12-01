@@ -6,14 +6,14 @@ import javafx.stage.Stage;
 
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IController;
-import tron.controller.interfaces.IControllerModel;
-import tron.model.base.gamelogic.impl.GameLogic;
+
+import tron.lobby.impl.Registrator;
+import tron.lobby.interfaces.IRegistrator;
+import tron.lobby.util.InterfaceType;
 import tron.model.base.gamelogic.impl.ModelController;
 import tron.model.base.persistenz.ViewEnum;
 import tron.model.interfaces.IModelController;
-import tron.registrator.impl.Registrator;
-import tron.registrator.interfaces.IRegistrator;
-import tron.registrator.util.InterfaceType;
+
 import tron.view.impl.ViewModel;
 import tron.view.interfaces.IViewModel;
 

@@ -2,13 +2,14 @@ package tron.controller.factory;
 
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IController;
-import tron.lobby.impl.Registrator;
+
+import tron.lobby.interfaces.IRegistrator;
 
 public class ControllerFactory {
 
     IController controller;
-    Registrator registrator;
-    public ControllerFactory(Registrator registrator) {
+    IRegistrator registrator;
+    public ControllerFactory(IRegistrator registrator) {
         this.registrator=registrator;
     }
 

@@ -11,9 +11,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import tron.controller.interfaces.IConfig;
 import tron.controller.interfaces.IControllerView;
-import tron.registrator.impl.Registrator;
-import tron.registrator.interfaces.IRegistrator;
-import tron.registrator.util.InterfaceType;
+
+import tron.lobby.interfaces.IRegistrator;
+import tron.lobby.util.InterfaceType;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 
 import java.io.IOException;
