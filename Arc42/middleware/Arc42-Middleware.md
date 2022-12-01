@@ -1545,16 +1545,41 @@ concepts. For documentation of your own system you use better the
 <em>plain</em> version.</p>
 </blockquote>
 <h1 dir="auto"><a id="user-content-introduction-and-goals" class="anchor" aria-hidden="true" href="#introduction-and-goals"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Introduction and Goals</h1>
-<p dir="auto">Describes the relevant requirements and the driving forces that software
-architects and development team must consider. These include</p>
+<p dir="auto">Die Middleware soll folgende Zile erreichen</p>
 <ul dir="auto">
 <li>
 <p dir="auto">underlying business goals, essential features and functional
 requirements for the system</p>
 </li>
 <li>
-<p dir="auto">quality goals for the architecture</p>
+Bereitstellen von Funktionen um Applikation miteinander kommunizieren lassen zu können.
+In unserem in Form von RPC bzw. RMI
 </li>
+<li>
+Ermöglichen Ressourcen (CPU, Speicher) effizient teilen und nutzen zu können
+</li>
+<li>
+Logging von Zugriffen um Nachrichtenflüsse nachzuvollziehen
+</li>
+<li>
+Fehler maskieren und wenn möglich beheben.
+</li>
+<li>
+<p dir="auto">quality goals for the architecture</p>
+
+<li> Aufteilung in Transparenz-Ziele, Scalierbarkeit und Offenheit
+        </li>
+<li>Transparenz-Ziele</li>
+(Objekt -> Ressource oder Prozess)
+<ul>
+<li>Zugriffstransparenz: Der Callee darf nicht wissen, wie auf ein Objekt/eine Funktion zugegriffen wird</li>
+<li>Ortstransparenz: Der Callee darf nicht wissen, wo sich ein Objekt (räumlich) befindet</li>
+<li>Verlegungstransparenz: Das System schiebt Prozesse und Ressourcen, ohne dass bestehende Kommunikation behindert wird.</li>
+<li>Migrationsstransparenz: Prozesse dürfen ihren Standort wechseln, ohne dass bestehende Kommunikation behindert wird. </li>
+<li>Replikationstransparenz: Der Callee darf nicht wissen, dass eine Ressource/Prozess mehrmals vorhanden sein kann</li>
+<li>Fehlertransparenz: Der Callee darf nicht wissen, dass Fehler auftreten und behandelt werden</li>
+
+</ul>
 <li>
 <p dir="auto">relevant stakeholders and their expectations</p>
 </li>
