@@ -71,4 +71,6 @@ public interface IViewHandler {
      * @param cell the cell to be highlighted
      */
     void highlightCell(Coordinate cell, Color color);
+
+    void pushClick(String elementIdentifier);
 }

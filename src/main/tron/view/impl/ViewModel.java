@@ -26,7 +26,7 @@ public class ViewModel implements IViewModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        startMenu=new StartMenu("startMenu.css",view,iRegistrator);
+        startMenu=new StartMenu("startMenu.css",view);
         // configure and show stage
         stage.setTitle("TRON - Light Cycles");
         stage.setScene(this.view.getScene());

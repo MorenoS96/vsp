@@ -9,7 +9,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IConfig;
 import tron.controller.interfaces.IControllerView;
 import tron.registrator.impl.Registrator;
@@ -41,6 +40,7 @@ public class ViewHandler implements IViewHandler {
     private StackPane base;
     private Map<String, Node> overlays;
     private Color gameBoardBackgroundColor;
+    private IRegistrator iRegistrator;
     static String defaultPath="src/res/view.properties";
     private IControllerView iControllerView;
     public ViewHandler(IRegistrator iRegistrator) throws IOException, NumberFormatException {
@@ -48,6 +48,7 @@ public class ViewHandler implements IViewHandler {
     }
 
     public ViewHandler(Color gameBoardBackgroundColor, IRegistrator iRegistrator) throws IOException {
+        this.iRegistrator = iRegistrator;
         this.gameBoardBackgroundColor = gameBoardBackgroundColor;
 
         IConfig iconfig =((IConfig) iRegistrator.getInterfaceOfType(InterfaceType.IConfig));
@@ -150,5 +151,13 @@ public class ViewHandler implements IViewHandler {
         GraphicsContext g = gameBoard.getGraphicsContext2D();
         g.setFill(color.darker().darker());
         g.fillRect(cell.x*WIDTH/COLUMNS, cell.y*HEIGHT/ROWS, WIDTH/COLUMNS, HEIGHT/ROWS);
+    }
+
+    @Override
+    public void pushClick(String elementIdentifier) {
+        if(iControllerView==null){
+            iControllerView=(IControllerView)iRegistrator.getInterfaceOfType(InterfaceType.IControllerView);
+        }
+        this.iControllerView.pushClick(elementIdentifier);
     }
 }
