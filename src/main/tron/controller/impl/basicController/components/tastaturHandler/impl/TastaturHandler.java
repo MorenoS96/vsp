@@ -49,8 +49,6 @@ public class TastaturHandler implements IGetInput, IGameKey, KeyListener {
     @Override
     public char[] getInputsForCurrentCycle() {
         char[] arrayToReturn=new char[6];
-        System.out.println("getInput");
-        System.out.println(this.pressedKeys);
         int moveDirections=4;
         for(int i=0;i< moveConfigNames.length;i+=moveDirections){
             char moveRight=iGetConfig.getConfigVal(moveConfigNames[i]).trim().toLowerCase().charAt(0);
