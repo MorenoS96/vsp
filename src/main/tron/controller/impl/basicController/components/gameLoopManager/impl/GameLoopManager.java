@@ -1,13 +1,6 @@
 package tron.controller.impl.basicController.components.gameLoopManager.impl;
 import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
 import tron.controller.impl.basicController.components.gameLoopManager.interfaces.IGameLoop;
-import tron.lobby.impl.BasicLobby;
-import tron.lobby.impl.BasicLobbyManager;
-import tron.lobby.impl.BasicLobyManagerFactory;
-import tron.lobby.interfaces.ILobby;
-import tron.lobby.interfaces.ILobbyManager;
-import tron.lobby.interfaces.ILobbyManagerFactory;
-import tron.lobby.interfaces.IRegistrator;
 import tron.model.interfaces.IModelController;
 import tron.registrator.interfaces.IRegistrator;
 import tron.registrator.util.InterfaceType;
@@ -20,8 +13,7 @@ public class GameLoopManager implements IGameLoop {
     public GameLoopManager(IRegistrator registrator,IGetConfig iGetConfig) {
         this.iModelController=(IModelController) registrator.getInterfaceOfType(InterfaceType.IModelController);
         this.iGetConfig=iGetConfig;
-        playerCount=Integer.valueOf(iGetConfig.getConfigVal("defaultPlayerCount"));
-        this.iRegistrator=iRegistrator;
+        playerCount=Integer.parseInt(iGetConfig.getConfigVal("defaultPlayerCount"));
     }
     @Override
     public void setPlayerCount(int playerCount) {
@@ -29,10 +21,8 @@ public class GameLoopManager implements IGameLoop {
     }
 
     @Override
-    public ILobby joinGame(int playerID) {
-        ILobbyManagerFactory iLobbyManagerFactory=new BasicLobyManagerFactory();
-        ILobbyManager iLobbyManager=iLobbyManagerFactory.getInstance();
-        return iLobbyManager.joinLobby(playerCount,playerID);
+    public void startApplication() {
+        iModelController.startApplication();
     }
 
     @Override

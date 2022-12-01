@@ -1,23 +1,20 @@
 package tron.controller.impl.basicController.components.tastaturHandler.impl;
 
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
-import lc.kra.system.keyboard.event.GlobalKeyEvent;
-import lc.kra.system.keyboard.event.GlobalKeyListener;
+
 import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
 import tron.controller.impl.basicController.components.tastaturHandler.interfaces.IGameKey;
 import tron.controller.impl.basicController.components.tastaturHandler.interfaces.IGetInput;
 
-import java.awt.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
-import java.util.List;
+
 
 import tron.controller.util.ConfigHelper;
-public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,KeyListener, NativeKeyListener {
+public class TastaturHandler implements IGetInput, IGameKey, KeyListener {
     private HashSet<Character> mappedKeys;
-    private static HashMap<Character,Long> pressedKeys=new HashMap<>();
+    private  HashMap<Character,Long> pressedKeys=new HashMap<>();
 
     private char lastInput;
     private String[] moveConfigNames;
@@ -32,8 +29,8 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
     @Override
     public void reMapKeys(){
         mappedKeys  = new HashSet<>();
-        for (int i=0;i< moveConfigNames.length;i++){
-            String mappedKey=iGetConfig.getConfigVal(moveConfigNames[i]).trim().toLowerCase();
+        for (String moveConfigName : moveConfigNames) {
+            String mappedKey = iGetConfig.getConfigVal(moveConfigName).trim().toLowerCase();
             mappedKeys.add(mappedKey.charAt(0));
         }
     }
@@ -52,8 +49,6 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
     @Override
     public char[] getInputsForCurrentCycle() {
         char[] arrayToReturn=new char[6];
-        System.out.println("getInput");
-        System.out.println(this.pressedKeys);
         int moveDirections=4;
         for(int i=0;i< moveConfigNames.length;i+=moveDirections){
             char moveRight=iGetConfig.getConfigVal(moveConfigNames[i]).trim().toLowerCase().charAt(0);
@@ -93,14 +88,13 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
         handleKeyBoardChar(e.getKeyChar());
     }
     private void  handleKeyBoardChar(char c){
-        System.out.println("key typed "+String.valueOf(c));
+
         this.lastInput= c;
         if(mappedKeys.contains(c)){
             pressedKeys.put(lastInput,new Date().getTime());
 
         }
-        System.out.println("end handle");
-        System.out.println(this.pressedKeys);
+
 
 
     }
@@ -114,28 +108,5 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
 
     }
 
-    @Override
-    public void keyPressed(GlobalKeyEvent globalKeyEvent) {
-        handleKeyBoardChar( globalKeyEvent.getKeyChar());
-    }
 
-    @Override
-    public void keyReleased(GlobalKeyEvent globalKeyEvent) {
-
-    }
-
-    @Override
-    public void nativeKeyTyped(NativeKeyEvent nativeEvent) {
-        handleKeyBoardChar( nativeEvent.getKeyChar());
-    }
-
-    @Override
-    public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
-        handleKeyBoardChar( nativeEvent.getKeyChar());
-    }
-
-    @Override
-    public void nativeKeyReleased(NativeKeyEvent nativeEvent) {
-
-    }
 }

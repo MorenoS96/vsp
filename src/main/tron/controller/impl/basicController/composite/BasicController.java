@@ -1,6 +1,4 @@
 package tron.controller.impl.basicController.composite;
-
-import lc.kra.system.keyboard.GlobalKeyboardHook;
 import tron.controller.impl.basicController.components.clickHandler.impl.ClickHandler;
 import tron.controller.impl.basicController.components.clickHandler.interfaces.IClick;
 import tron.controller.impl.basicController.components.configHandler.impl.ConfigHandler;
@@ -12,10 +10,6 @@ import tron.controller.impl.basicController.components.gameLoopManager.interface
 import tron.controller.impl.basicController.components.tastaturHandler.impl.*;
 import tron.controller.impl.basicController.components.tastaturHandler.interfaces.*;
 import tron.controller.interfaces.*;
-import tron.controller.util.OsUtil;
-import com.github.kwhat.jnativehook.GlobalScreen;
-import tron.model.interfaces.IModelController;
-import tron.registrator.impl.Registrator;
 import tron.registrator.interfaces.IRegistrator;
 import tron.registrator.util.InterfaceType;
 
@@ -38,14 +32,6 @@ public class BasicController implements IController {
         tastaturHandler= tastaturHandlerIFactory.getInstance();
         iGameLoop=new GameLoopManager(registrator,iGetConfig);
         iClick=new ClickHandler(iGameLoop);
-        /*
-        if(OsUtil.getOS().equals( OsUtil.OS.WINDOWS)){
-            GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(false);
-            keyboardHook.addKeyListener(tastaturHandler);
-
-        }else {
-            GlobalScreen.addNativeKeyListener(tastaturHandler);
-        }*/
         registrator.registerComponent(InterfaceType.IControllerModel,this);
         registrator.registerComponent(InterfaceType.IControllerView,this);
         registrator.registerComponent(InterfaceType.IConfig,this);

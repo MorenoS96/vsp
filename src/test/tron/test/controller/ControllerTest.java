@@ -3,15 +3,15 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-
 import org.junit.jupiter.api.Test;
 import tron.controller.interfaces.IController;
 import tron.controller.factory.ControllerFactory;
-import tron.lobby.impl.Registrator;
+import tron.controller.interfaces.IControllerView;
+import tron.registrator.impl.Registrator;
+import tron.registrator.util.InterfaceType;
 
-public class controllerTest {
+
+public class ControllerTest {
     @Test
   public void testIConfig(){
         Registrator registrator=new Registrator();
@@ -35,29 +35,27 @@ public class controllerTest {
          */
 
     @Test
-    public void testIControllerModel(){
+    public void testIControllerModel()  {
         Registrator registrator=new Registrator();
         ControllerFactory controllerFactory=new ControllerFactory(registrator);
         IController controller= controllerFactory.getInstance();
         String testConfigPath= "src/test/res/default_config.json";
         controller.setConfigPath(testConfigPath);
-        boolean run=true;
-        try {
-            Robot robot =new Robot();
+        IControllerView iControllerView=(IControllerView)registrator.getInterfaceOfType(InterfaceType.IControllerView);
 
 
 
-            char[] inputs=new char[]{'e','e','q','z','t','z',' ','i',' ',' ','h',','};
-            for(int i=0;i<inputs.length;i++){
-               robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(inputs[i]));
-               robot.delay(1);
-                robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(inputs[i]));
+        char[] inputs=new char[]{'e','e','q','z','t','z',' ','i',' ',' ','h',','};
+        for (char input : inputs) {
+            iControllerView.pushKeyboardInput(input);
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            char[] inputsForCurrentCycle= controller.getInputForCurrentCycle();
-            assertArrayEquals(new char[]{'q','z','i',' ',' ',','},inputsForCurrentCycle);
-        } catch (AWTException e) {
-            e.printStackTrace();
         }
+        char[] inputsForCurrentCycle= controller.getInputForCurrentCycle();
+        assertArrayEquals(new char[]{'q','z','i',' ',' ',','},inputsForCurrentCycle);
     }
 
     @Test

@@ -75,7 +75,7 @@ public class GameLogic implements IInputHandler, Runnable {
             List<Player> playersToPaint = players.stream().filter(Player::isAlive).toList();
             iViewModel.displayBoard(playersToPaint);
 
-            System.out.println(board.toStringTest());
+          //  System.out.println(board.toStringTest());
         }
     }
 
@@ -102,7 +102,7 @@ public class GameLogic implements IInputHandler, Runnable {
             } else {
                 System.out.println("Beide Spieler sind gleichzeitig gecrasht.");
             }
-            System.out.println(board.toStringTest());
+            //System.out.println(board.toStringTest());
             gameThread.stop();
             //iViewModel.displayView(ViewEnum.VIEW4.getViewId());
         }
