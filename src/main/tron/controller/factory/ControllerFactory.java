@@ -2,7 +2,7 @@ package tron.controller.factory;
 
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IController;
-import tron.registrator.impl.Registrator;
+import tron.lobby.impl.Registrator;
 
 public class ControllerFactory {
 
