@@ -73,7 +73,7 @@ public class GameLogic implements IInputHandler, Runnable {
             }
             gametick();
             List<Player> playersToPaint = players.stream().filter(Player::isAlive).toList();
-            iViewModel.displayBoard(players);
+            iViewModel.displayBoard(playersToPaint);
 
             System.out.println(board.toStringTest());
         }
