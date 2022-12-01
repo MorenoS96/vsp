@@ -39,7 +39,7 @@ public interface IViewHandler {
      *
      * @throws IllegalArgumentException - if at least one of the coordinates is outside of the canvas, i.e. game board
      */
-    void draw(List<Coordinate> player, Color color);
+    void draw(List<Coordinate> player, Color color,boolean isAlive);
 
     /**
      * Registers a new overlay, e.g. a menu. If a mapping for the name already exists, the old value is replaced by

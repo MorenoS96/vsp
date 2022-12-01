@@ -83,7 +83,16 @@ public class ViewHandler implements IViewHandler {
     }
 
     @Override
-    public void draw(List<Coordinate> player, Color color) {
+    public void draw(List<Coordinate> player, Color color,boolean isAlive) {
+        if(!isAlive) {
+            for(Coordinate pos : player){
+                // paint new bike position
+                GraphicsContext g = gameBoard.getGraphicsContext2D();
+                g.setFill(Color.BLUEVIOLET.darker().darker().darker().desaturate());
+                g.fillRect(pos.x*WIDTH/COLUMNS, pos.y*HEIGHT/ROWS, WIDTH/COLUMNS, HEIGHT/ROWS);
+            }
+            return;
+        }
         if(player == null || color == null){
             throw new NullPointerException();
         }

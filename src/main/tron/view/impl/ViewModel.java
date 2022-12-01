@@ -54,7 +54,7 @@ public class ViewModel implements IViewModel {
     @Override
     public void displayBoard(List<Player> players) {
         for (Player player : players) {
-            view.draw(getPlayerCoordinates(player), getPlayerColor(player.getColor()));
+            view.draw(getPlayerCoordinates(player), getPlayerColor(player.getColor()),player.isAlive());
             view.highlightCell(new Coordinate(player.getCurrentCell().getX(), player.getCurrentCell().getY()), getPlayerColor(player.getColor()));
         }
     }

@@ -40,12 +40,13 @@ public class TestPlayer implements IInputHandler {
 
     @Test
     public void testSetCurentCell() {
+        cleanUp();
         Player player1 = gameLogic.getPlayers().get(0);
         gameLogic.getPlayers().get(0).setCurrentCell(gameLogic.board.getCellById(1));
         Assertions.assertEquals(1, gameLogic.board.getCellById(1).getColorId());
         gameLogic.getPlayers().get(0).setCurrentCell(gameLogic.board.getCellById(99));
         Assertions.assertEquals(1, gameLogic.board.getCellById(99).getColorId());
-        Assertions.assertEquals(3, gameLogic.getPlayers().get(0).getPaintedCells().size());
+        Assertions.assertEquals(2, gameLogic.getPlayers().get(0).getPaintedCells().size());
 
         // Wenn schon gefärbt ist sollte der Spieler sich nicht dahin bewegen können
         player1.setCurrentCell(gameLogic.board.getCellById(1));
@@ -55,8 +56,10 @@ public class TestPlayer implements IInputHandler {
 
     @Test
     public void testCheckBorder() {
+        cleanUp();
 
         Player player1 = gameLogic.getPlayers().get(0); // Bei AnfangsPosition nur nicht nach oben bewegen
+        player1.setCurrentCell(gameLogic.board.getCellById(gameLogic.getPlayerStartingPositions()[0])); // Ecke oben links
         Assertions.assertTrue(player1.checkBorder(player1.getCurrentCell().getId(), "moveUp"));
         Assertions.assertFalse(player1.checkBorder(player1.getCurrentCell().getId(), "moveDown"));
         Assertions.assertFalse(player1.checkBorder(player1.getCurrentCell().getId(), "moveRight"));
