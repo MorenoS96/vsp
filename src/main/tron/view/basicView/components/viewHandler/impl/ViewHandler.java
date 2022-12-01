@@ -1,14 +1,19 @@
 package tron.view.basicView.components.viewHandler.impl;
 
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import tron.controller.impl.basicController.composite.BasicController;
+import tron.controller.interfaces.IConfig;
+import tron.controller.interfaces.IControllerView;
 import tron.registrator.impl.Registrator;
+import tron.registrator.interfaces.IRegistrator;
+import tron.registrator.util.InterfaceType;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 
 import java.io.IOException;
@@ -35,20 +40,23 @@ public class ViewHandler implements IViewHandler {
     private StackPane base;
     private Map<String, Node> overlays;
     private Color gameBoardBackgroundColor;
+    private IRegistrator iRegistrator;
     static String defaultPath="src/res/view.properties";
-
-    public ViewHandler() throws IOException, NumberFormatException {
-        this(Color.BLUEVIOLET.darker().darker().darker().desaturate());
+    private IControllerView iControllerView;
+    public ViewHandler(IRegistrator iRegistrator) throws IOException, NumberFormatException {
+        this(Color.BLUEVIOLET.darker().darker().darker().desaturate(),iRegistrator);
     }
 
-    public ViewHandler(Color gameBoardBackgroundColor) throws IOException {
+    public ViewHandler(Color gameBoardBackgroundColor, IRegistrator iRegistrator) throws IOException {
+        this.iRegistrator = iRegistrator;
         this.gameBoardBackgroundColor = gameBoardBackgroundColor;
 
-        Map<String, String> config = new BasicController(new Registrator()).getConfig();
-        this.WIDTH = Integer.parseInt(config.get("windowWidth"));
-        this.HEIGHT = Integer.parseInt(config.get("windowHeight"));
-        this.ROWS = Integer.parseInt(config.get("verticalRasterPoints"));
-        this.COLUMNS = Integer.parseInt(config.get("horizontalRasterPoints"));
+        IConfig iconfig =((IConfig) iRegistrator.getInterfaceOfType(InterfaceType.IConfig));
+
+        this.WIDTH = Integer.parseInt(iconfig.getConfigVal("windowWidth"));
+        this.HEIGHT = Integer.parseInt(iconfig.getConfigVal("windowHeight"));
+        this.ROWS = Integer.parseInt(iconfig.getConfigVal("verticalRasterPoints"));
+        this.COLUMNS = Integer.parseInt(iconfig.getConfigVal("horizontalRasterPoints"));
 
         this.overlays = new HashMap<>();
         base = new StackPane();
@@ -61,6 +69,14 @@ public class ViewHandler implements IViewHandler {
         base.getChildren().add(fog);
 
         this.scene = new Scene(base);
+        iControllerView=((IControllerView) iRegistrator.getInterfaceOfType(InterfaceType.IControllerView));
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                iControllerView.pushKeyboardInput(   event.getText().charAt(0));
+            }
+        });
     }
 
     @Override
@@ -144,5 +160,13 @@ public class ViewHandler implements IViewHandler {
         GraphicsContext g = gameBoard.getGraphicsContext2D();
         g.setFill(color.darker().darker());
         g.fillRect(cell.x*WIDTH/COLUMNS, cell.y*HEIGHT/ROWS, WIDTH/COLUMNS, HEIGHT/ROWS);
+    }
+
+    @Override
+    public void pushClick(String elementIdentifier) {
+        if(iControllerView==null){
+            iControllerView=(IControllerView)iRegistrator.getInterfaceOfType(InterfaceType.IControllerView);
+        }
+        this.iControllerView.pushClick(elementIdentifier);
     }
 }
