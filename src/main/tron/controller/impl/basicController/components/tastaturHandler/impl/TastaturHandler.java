@@ -38,6 +38,11 @@ public class TastaturHandler implements IGetInput, IGameKey, GlobalKeyListener,K
         }
     }
 
+    @Override
+    public void pushInput(char c) {
+        handleKeyBoardChar(c);
+    }
+
 
     @Override
     public char getInput() {

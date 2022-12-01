@@ -22,7 +22,7 @@ public class ViewModel implements IViewModel {
     public ViewModel(Stage stage, IRegistrator iRegistrator) {
 
         try {
-            this.view = new ViewHandler();
+            this.view = new ViewHandler(iRegistrator);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,6 +31,7 @@ public class ViewModel implements IViewModel {
         stage.setTitle("TRON - Light Cycles");
         stage.setScene(this.view.getScene());
         stage.show();
+
     }
 
     @Override

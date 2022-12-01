@@ -5,4 +5,5 @@ import lc.kra.system.keyboard.event.GlobalKeyListener;
 public interface IGameKey  {
  char[] getInputsForCurrentCycle();
  void reMapKeys();
+ void pushInput(char c);
 }
