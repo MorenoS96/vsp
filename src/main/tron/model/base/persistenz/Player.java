@@ -2,7 +2,6 @@ package tron.model.base.persistenz;
 
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements IInputHandler {

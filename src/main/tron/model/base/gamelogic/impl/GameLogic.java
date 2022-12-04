@@ -7,6 +7,7 @@ import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.Board;
 import tron.model.base.persistenz.BoardCell;
 import tron.model.base.persistenz.Player;
+import tron.model.base.persistenz.ViewEnum;
 import tron.view.interfaces.IViewModel;
 
 import java.sql.SQLOutput;
@@ -28,8 +29,6 @@ public class GameLogic implements IInputHandler, Runnable {
     public IViewModel iViewModel;
 
     Thread gameThread;
-
-    //TODO vermutlich mind 10er tickspeed und eher width und height bei 20+
 
     public GameLogic(IControllerModel iControllerModel, IViewModel iViewModel) {
         this.board = new Board(HEIGHT, WIDTH);
@@ -79,12 +78,8 @@ public class GameLogic implements IInputHandler, Runnable {
         }
     }
 
-    public void gametick() { //TODO Test
+    public void gametick() {
         // Was in einem Tick passieren soll
-        // Zum testen:
-        char[] inputrndm = new char[2];
-        inputrndm[0] = 'w';
-        inputrndm[1] = 'z';
 
         moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board); //iControllerModel.getInputForCurrentCycle()
         //iViewModel.displayBoard(players);
@@ -92,19 +87,20 @@ public class GameLogic implements IInputHandler, Runnable {
 
         if (playersAlive <= 1) {
             onePlayerRemaining = true;
-            // iControllerModel.endGame(); //TODO einkommentieren wenn drin
             List<Player> winningPlayer = players.stream().filter(Player::isAlive).toList();
-            Player lastStandingPlayer; //TODO den müssen wir noch mitgeben
+            int lastStandingPlayer;
             if (winningPlayer.size() == 1) {
-                lastStandingPlayer = winningPlayer.get(0);
-                System.out.println("Winner is " + lastStandingPlayer.getId());
+                lastStandingPlayer = winningPlayer.get(0).getId();
+                System.out.println("Winner is " + lastStandingPlayer);
 
             } else {
                 System.out.println("Beide Spieler sind gleichzeitig gecrasht.");
+                lastStandingPlayer = 0;
             }
             //System.out.println(board.toStringTest());
             gameThread.stop();
-            //iViewModel.displayView(ViewEnum.VIEW4.getViewId());
+            // iControllerModel.endGame(); //TODO einkommentieren wenn drin
+            //iViewModel.displayLastView(lastStandingPlayer); //TODO einkommentieren wenn drin
         }
 
     }

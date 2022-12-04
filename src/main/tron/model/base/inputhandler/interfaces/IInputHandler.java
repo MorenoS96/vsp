@@ -13,4 +13,6 @@ public interface IInputHandler {
     int PLAYER_COUNT = Integer.parseInt(config.get("defaultPlayerCount"));
     int VELOCITYOFPLAYERS = Integer.parseInt(config.get("velocityOfPlayers"));
 
+    int WAIT_TIME_MILISEC = Integer.parseInt(config.get("maxWaitTimeMs"));
+
 }
