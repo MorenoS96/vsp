@@ -18,7 +18,7 @@ public enum ColorEnum { // Vllt intern benutzen und sonst 1-6 Ids geben
         return id;
     }
 
-    public ColorEnum getPlayerColor(int id) { // throws Fehler? TODO kann Julius übernehmen und für sein Color Enum benutzen
+    public ColorEnum getPlayerColor(int id) { // throws Fehler? kann Julius übernehmen und für sein Color Enum benutzen
         switch (id) {
             case 1:
                 return ColorEnum.BLUE;

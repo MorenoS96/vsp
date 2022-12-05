@@ -3,25 +3,22 @@ package tron.model.base.gamelogic.impl;
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
 import tron.lobby.impl.Registrator;
+import tron.model.base.gamelogic.interfaces.IGameLogic;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.Board;
 import tron.model.base.persistenz.BoardCell;
 import tron.model.base.persistenz.Player;
-import tron.model.base.persistenz.ViewEnum;
 import tron.view.interfaces.IViewModel;
 
-import java.sql.SQLOutput;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 // Wird noch IGameLogic implementieren
-public class GameLogic implements IInputHandler, Runnable {
+public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
     boolean onePlayerRemaining = false; // Kommt noch was zu
 
     List<Player> players;
-
     public Board board;
 
     public IControllerModel iControllerModel;
@@ -39,6 +36,7 @@ public class GameLogic implements IInputHandler, Runnable {
 
     }
 
+    @Override
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -55,9 +53,6 @@ public class GameLogic implements IInputHandler, Runnable {
 
         while (gameThread != null) {
             //System.out.println("GameThread is running");
-            double startTime = System.nanoTime();
-
-
 
             try {
                 double remainingTimeUpdate = (nextUpdateTime - System.nanoTime()) / 1000000; // in ms nicht ns
@@ -74,10 +69,11 @@ public class GameLogic implements IInputHandler, Runnable {
             List<Player> playersToPaint = players.stream().filter(Player::isAlive).toList();
             iViewModel.displayBoard(playersToPaint);
 
-          //  System.out.println(board.toStringTest());
+            //  System.out.println(board.toStringTest());
         }
     }
 
+    @Override
     public void gametick() {
         // Was in einem Tick passieren soll
 
@@ -94,8 +90,7 @@ public class GameLogic implements IInputHandler, Runnable {
                 System.out.println("Winner is " + lastStandingPlayer);
 
             } else {
-                System.out.println("Beide Spieler sind gleichzeitig gecrasht.");
-                lastStandingPlayer = 0;
+                System.out.println("Beide Spieler sind gleichzeitig gecrasht."); // lastStandingPlayer ist 0
             }
             //System.out.println(board.toStringTest());
             gameThread.stop();
@@ -105,6 +100,7 @@ public class GameLogic implements IInputHandler, Runnable {
 
     }
 
+    @Override
     public List<Player> initPlayers() {
         List<Player> players = new ArrayList<>();
         int[] startPositionIds = getPlayerStartingPositions();
@@ -142,14 +138,13 @@ public class GameLogic implements IInputHandler, Runnable {
         return players;
     }
 
-    // Angepasst.
-
     /**
      * Die Berechnung soll so funktionieren, dass wir die Spieleranzahl+2 durch die Boardlänge (x Anzahl) teilen,
      * und dann die mittleren Positionen als Startkoordinaten für die Spieler nutzen.
      *
      * @return Alle XWerte bzw Ids wo gestartet werden soll
      */
+    @Override
     public int[] getPlayerStartingPositions() {
         int[] xWerte = new int[PLAYER_COUNT];
         int possibleXCoord = WIDTH / (PLAYER_COUNT + 2);
@@ -161,6 +156,7 @@ public class GameLogic implements IInputHandler, Runnable {
         return xWerte;
     }
 
+    @Override
     public void moveEveryPlayer(char[] allInputs, Board board) {
 
         List<Player> playersToKill = new ArrayList<>();
@@ -169,9 +165,9 @@ public class GameLogic implements IInputHandler, Runnable {
             if (currentPlayer.isAlive()) { // Wenn currentCell von einem Spieler auf CurrentCell eines anderen ist, beide dead
                 currentPlayer.move(allInputs[i], board);
             }
-            for(int j=0;j<PLAYER_COUNT;j++) {
-                for(int k=j+1;k<PLAYER_COUNT;k++) {
-                    if(players.get(j).getCurrentCell().getId()==players.get(k).getCurrentCell().getId()) {
+            for (int j = 0; j < PLAYER_COUNT; j++) {
+                for (int k = j + 1; k < PLAYER_COUNT; k++) {
+                    if (players.get(j).getCurrentCell().getId() == players.get(k).getCurrentCell().getId()) {
                         playersToKill.add(players.get(j));
                         players.get(j).setAlive(false);
                         playersToKill.add(players.get(k));
@@ -186,6 +182,7 @@ public class GameLogic implements IInputHandler, Runnable {
         killPlayers(playersToKill);
     }
 
+    @Override
     public void killPlayers(List<Player> players) {
         for (Player player : players) {
             player.playerDies();
@@ -199,8 +196,8 @@ public class GameLogic implements IInputHandler, Runnable {
     public static void main(String[] args) {
         Registrator registrator = new Registrator();
         IControllerModel iControllerModel = new BasicController(registrator);
-        IViewModel iViewModel = null; // Später
-        GameLogic gameLogic =  new GameLogic(iControllerModel,iViewModel);
+        IViewModel iViewModel = null;
+        GameLogic gameLogic = new GameLogic(iControllerModel, iViewModel);
         gameLogic.startGameThread();
     }
 }

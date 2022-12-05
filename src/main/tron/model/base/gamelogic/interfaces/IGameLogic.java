@@ -1,14 +1,21 @@
 package tron.model.base.gamelogic.interfaces;
 
+import tron.model.base.persistenz.Board;
+import tron.model.base.persistenz.Player;
+
+import java.util.List;
+
 public interface IGameLogic {
+    void startGameThread();
 
-    void initPLayer();
+    void gametick();
 
-    void initBoard();
+    List<Player> initPlayers();
 
+    int[] getPlayerStartingPositions();
 
+    void moveEveryPlayer(char[] allInputs, Board board);
 
-    boolean modify();
+    void killPlayers(List<Player> players);
 
-    void moveEveryPlayer();
 }

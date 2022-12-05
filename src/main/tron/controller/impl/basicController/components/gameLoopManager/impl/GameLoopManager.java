@@ -22,7 +22,7 @@ public class GameLoopManager implements IGameLoop {
     }
 
     @Override
-    public void startApplication() {
+    public void startApplication() throws InterruptedException {
         iModelController.startApplication();
     }
 
