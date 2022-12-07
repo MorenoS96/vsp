@@ -1,6 +1,5 @@
 package tron.view.basicView.overlays;
 
-import com.sun.javafx.scene.control.InputField;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,8 +15,8 @@ import tron.view.basicView.components.viewHandler.impl.ViewUtility;
 public class StartMenu extends VBox {
     private final Label labelReady;
     private final Button btnStart;
-
     private final Label labelPlayerCount;
+    private final Button btnConfirm;
     private final TextField inputPlayerCount;
     public IControllerView iControllerView;
 
@@ -27,7 +26,6 @@ public class StartMenu extends VBox {
         this.setAlignment(Pos.CENTER);
 
         labelReady = new Label("Ready?");
-        labelReady.setStyle("-fx-text-fill: " + ViewUtility.getHexTriplet(Color.PAPAYAWHIP.brighter()) + ";");
 
         //inputfield for desired playerCount
         labelPlayerCount = new Label("Player Count (default is 2): ");
@@ -37,17 +35,22 @@ public class StartMenu extends VBox {
         hb.setSpacing(10);
         hb.setAlignment(Pos.CENTER);
 
+        btnConfirm = new Button("Confrim");
+        btnConfirm.setOnAction(event -> {
+            view.pushInput("changePlayerCount", inputPlayerCount.getText());
+        });
+
         btnStart = new Button("Start Game");
         btnStart.setOnAction(event -> {
             System.out.println("click!");
             view.pushClick("startGameButton");
-            view.pushInput("changePlayerCount", inputPlayerCount.getText());
             view.hideOverlays();
         });
 
-        this.getChildren().add(labelReady);
-        this.getChildren().add(btnStart);
         this.getChildren().add(labelPlayerCount);
         this.getChildren().add(hb);
+        this.getChildren().add(btnConfirm);
+        this.getChildren().add(labelReady);
+        this.getChildren().add(btnStart);
     }
 }
