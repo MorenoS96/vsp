@@ -38,17 +38,10 @@ public class ViewModel implements IViewModel {
     @Override
     public void displayView(int view) {
         switch (view) {
-            case 1:
-                showStartMenu();
-                break;
-            case 2:
-                showWaitScreen();
-                break;
-            case 3:
-                showGame();
-                break;
-            case 4:
-                showEndScreen();
+            case 1 -> showStartMenu();
+            case 2 -> showWaitScreen();
+            case 3 -> showGame();
+            case 4 -> showEndScreen();
         }
 
     }

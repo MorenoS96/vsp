@@ -73,4 +73,6 @@ public interface IViewHandler {
     void highlightCell(Coordinate cell, Color color);
 
     void pushClick(String elementIdentifier);
+
+    void pushInput(String elementIdentifier, String input);
 }

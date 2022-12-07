@@ -160,4 +160,12 @@ public class ViewHandler implements IViewHandler {
         }
         this.iControllerView.pushClick(elementIdentifier);
     }
+
+    @Override
+    public void pushInput(String elementIdentifier, String input) {
+        if(iControllerView==null){
+            iControllerView=(IControllerView)iRegistrator.getInterfaceOfType(InterfaceType.IControllerView);
+        }
+        this.iControllerView.pushInput(elementIdentifier, input);
+    }
 }
