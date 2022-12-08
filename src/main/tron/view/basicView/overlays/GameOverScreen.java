@@ -6,13 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+
 import javafx.scene.shape.Rectangle;
 import tron.model.base.persistenz.Player;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
-
-import java.util.Timer;
-import java.util.concurrent.CountDownLatch;
 
 public class GameOverScreen extends VBox {
     private final Label labelWinner;
@@ -47,6 +44,7 @@ public class GameOverScreen extends VBox {
 
             this.getChildren().add(labelWinner);
         }
+
         counter = 5;
         labelCountdown = new Label("Countdown for new Round: " + counter);
         this.getChildren().add(labelCountdown);
