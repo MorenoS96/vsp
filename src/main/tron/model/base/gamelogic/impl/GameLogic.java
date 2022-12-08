@@ -1,5 +1,6 @@
 package tron.model.base.gamelogic.impl;
 
+import javafx.application.Platform;
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
 import tron.lobby.impl.Registrator;
@@ -29,7 +30,7 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
     public GameLogic(IControllerModel iControllerModel, IViewModel iViewModel) {
         this.board = new Board(HEIGHT, WIDTH);
-        playerCount=PLAYER_COUNT;
+        playerCount = PLAYER_COUNT;
         //playerCount ok in Controller oder Model?
 
         this.iControllerModel = iControllerModel;
@@ -79,7 +80,6 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
     @Override
     public void gametick() {
         // Was in einem Tick passieren soll
-
         moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board); //iControllerModel.getInputForCurrentCycle()
         //iViewModel.displayBoard(players);
         long playersAlive = players.stream().filter(Player::isAlive).count();
@@ -89,14 +89,18 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
             List<Player> winningPlayer = players.stream().filter(Player::isAlive).toList();
             if (winningPlayer.size() == 1) {
                 System.out.println("Winner is " + winningPlayer.get(0).getId());
-                iViewModel.displayLastView(winningPlayer.get(0));
+                Platform.runLater(() -> {
+                    iViewModel.displayLastView(winningPlayer.get(0));
+                });
             } else {
                 System.out.println("Beide Spieler sind gleichzeitig gecrasht."); // lastStandingPlayer ist 0
-                iViewModel.displayLastView(null);
+                Platform.runLater(() -> {
+                    iViewModel.displayLastView(null);
+                });
             }
             //System.out.println(board.toStringTest());
-            gameThread.stop();
             // iControllerModel.endGame(); //TODO einkommentieren wenn drin
+            gameThread.stop();
         }
 
     }
