@@ -1,5 +1,6 @@
 package tron.view.basicView.overlays;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -10,11 +11,12 @@ import javafx.scene.shape.Rectangle;
 import tron.model.base.persistenz.Player;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 
+import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 
 public class GameOverScreen extends VBox {
     private final Label labelWinner;
-    private final Label labelCountdown;
+    private Label labelCountdown;
     private final Label labelPLayer;
     private final Rectangle playerColor;
     private Integer counter;
@@ -33,16 +35,10 @@ public class GameOverScreen extends VBox {
             hb.setAlignment(Pos.CENTER);
             hb.getChildren().add(labelPLayer);
             hb.getChildren().add(playerColor);
-            //TODO counter fixen
-            counter = 5;
-            while (counter > 0) {
-                counter--;
-            }
-            labelCountdown = new Label("Countdown for new Round: " + counter);
+            //TODO counter einkommentieren
 
             this.getChildren().add(labelWinner);
             this.getChildren().add(hb);
-            this.getChildren().add(labelCountdown);
         } else {
             labelWinner = new Label("You crashed at the same time. It's a draw!");
             labelCountdown = null;
@@ -51,5 +47,20 @@ public class GameOverScreen extends VBox {
 
             this.getChildren().add(labelWinner);
         }
+        counter = 5;
+        labelCountdown = new Label("Countdown for new Round: " + counter);
+        this.getChildren().add(labelCountdown);
+        Platform.runLater(() -> {
+
+            while (counter > 0) {
+                try {
+                    Thread.sleep((long) 1000);
+                    System.out.println(System.currentTimeMillis());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                counter--;
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 package tron.view.impl;
 
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tron.lobby.interfaces.IRegistrator;
@@ -116,16 +117,28 @@ public class ViewModel implements IViewModel {
     }
 
     public void showEndScreen(Player player) {
-        view.hideOverlays();
         Color color;
-        if (player != null) {
-            color = getPlayerColor(player.getColor());
-        } else {
-            color = Color.RED;
+
+        for (int counter = 5; counter > 0; counter--) {
+            try {
+                view.hideOverlays();
+                if (player != null) {
+                    color = getPlayerColor(player.getColor());
+                } else {
+                    color = Color.RED;
+                }
+                endScreen = new GameOverScreen("startMenu.css", view, player, color, counter);
+                Platform.runLater(() -> {
+                    view.registerOverlay("endScreen", endScreen);
+                    view.showOverlay("endScreen");
+                });
+                Thread.sleep((long) 1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
-        endScreen = new GameOverScreen("startMenu.css", view, player, color);
-        view.registerOverlay("endScreen", endScreen);
-        view.showOverlay("endScreen");
+        view.hideOverlays();
+        view.showOverlay("startMenu");
     }
 
 }
