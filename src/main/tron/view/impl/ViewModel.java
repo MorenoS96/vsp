@@ -118,27 +118,16 @@ public class ViewModel implements IViewModel {
 
     public void showEndScreen(Player player) {
         Color color;
-
-        for (int counter = 5; counter > 0; counter--) {
-            try {
-                view.hideOverlays();
-                if (player != null) {
-                    color = getPlayerColor(player.getColor());
-                } else {
-                    color = Color.RED;
-                }
-                endScreen = new GameOverScreen("startMenu.css", view, player, color, counter);
-                Platform.runLater(() -> {
-                    view.registerOverlay("endScreen", endScreen);
-                    view.showOverlay("endScreen");
-                });
-                Thread.sleep((long) 1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        if (player != null) {
+            color = getPlayerColor(player.getColor());
+        } else {
+            color = Color.RED;
         }
-        view.hideOverlays();
-        view.showOverlay("startMenu");
+        endScreen = new GameOverScreen("startMenu.css", view, player, color);
+        view.registerOverlay("endScreen", endScreen);
+        view.showOverlay("endScreen");
+
+
     }
 
 }
