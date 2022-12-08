@@ -3,6 +3,7 @@ package tron.view.basicView.components.boardHandler.interfaces;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import tron.lobby.interfaces.IRegistrator;
 import tron.view.basicView.components.viewHandler.impl.Coordinate;
 
 import java.util.List;
@@ -75,4 +76,6 @@ public interface IViewHandler {
     void pushClick(String elementIdentifier);
 
     void pushInput(String elementIdentifier, String input);
+
+    IRegistrator getRegistrator();
 }

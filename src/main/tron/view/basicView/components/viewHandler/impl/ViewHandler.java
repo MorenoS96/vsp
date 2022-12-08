@@ -168,4 +168,9 @@ public class ViewHandler implements IViewHandler {
         }
         this.iControllerView.pushInput(elementIdentifier, input);
     }
+
+    @Override
+    public IRegistrator getRegistrator() {
+        return iRegistrator;
+    }
 }
