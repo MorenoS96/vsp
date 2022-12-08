@@ -120,7 +120,12 @@ public class ViewModel implements IViewModel {
 
     public void showEndScreen(Player player) {
         view.hideOverlays();
-        Color color = getPlayerColor(player.getColor());
+        Color color;
+        if (player != null) {
+            color = getPlayerColor(player.getColor());
+        } else {
+            color = Color.RED;
+        }
         endScreen = new GameOverScreen("startMenu.css", view, player, color);
         view.registerOverlay("endScreen", endScreen);
         view.showOverlay("endScreen");
