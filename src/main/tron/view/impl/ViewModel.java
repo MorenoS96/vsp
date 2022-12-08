@@ -31,7 +31,7 @@ public class ViewModel implements IViewModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        startMenu=new StartMenu("startMenu.css",view);
+        startMenu = new StartMenu("startMenu.css", view);
         // configure and show stage
         stage.setTitle("TRON - Light Cycles");
         stage.setScene(this.view.getScene());
@@ -45,7 +45,16 @@ public class ViewModel implements IViewModel {
             case 1 -> showStartMenu();
             case 2 -> showWaitScreen();
             case 3 -> showGame();
-            case 4 -> showEndScreen();
+        }
+    }
+
+    @Override
+    public void displayView(int view, Player player) {
+        switch (view) {
+            case 1 -> showStartMenu();
+            case 2 -> showWaitScreen();
+            case 3 -> showGame();
+            case 4 -> showEndScreen(player);
         }
 
     }
@@ -54,7 +63,7 @@ public class ViewModel implements IViewModel {
     public void displayBoard(List<Player> players) {
         view.clear();
         for (Player player : players) {
-            view.draw(getPlayerCoordinates(player), getPlayerColor(player.getColor()),player.isAlive());
+            view.draw(getPlayerCoordinates(player), getPlayerColor(player.getColor()), player.isAlive());
             view.highlightCell(new Coordinate(player.getCurrentCell().getX(), player.getCurrentCell().getY()), getPlayerColor(player.getColor()));
         }
     }
@@ -109,9 +118,10 @@ public class ViewModel implements IViewModel {
         view.hideOverlays();
     }
 
-    public void showEndScreen() {
+    public void showEndScreen(Player player) {
         view.hideOverlays();
-        endScreen = new GameOverScreen("startMenu.css", view);
+        Color color = getPlayerColor(player.getColor());
+        endScreen = new GameOverScreen("startMenu.css", view, player, color);
         view.registerOverlay("endScreen", endScreen);
         view.showOverlay("endScreen");
     }
