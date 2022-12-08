@@ -24,22 +24,32 @@ public class GameOverScreen extends VBox {
         this.getStylesheets().add(stylesheet);
         this.setAlignment(Pos.CENTER);
 
-        labelWinner = new Label("The winner is: ");
-        HBox hb = new HBox();
-        labelPLayer = new Label("Player " + winner.getId() + " ");
-        playerColor = new Rectangle(20, 20, 20, 20);
-        //TODO dynamisches Laden der Daten
-        playerColor.setFill(color);
-        hb.setAlignment(Pos.CENTER);
-        hb.getChildren().add(labelPLayer);
-        hb.getChildren().add(playerColor);
-        //TODO counter fixen
-        counter = 5;
-        while (counter > 0) {counter--;}
-        labelCountdown = new Label("Countdown for new Round: " + counter);
+        if (winner != null) {
+            labelWinner = new Label("The winner is: ");
+            HBox hb = new HBox();
+            labelPLayer = new Label("Player " + winner.getId() + " ");
+            playerColor = new Rectangle(20, 20, 20, 20);
+            playerColor.setFill(color);
+            hb.setAlignment(Pos.CENTER);
+            hb.getChildren().add(labelPLayer);
+            hb.getChildren().add(playerColor);
+            //TODO counter fixen
+            counter = 5;
+            while (counter > 0) {
+                counter--;
+            }
+            labelCountdown = new Label("Countdown for new Round: " + counter);
 
-        this.getChildren().add(labelWinner);
-        this.getChildren().add(hb);
-        this.getChildren().add(labelCountdown);
+            this.getChildren().add(labelWinner);
+            this.getChildren().add(hb);
+            this.getChildren().add(labelCountdown);
+        } else {
+            labelWinner = new Label("You crashed at the same time. It's a draw!");
+            labelCountdown = null;
+            labelPLayer = null;
+            playerColor = null;
+
+            this.getChildren().add(labelWinner);
+        }
     }
 }
