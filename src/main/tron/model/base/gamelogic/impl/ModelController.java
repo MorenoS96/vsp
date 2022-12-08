@@ -1,5 +1,6 @@
 package tron.model.base.gamelogic.impl;
 
+import javafx.application.Platform;
 import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
 import tron.lobby.impl.BasicLobby;
@@ -54,7 +55,9 @@ public class ModelController implements IModelController, IInputHandler {
         iViewModel.displayView(ViewEnum.VIEW1.getViewId());
 
         // Detecten das jemand geklickt hat
-        iViewModel.displayView(ViewEnum.VIEW2.getViewId());
+        Platform.runLater(() -> {
+            iViewModel.displayView(ViewEnum.VIEW2.getViewId());
+        });
 
         wait(WAIT_TIME_MILISEC);
 
