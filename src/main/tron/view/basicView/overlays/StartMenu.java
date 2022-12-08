@@ -42,7 +42,7 @@ public class StartMenu extends VBox {
         hb.setSpacing(10);
         hb.setAlignment(Pos.CENTER);
 
-        btnConfirm = new Button("Confrim");
+        btnConfirm = new Button("Confirm");
         btnConfirm.setOnAction(event -> {
             view.pushInput("changePlayerCount", inputPlayerCount.getText());
         });
