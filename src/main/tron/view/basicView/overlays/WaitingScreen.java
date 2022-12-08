@@ -25,7 +25,7 @@ public class WaitingScreen extends VBox {
         //TODO dynamic x and y
         double y = Integer.parseInt(iConfig.getConfigVal("defaultPlayerCount"));
         double x = 1.0;
-        labelPlayersReady = new Label("x of" + y + "players are ready");
+        labelPlayersReady = new Label((int) x + " of " + (int) y + " players are ready");
 
         progress = x/y;
         System.out.println(progress);
