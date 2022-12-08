@@ -17,7 +17,7 @@ import java.util.*;
 public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
     boolean onePlayerRemaining = false; // Kommt noch was zu
-
+    int playerCount;
     List<Player> players;
     public Board board;
 
@@ -29,15 +29,18 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
     public GameLogic(IControllerModel iControllerModel, IViewModel iViewModel) {
         this.board = new Board(HEIGHT, WIDTH);
-        players = initPlayers(); //playerCount ok in Controller oder Model?
+        playerCount=PLAYER_COUNT;
+        //playerCount ok in Controller oder Model?
 
         this.iControllerModel = iControllerModel;
         this.iViewModel = iViewModel;
+
 
     }
 
     @Override
     public void startGameThread() {
+        players = initPlayers();
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -107,7 +110,7 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
         //System.out.println(board.toStringTest());
 
-        for (int i = 1; i <= PLAYER_COUNT; i++) {
+        for (int i = 1; i <= playerCount; i++) {
             List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
 
             //System.out.println(board.getCellById(startPositionIds[i-1]));
@@ -146,10 +149,10 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
      */
     @Override
     public int[] getPlayerStartingPositions() {
-        int[] xWerte = new int[PLAYER_COUNT];
-        int possibleXCoord = WIDTH / (PLAYER_COUNT + 2);
+        int[] xWerte = new int[playerCount];
+        int possibleXCoord = WIDTH / (playerCount + 2);
         int j = 0;
-        for (int i = 2; i < PLAYER_COUNT + 2; i++) {
+        for (int i = 2; i < playerCount + 2; i++) {
             int x = i * possibleXCoord;
             xWerte[j++] = x;
         }
@@ -160,13 +163,13 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
     public void moveEveryPlayer(char[] allInputs, Board board) {
 
         List<Player> playersToKill = new ArrayList<>();
-        for (int i = 0; i < PLAYER_COUNT; i++) {
+        for (int i = 0; i < playerCount; i++) {
             Player currentPlayer = players.get(i);
             if (currentPlayer.isAlive()) { // Wenn currentCell von einem Spieler auf CurrentCell eines anderen ist, beide dead
                 currentPlayer.move(allInputs[i], board);
             }
-            for (int j = 0; j < PLAYER_COUNT; j++) {
-                for (int k = j + 1; k < PLAYER_COUNT; k++) {
+            for (int j = 0; j < playerCount; j++) {
+                for (int k = j + 1; k < playerCount; k++) {
                     if (players.get(j).getCurrentCell().getId() == players.get(k).getCurrentCell().getId()) {
                         playersToKill.add(players.get(j));
                         players.get(j).setAlive(false);
@@ -199,5 +202,9 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
         IViewModel iViewModel = null;
         GameLogic gameLogic = new GameLogic(iControllerModel, iViewModel);
         gameLogic.startGameThread();
+    }
+
+    public void setPlayerCount(int playerCount) {
+        this.playerCount = playerCount;
     }
 }
