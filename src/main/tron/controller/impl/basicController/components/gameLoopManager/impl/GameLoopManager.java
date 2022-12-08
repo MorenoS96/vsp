@@ -33,6 +33,7 @@ public class GameLoopManager implements IGameLoop {
 
     @Override
     public void startGame() {
+
         iModelController.startGame(playerCount);
     }
 }

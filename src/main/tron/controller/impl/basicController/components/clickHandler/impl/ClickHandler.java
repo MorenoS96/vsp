@@ -21,6 +21,7 @@ public class ClickHandler implements IClick {
     public void pushInput(String elementIdentifier, String input) {
             switch (elementIdentifier){
                 case "changePlayerCount":
+                    System.out.println(input);
                     int newPlayerCount=Integer.valueOf(input);
                     if(newPlayerCount>=2 && newPlayerCount<=6){
                         iGameLoop.setPlayerCount(newPlayerCount);

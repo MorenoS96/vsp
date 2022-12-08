@@ -38,6 +38,7 @@ public class ModelController implements IModelController, IInputHandler {
         }
         iViewModel.displayView(ViewEnum.VIEW3.getViewId());
         GameLogic gameLogic = new GameLogic(iControllerModel,iViewModel);
+        gameLogic.setPlayerCount(playerCount);
         gameLogic.startGameThread();
     }
 
