@@ -51,7 +51,6 @@ public class StartMenu extends VBox {
         btnStart.setOnAction(event -> {
             System.out.println("click!");
             view.pushClick("startGameButton");
-            view.hideOverlays();
         });
 
         this.getChildren().add(labelPlayerCount);
