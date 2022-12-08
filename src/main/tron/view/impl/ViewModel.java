@@ -8,7 +8,9 @@ import tron.model.base.persistenz.Player;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 import tron.view.basicView.components.viewHandler.impl.Coordinate;
 import tron.view.basicView.components.viewHandler.impl.ViewHandler;
+import tron.view.basicView.overlays.GameOverScreen;
 import tron.view.basicView.overlays.StartMenu;
+import tron.view.basicView.overlays.WaitingScreen;
 import tron.view.interfaces.IViewModel;
 
 import java.io.IOException;
@@ -19,6 +21,8 @@ public class ViewModel implements IViewModel {
 
     private IViewHandler view;
     private StartMenu startMenu;
+    private WaitingScreen waitingScreen;
+    private GameOverScreen endScreen;
 
     public ViewModel(Stage stage, IRegistrator iRegistrator) {
 
@@ -88,11 +92,16 @@ public class ViewModel implements IViewModel {
         view.hideOverlays();
         view.registerOverlay("startMenu", startMenu);
         view.showOverlay("startMenu");
+        // just for testing
+//        waitingScreen = new WaitingScreen("startMenu.css", view);
+//        view.registerOverlay("waitScreen", waitingScreen);
+//        view.showOverlay("waitScreen");
     }
 
     public void showWaitScreen() {
         view.hideOverlays();
-        view.registerOverlay("waitScreen", startMenu);
+        waitingScreen = new WaitingScreen("startMenu.css", view);
+        view.registerOverlay("waitScreen", waitingScreen);
         view.showOverlay("waitScreen");
     }
 
@@ -102,7 +111,8 @@ public class ViewModel implements IViewModel {
 
     public void showEndScreen() {
         view.hideOverlays();
-        view.registerOverlay("endScreen", startMenu);
+        endScreen = new GameOverScreen("startMenu.css", view);
+        view.registerOverlay("endScreen", endScreen);
         view.showOverlay("endScreen");
     }
 
