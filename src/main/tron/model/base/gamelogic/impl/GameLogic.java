@@ -87,18 +87,16 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
         if (playersAlive <= 1) {
             onePlayerRemaining = true;
             List<Player> winningPlayer = players.stream().filter(Player::isAlive).toList();
-            int lastStandingPlayer;
             if (winningPlayer.size() == 1) {
-                lastStandingPlayer = winningPlayer.get(0).getId();
-                System.out.println("Winner is " + lastStandingPlayer);
-
+                System.out.println("Winner is " + winningPlayer.get(0).getId());
+                iViewModel.displayLastView(winningPlayer.get(0));
             } else {
                 System.out.println("Beide Spieler sind gleichzeitig gecrasht."); // lastStandingPlayer ist 0
+                iViewModel.displayLastView(null);
             }
             //System.out.println(board.toStringTest());
             gameThread.stop();
             // iControllerModel.endGame(); //TODO einkommentieren wenn drin
-            //iViewModel.displayLastView(lastStandingPlayer); //TODO einkommentieren wenn drin
         }
 
     }
