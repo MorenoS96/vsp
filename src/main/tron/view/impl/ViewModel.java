@@ -99,12 +99,9 @@ public class ViewModel implements IViewModel {
     }
 
     public void showStartMenu() {
-//        view.hideOverlays();
-//        view.registerOverlay("startMenu", startMenu);
-//        view.showOverlay("startMenu");
-        endScreen = new GameOverScreen("startMenu.css", view, null, Color.RED);
-        view.registerOverlay("endScreen", endScreen);
-        view.showOverlay("endScreen");
+        view.hideOverlays();
+        view.registerOverlay("startMenu", startMenu);
+        view.showOverlay("startMenu");
     }
 
     public void showWaitScreen() {
