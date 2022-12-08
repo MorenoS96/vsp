@@ -4,32 +4,32 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import tron.controller.interfaces.IConfig;
+import tron.lobby.util.InterfaceType;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
-import tron.view.basicView.components.viewHandler.impl.ViewUtility;
 
 public class WaitingScreen extends VBox {
 
     private final Label labelWaitingProgress;
     private final ProgressBar progressBar;
-    private final Double progress;
+    private Double progress = 0.0;
     private final Label labelPlayersReady;
+    private final IConfig iConfig;
     public WaitingScreen(String stylesheet, IViewHandler view) {
         super(20.0);
         this.getStylesheets().add(stylesheet);
         this.setAlignment(Pos.CENTER);
 
+        iConfig = (IConfig) view.getRegistrator().getInterfaceOfType(InterfaceType.IConfig);
         labelWaitingProgress = new Label("waiting on players");
-        progress = 0.1;
-        progressBar = new ProgressBar(progress);
         //TODO dynamic x and y
-        labelPlayersReady = new Label("x of y players are ready");
+        double y = Integer.parseInt(iConfig.getConfigVal("defaultPlayerCount"));
+        double x = 1.0;
+        labelPlayersReady = new Label("x of" + y + "players are ready");
 
-        //TODO progression of progressbar
-        /*
-        if (new player joins)
-         progress += 1 - x/y players
-         */
+        progress = x/y;
+        System.out.println(progress);
+        progressBar = new ProgressBar(progress);
 
         this.getChildren().add(labelWaitingProgress);
         this.getChildren().add(progressBar);
