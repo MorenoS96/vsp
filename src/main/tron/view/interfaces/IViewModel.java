@@ -11,7 +11,7 @@ import java.util.List;
 public interface IViewModel {
     void displayView(int view);
 
-    void displayView(int view, Player player);
+    void displayLastView(Player player);
 
     void displayBoard(List<Player> players);
 }
