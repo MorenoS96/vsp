@@ -1,10 +1,11 @@
 package tron.model.base.persistenz;
 
 import tron.model.base.inputhandler.interfaces.IInputHandler;
+import tron.model.base.persistenz.interfaces.IPlayer;
 
 import java.util.List;
 
-public class Player implements IInputHandler {
+public class Player implements IInputHandler, IPlayer {
 
     int id;
 

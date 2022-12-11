@@ -1,21 +1,12 @@
 package tron.model.interfaces.impl;
 
-import javafx.application.Platform;
-import javafx.stage.Stage;
-import tron.controller.impl.basicController.composite.BasicController;
-import tron.controller.interfaces.IController;
 import tron.controller.interfaces.IControllerModel;
-import tron.lobby.impl.BasicLobby;
-import tron.lobby.impl.Registrator;
-import tron.lobby.interfaces.ILobby;
 import tron.lobby.interfaces.IRegistrator;
 import tron.lobby.util.InterfaceType;
 import tron.model.base.gamelogic.impl.GameLogic;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.ViewEnum;
 import tron.model.interfaces.IModelController;
-;
-import tron.view.impl.ViewModel;
 import tron.view.interfaces.IViewModel;
 
 public class ModelController implements IModelController, IInputHandler {
@@ -53,9 +44,8 @@ public class ModelController implements IModelController, IInputHandler {
         if (iControllerModel == null) {
             iControllerModel = (IControllerModel) registrator.getInterfaceOfType(InterfaceType.IControllerModel);
         }
-        registrator.registerComponent(InterfaceType.IControllerModel,registrator);
+        registrator.registerComponent(InterfaceType.IControllerModel, registrator);
         registrator.registerComponent(InterfaceType.IViewModel, iViewModel);
-
 
         iViewModel.displayView(ViewEnum.VIEW1.getViewId());
     }
