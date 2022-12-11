@@ -10,7 +10,7 @@ import tron.controller.interfaces.IController;
 import tron.lobby.impl.Registrator;
 import tron.lobby.interfaces.IRegistrator;
 import tron.lobby.util.InterfaceType;
-import tron.model.base.gamelogic.impl.ModelController;
+import tron.model.interfaces.impl.ModelController;
 import tron.model.base.persistenz.ViewEnum;
 import tron.model.interfaces.IModelController;
 
