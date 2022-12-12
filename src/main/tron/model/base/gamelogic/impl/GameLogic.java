@@ -1,9 +1,7 @@
 package tron.model.base.gamelogic.impl;
 
 import javafx.application.Platform;
-import tron.controller.impl.basicController.composite.BasicController;
 import tron.controller.interfaces.IControllerModel;
-import tron.lobby.impl.Registrator;
 import tron.model.base.gamelogic.interfaces.IGameLogic;
 import tron.model.base.inputhandler.interfaces.IInputHandler;
 import tron.model.base.persistenz.Board;
@@ -13,11 +11,9 @@ import tron.view.interfaces.IViewModel;
 
 import java.util.*;
 
-
-// Wird noch IGameLogic implementieren
 public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
-    boolean onePlayerRemaining = false; // Kommt noch was zu
+    boolean onePlayerRemaining = false;
     int playerCount;
     List<Player> players;
     public Board board;
@@ -56,8 +52,6 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
         double nextUpdateTime = System.nanoTime() + updateIntervall;
 
         while (gameThread != null) {
-            //System.out.println("GameThread is running");
-
             try {
                 double remainingTimeUpdate = (nextUpdateTime - System.nanoTime()) / 1000000; // in ms nicht ns
 
@@ -72,16 +66,13 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
             gametick();
             List<Player> playersToPaint = players.stream().filter(Player::isAlive).toList();
             iViewModel.displayBoard(playersToPaint);
-
-            //  System.out.println(board.toStringTest());
         }
     }
 
     @Override
     public void gametick() {
         // Was in einem Tick passieren soll
-        moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board); //iControllerModel.getInputForCurrentCycle()
-        //iViewModel.displayBoard(players);
+        moveEveryPlayer(iControllerModel.getInputForCurrentCycle(), board);
         long playersAlive = players.stream().filter(Player::isAlive).count();
 
         if (playersAlive <= 1) {
@@ -89,16 +80,11 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
             List<Player> winningPlayer = players.stream().filter(Player::isAlive).toList();
             if (winningPlayer.size() == 1) {
                 System.out.println("Winner is " + winningPlayer.get(0).getId());
-                Platform.runLater(() -> {
-                    iViewModel.displayLastView(winningPlayer.get(0));
-                });
+                Platform.runLater(() -> iViewModel.displayLastView(winningPlayer.get(0)));
             } else {
                 System.out.println("Beide Spieler sind gleichzeitig gecrasht."); // lastStandingPlayer ist 0
-                Platform.runLater(() -> {
-                    iViewModel.displayLastView(null);
-                });
+                Platform.runLater(() -> iViewModel.displayLastView(null));
             }
-            //System.out.println(board.toStringTest());
             // iControllerModel.endGame(); //TODO einkommentieren wenn drin
             gameThread.stop();
         }
@@ -110,12 +96,8 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
         List<Player> players = new ArrayList<>();
         int[] startPositionIds = getPlayerStartingPositions();
 
-        //System.out.println(board.toStringTest());
-
         for (int i = 1; i <= playerCount; i++) {
-            List<BoardCell> paintedCells = new ArrayList<>(); // Könnte hier raus
-
-            //System.out.println(board.getCellById(startPositionIds[i-1]));
+            List<BoardCell> paintedCells = new ArrayList<>();
 
             String moveUpKey = "player" + i + "MoveUp";
             String moveUpString = config.get(moveUpKey);
@@ -135,7 +117,6 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
             Player player = new Player(i, i, board.getCellById(startPositionIds[i - 1]), paintedCells, moveUp, moveDown, moveLeft, moveRight, true);
 
-            //System.out.println(player.getCurrentCell());
             player.setCurrentCellColor(i);
             player.getPaintedCells().add(player.getCurrentCell());
             players.add(player);
@@ -182,7 +163,7 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
             }
             if (!currentPlayer.isAlive()) {
                 playersToKill.add(currentPlayer);
-            } // Hier könnte man auf Anzahl noch lebender Spieler leicht nachfragen
+            }
         }
         killPlayers(playersToKill);
     }
@@ -196,14 +177,6 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public static void main(String[] args) {
-        Registrator registrator = new Registrator();
-        IControllerModel iControllerModel = new BasicController(registrator);
-        IViewModel iViewModel = null;
-        GameLogic gameLogic = new GameLogic(iControllerModel, iViewModel);
-        gameLogic.startGameThread();
     }
 
     public void setPlayerCount(int playerCount) {

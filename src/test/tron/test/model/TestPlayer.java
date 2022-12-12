@@ -143,6 +143,7 @@ public class TestPlayer implements IInputHandler {
 
     @Test
     public void testIsMoveIncorrect() {
+        cleanUp();
         Player player1 = gameLogic.getPlayers().get(0);
         // Sollte anfangs immer moveDown sein
         System.out.println(player1.getCurrentDirection());
