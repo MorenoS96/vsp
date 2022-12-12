@@ -59,7 +59,6 @@ public class GameOverScreen extends VBox {
             this.getChildren().add(labelCountdown);
         } else {
             labelWinner = new Label("You crashed at the same time. It's a draw!");
-            labelCountdown = new Label();
             labelPLayer = null;
             playerColor = null;
             Timeline timeline = new Timeline();
