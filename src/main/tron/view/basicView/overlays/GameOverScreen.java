@@ -1,5 +1,6 @@
 package tron.view.basicView.overlays;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -51,6 +52,7 @@ public class GameOverScreen extends VBox {
                         counter--;
                     });
             timeline.getKeyFrames().addAll(kf, new KeyFrame(Duration.seconds(1)));
+            timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
             this.getChildren().add(labelWinner);
             this.getChildren().add(hb);
