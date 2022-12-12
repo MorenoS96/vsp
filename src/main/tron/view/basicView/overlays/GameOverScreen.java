@@ -59,11 +59,28 @@ public class GameOverScreen extends VBox {
             this.getChildren().add(labelCountdown);
         } else {
             labelWinner = new Label("You crashed at the same time. It's a draw!");
-            labelCountdown = null;
+            labelCountdown = new Label();
             labelPLayer = null;
             playerColor = null;
+            Timeline timeline = new Timeline();
+            counter = 5;
+            labelCountdown = new Label();
+            KeyFrame kf = new KeyFrame(Duration.seconds(0),
+                    event -> {
+                        labelCountdown.setText(String.valueOf(counter));
+                        System.out.println(counter);
+                        if (counter <= 0) {
+                            timeline.stop();
+                            System.out.println("timeline stopped");
+                        }
+                        counter--;
+                    });
+            timeline.getKeyFrames().addAll(kf, new KeyFrame(Duration.seconds(1)));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
 
             this.getChildren().add(labelWinner);
+            this.getChildren().add(labelCountdown);
         }
     }
 }
