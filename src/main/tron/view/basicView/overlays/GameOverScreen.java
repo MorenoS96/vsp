@@ -1,5 +1,7 @@
 package tron.view.basicView.overlays;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -8,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import tron.model.base.persistenz.Player;
 import tron.view.basicView.components.boardHandler.interfaces.IViewHandler;
 
@@ -33,9 +36,25 @@ public class GameOverScreen extends VBox {
             hb.getChildren().add(labelPLayer);
             hb.getChildren().add(playerColor);
             //TODO counter einkommentieren
-
+            //https://stackoverflow.com/questions/65173830/javafx-how-to-stop-timeline-countdown-timer-when-zero-is-reached
+            Timeline timeline = new Timeline();
+            counter = 5;
+            labelCountdown = new Label();
+            KeyFrame kf = new KeyFrame(Duration.seconds(0),
+                    event -> {
+                        labelCountdown.setText(String.valueOf(counter));
+                        System.out.println(counter);
+                        if (counter <= 0) {
+                            timeline.stop();
+                            System.out.println("timeline stopped");
+                        }
+                        counter--;
+                    });
+            timeline.getKeyFrames().addAll(kf, new KeyFrame(Duration.seconds(1)));
+            timeline.play();
             this.getChildren().add(labelWinner);
             this.getChildren().add(hb);
+            this.getChildren().add(labelCountdown);
         } else {
             labelWinner = new Label("You crashed at the same time. It's a draw!");
             labelCountdown = null;
@@ -44,21 +63,5 @@ public class GameOverScreen extends VBox {
 
             this.getChildren().add(labelWinner);
         }
-
-        counter = 5;
-        labelCountdown = new Label("Countdown for new Round: " + counter);
-        this.getChildren().add(labelCountdown);
-        Platform.runLater(() -> {
-
-            while (counter > 0) {
-                try {
-                    Thread.sleep((long) 1000);
-                    System.out.println(System.currentTimeMillis());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                counter--;
-            }
-        });
     }
 }
