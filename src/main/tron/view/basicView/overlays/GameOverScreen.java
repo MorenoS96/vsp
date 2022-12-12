@@ -36,8 +36,6 @@ public class GameOverScreen extends VBox {
             hb.setAlignment(Pos.CENTER);
             hb.getChildren().add(labelPLayer);
             hb.getChildren().add(playerColor);
-            //TODO counter einkommentieren
-            //https://stackoverflow.com/questions/65173830/javafx-how-to-stop-timeline-countdown-timer-when-zero-is-reached
             Timeline timeline = new Timeline();
             counter = 5;
             labelCountdown = new Label();
