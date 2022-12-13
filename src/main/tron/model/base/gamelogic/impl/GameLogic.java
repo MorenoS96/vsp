@@ -85,7 +85,8 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
                 System.out.println("Beide Spieler sind gleichzeitig gecrasht."); // lastStandingPlayer ist 0
                 Platform.runLater(() -> iViewModel.displayLastView(null));
             }
-            // iControllerModel.endGame(); //TODO einkommentieren wenn drin
+            cleanUp();
+            // iControllerModel.endGame(); //TODO einkommentieren wenn implementiert
             try {
                 Thread.sleep(6000);
             } catch (InterruptedException e) {
@@ -178,6 +179,12 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
     public void killPlayers(List<Player> players) {
         for (Player player : players) {
             player.playerDies();
+        }
+    }
+
+    public void cleanUp() {
+        for(Player player:players) {
+            player.setCurrentDirection(' ');
         }
     }
 
