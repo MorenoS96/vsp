@@ -32,6 +32,7 @@ public class ViewModel implements IViewModel {
             e.printStackTrace();
         }
         startMenu = new StartMenu("startMenu.css", view);
+        view.registerOverlay("startMenu", startMenu);
         // configure and show stage
         stage.setTitle("TRON - Light Cycles");
         stage.setScene(this.view.getScene());
