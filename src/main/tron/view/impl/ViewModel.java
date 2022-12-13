@@ -1,6 +1,5 @@
 package tron.view.impl;
 
-import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tron.lobby.interfaces.IRegistrator;
@@ -101,7 +100,6 @@ public class ViewModel implements IViewModel {
 
     public void showStartMenu() {
         view.hideOverlays();
-        view.registerOverlay("startMenu", startMenu);
         view.showOverlay("startMenu");
     }
 
@@ -126,8 +124,6 @@ public class ViewModel implements IViewModel {
         endScreen = new GameOverScreen("startMenu.css", view, player, color);
         view.registerOverlay("endScreen", endScreen);
         view.showOverlay("endScreen");
-
-
     }
 
 }
