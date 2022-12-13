@@ -87,6 +87,12 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
             }
             // iControllerModel.endGame(); //TODO einkommentieren wenn drin
             gameThread.stop();
+            try {
+                Thread.sleep(6000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            iViewModel.displayView(1);
         }
 
     }
