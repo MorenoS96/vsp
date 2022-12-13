@@ -19,4 +19,6 @@ public interface IPlayer {
     List<BoardCell> getPaintedCells();
 
     BoardCell getCurrentCell();
+
+    void setCurrentDirection(char currentDirection);
 }
