@@ -86,7 +86,7 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
                 Platform.runLater(() -> iViewModel.displayLastView(null));
             }
             cleanUp();
-            // iControllerModel.endGame(); //TODO einkommentieren wenn implementiert
+            iControllerModel.endGame();
             try {
                 Thread.sleep(6000);
             } catch (InterruptedException e) {

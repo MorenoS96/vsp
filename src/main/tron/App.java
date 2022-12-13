@@ -35,6 +35,6 @@ public class App extends Application {
 
         IViewModel viewModel=new ViewModel(stage,iRegistrator);
         iRegistrator.registerComponent(InterfaceType.IViewModel,viewModel);
-        viewModel.displayView(ViewEnum.VIEW1.getViewId());
+        iController.startApplication();
     }
 }

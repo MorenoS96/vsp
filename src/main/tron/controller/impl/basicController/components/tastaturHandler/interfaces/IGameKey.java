@@ -6,4 +6,5 @@ public interface IGameKey  {
  char[] getInputsForCurrentCycle();
  void reMapKeys();
  void pushInput(char c);
+ void clearInputs();
 }

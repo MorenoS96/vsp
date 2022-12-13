@@ -40,6 +40,11 @@ public class TastaturHandler implements IGetInput, IGameKey, KeyListener {
         handleKeyBoardChar(c);
     }
 
+    @Override
+    public void clearInputs() {
+        pressedKeys.clear();
+    }
+
 
     @Override
     public char getInput() {

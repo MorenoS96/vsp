@@ -5,5 +5,5 @@ public interface IGameLoop {
     void startGame();
     void setPlayerCount(int playerCount);
     void startApplication() throws InterruptedException;
-
+    void endGame();
 }

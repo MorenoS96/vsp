@@ -68,7 +68,13 @@ public class BasicController implements IController {
 
     }
 
-    //@Override
+    @Override
+    public void endGame() {
+        iGameLoop.endGame();
+        iGameKey.clearInputs();
+    }
+
+    @Override
     public void startGame(int playerCount) {
         iClick.pushInput("changePlayerCount",String.valueOf(playerCount));
         iGameLoop.startGame();
@@ -77,6 +83,13 @@ public class BasicController implements IController {
     @Override
     public int getPlayerCount() {
         return iGameLoop.getPlayerCount();
+    }
+
+
+
+    @Override
+    public void startApplication() throws InterruptedException {
+    iGameLoop.startApplication();
     }
 
     @Override
