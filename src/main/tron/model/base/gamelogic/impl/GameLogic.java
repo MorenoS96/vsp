@@ -65,7 +65,7 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
             }
             gametick();
             List<Player> playersToPaint = players.stream().filter(Player::isAlive).toList();
-            // ids,currentcell, paintedcells
+            System.out.println(Arrays.toString(allIdsLeft(playersToPaint)));
             //iViewModel.displayBoard(allIdsLeft(playersToPaint),allCurrentCellsLeft(playersToPaint),allPathsLeft(playersToPaint)); TODO einkommentieren wenn implementiert
             iViewModel.displayBoard(playersToPaint); //TODO rausnehmen irgendwann.
         }
@@ -185,22 +185,29 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
     }
 
     public void cleanUp() {
-        for(Player player:players) {
+        for (Player player : players) {
             player.setCurrentDirection(' ');
         }
     }
 
+    /**
+     * @return int[] mit allen IDs der Spieler die noch am Leben sind
+     */
     public int[] allIdsLeft(List<Player> playersToPaint) {
         int[] idsLeft = new int[playersToPaint.size()];
-        for(int i=0;i<playersToPaint.size();i++) {
+        for (int i = 0; i < playersToPaint.size(); i++) {
             idsLeft[i] = playersToPaint.get(i).getId();
         }
         return idsLeft;
     }
 
+    /**
+     * @return Ein Array wo je ein Eintrag laos ein int[] für einen Spieler steht, dieses int[] hat immer nur x und y
+     * Wert drin
+     */
     public int[][] allCurrentCellsLeft(List<Player> playersToPaint) {
         int[][] currenCellsLeft = new int[playersToPaint.size()][2];
-        for(int i=0;i<playersToPaint.size();i++) {
+        for (int i = 0; i < playersToPaint.size(); i++) {
             int x = playersToPaint.get(i).getCurrentCell().getX();
             int y = playersToPaint.get(i).getCurrentCell().getY();
             currenCellsLeft[i] = new int[]{x, y};
@@ -208,15 +215,19 @@ public class GameLogic implements IGameLogic, IInputHandler, Runnable {
         return currenCellsLeft;
     }
 
+    /**
+     * @return Pro Spieler ein int[][], dadrin sind so viele int[] mit x und y Werten wie der Spieler schon Zellen
+     * gefärbt hat.
+     */
     public int[][][] allPathsLeft(List<Player> playersToPaint) {
         int[][][] pathsLeft = new int[playersToPaint.size()][][];
-        for(int i=0;i<playersToPaint.size();i++) {
+        for (int i = 0; i < playersToPaint.size(); i++) {
             int[][] onePath = new int[playersToPaint.get(i).getPaintedCells().size()][2];
 
-            for(int j=0;j<playersToPaint.get(i).getPaintedCells().size();j++) {
+            for (int j = 0; j < playersToPaint.get(i).getPaintedCells().size(); j++) {
                 int x = playersToPaint.get(i).getPaintedCells().get(j).getX();
                 int y = playersToPaint.get(i).getPaintedCells().get(j).getY();
-                onePath[j] = new int[]{x,y};
+                onePath[j] = new int[]{x, y};
             }
             pathsLeft[i] = onePath;
         }
