@@ -43,13 +43,10 @@ Dafür sollen wir eine Middleware entwickeln, welche es mindestens unseren beide
 
 ## Stakeholder {#_stakeholder}
 
-+-----------------+-----------------+-----------------------------------+
-| Rolle           | Kontakt         | Erwartungshaltung                 |
-+=================+=================+===================================+
-| *\<Rolle-1\>*   | *\<Kontakt-1\>* | *\<Erwartung-1\>*                 |
-+-----------------+-----------------+-----------------------------------+
-| *\<Rolle-2\>*   | *\<Kontakt-2\>* | *\<Erwartung-2\>*                 |
-+-----------------+-----------------+-----------------------------------+
+| Rolle         | Kontakt         | Erwartungshaltung |
+|---------------|-----------------|-------------------|
+| *\<Rolle-1\>* | *\<Kontakt-1\>* | *\<Erwartung-1\>* |
+| *\<Rolle-2\>* | *\<Kontakt-2\>* | *\<Erwartung-2\>* |
 
 # Randbedingungen {#section-architecture-constraints}
 
