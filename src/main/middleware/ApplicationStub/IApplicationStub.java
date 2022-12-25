@@ -12,4 +12,5 @@ public interface IApplicationStub {
     JSONObject receiveSynchronous(JSONObject json);
 
     void handle(JSONObject response, String objectName);
+
 }
