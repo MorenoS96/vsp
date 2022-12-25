@@ -1,7 +1,6 @@
 package middleware.nameservice;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class NameService {
 
@@ -58,7 +57,31 @@ public class NameService {
     }
 
     public String[] lookup(String funcName) {
-        return null;
+        // Find all registered services with the given function name
+        List<ServiceInfo> matchingServices = new ArrayList<>();
+        for (ServiceInfo serviceInfo : registeredServices.values()) {
+            if (serviceInfo.getFuncName().equals(funcName) && serviceInfo.isAvailable()) {
+                matchingServices.add(serviceInfo);
+            }
+        }
+
+        // Return the parameter types for each matching service
+        String[] paramTypes = new String[matchingServices.size()];
+        for (int i = 0; i < matchingServices.size(); i++) {
+            paramTypes[i] = Arrays.toString(matchingServices.get(i).getParamTypes());
+        }
+        return paramTypes;
+    }
+    
+    public String[] lookup() {
+        //find all registered services
+        List<ServiceInfo> services = new ArrayList<>();
+        for (ServiceInfo serviceInfo : registeredServices.values()) {
+            if (serviceInfo.isAvailable()) {
+                services.add(serviceInfo);
+            }
+        }
+        return services.toString().split(",");
     }
 
     void heartbeatReq(int maxResponseTime) {
