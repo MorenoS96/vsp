@@ -72,7 +72,7 @@ public class NameService {
         }
         return paramTypes;
     }
-    
+
     public String[] lookup() {
         //find all registered services
         List<ServiceInfo> services = new ArrayList<>();
@@ -84,7 +84,24 @@ public class NameService {
         return services.toString().split(",");
     }
 
-    void heartbeatReq(int maxResponseTime) {
+    public void heartbeatReq(int maxResponseTime) {
+        long currentTime = System.currentTimeMillis();
+        for (ServiceInfo serviceInfo : registeredServices.values()) {
+            // Check if the service has sent a heartbeat within the specified time window
+            if (currentTime - serviceInfo.getLastHeartbeat() > maxResponseTime) {
+                // The service has not sent a heartbeat within the time window, mark it as not available
+                serviceInfo.setAvailable(false);
+            } else {
+                // The service has sent a heartbeat within the time window, mark it as available
+                serviceInfo.setAvailable(true);
+            }
+        }
+    }
 
+    public void updateLastHeartbeat(int serviceId) {
+        ServiceInfo serviceInfo = registeredServices.get(serviceId);
+        if (serviceInfo != null) {
+            serviceInfo.setLastHeartbeat(System.currentTimeMillis());
+        }
     }
 }
