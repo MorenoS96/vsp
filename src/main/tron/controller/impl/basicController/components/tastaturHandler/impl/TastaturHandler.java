@@ -1,17 +1,15 @@
 package tron.controller.impl.basicController.components.tastaturHandler.impl;
 
+import  tron.controller.impl.basicController.components.tastaturHandler.interfaces.*;
 
-import tron.controller.impl.basicController.components.configHandler.interfaces.IGetConfig;
-import tron.controller.impl.basicController.components.tastaturHandler.interfaces.IGameKey;
-import tron.controller.impl.basicController.components.tastaturHandler.interfaces.IGetInput;
-
+import  tron.controller.impl.basicController.components.configHandler.interfaces.*;
+import tron.controller.util.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 
 
-import tron.controller.util.ConfigHelper;
 public class TastaturHandler implements IGetInput, IGameKey, KeyListener {
     private HashSet<Character> mappedKeys;
     private  HashMap<Character,Long> pressedKeys=new HashMap<>();

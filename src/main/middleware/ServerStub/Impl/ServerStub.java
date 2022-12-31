@@ -50,8 +50,9 @@ public class ServerStub implements IServerStubApplicationStub {
         register.heartbeat_resp(id);
     }
 
+
     @Override
-    public void unmarshallAndCall(JSONObject obj) {
-        unMarshall.unmarshallAndCall(obj);
+    public void unmarshallAndCall(String jSONString) {
+        unMarshall.unmarshallAndCall(jSONString);
     }
 }

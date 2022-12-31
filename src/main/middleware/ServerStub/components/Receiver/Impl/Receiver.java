@@ -38,14 +38,11 @@ public class Receiver implements IReceiver {
     private void processUDPPacket(DatagramPacket packet) {
         // Process the UDP packet
         String string=new String(packet.getData(), StandardCharsets.UTF_8);
-        JSONParser parser = new JSONParser();
 
-        try {
-            JSONObject jsonObject= (JSONObject)parser.parse(string);
-            iUnMarshall.unmarshallAndCall(jsonObject);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+
+
+            iUnMarshall.unmarshallAndCall(string);
 
     }
 
@@ -54,14 +51,12 @@ public class Receiver implements IReceiver {
         try {
             dis = new DataInputStream(s.getInputStream());
             String string=(String)dis.readUTF();
-            JSONParser parser = new JSONParser();
 
-            try {
-                JSONObject jsonObject= (JSONObject)parser.parse(string);
-                iUnMarshall.unmarshallAndCall(jsonObject);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+
+
+                iUnMarshall.unmarshallAndCall(string);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
